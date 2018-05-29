@@ -30,7 +30,6 @@ async def on_ready():
 class NoPermError(Exception):
     pass
 
-
 @bot.command(pass_context=True)
 async def clear(ctx, number : int):
     if ctx.message.author.id in Moderators:
@@ -41,6 +40,7 @@ async def clear(ctx, number : int):
         await asyncio.sleep(4)
         await bot.delete_message(msg)
     else:
+        await bot.send_message(ctx.message.channel, f'**Boi, you cant use this command...*')
         raise NoPermError
 
 @bot.command(pass_context=True)
