@@ -2,7 +2,7 @@ import discord, logging, json, asyncio, time, random, aiohttp, re, datetime, tra
 from discord.ext import commands
 
 #-------------------DATA---------------------
-version = "0.6.0"
+version = "0.6.1"
 owner = ["361534796830081024"]
 bot = commands.Bot(command_prefix='r-', description=None)
 message = discord.Message
@@ -121,8 +121,14 @@ async def suggest(ctx, pref, text):
         channel = bot.get_channel(id="444837114258128916")
         room = bot.get_channel(id="444837114258128916")
         await bot.send_message(ctx.message.channel, f"**:white_check_mark: Sent in #{channel}**")
-        await bot.send_message(room, embed=em)
-
+        mesg = await bot.send_message(room, embed=em)
+        if pref is "S":
+            await bot.add_reaction(mesg, "👍")
+            await bot.add_reaction(mesg, "👎")
+        if pref is "C":
+            await bot.add_reaction(mesg, "👍")
+            await bot.add_reaction(mesg, "👎")
+            
 @bot.command(pass_context=True)
 async def poll(ctx, question, options: str):
     if len(options) <= 1:
