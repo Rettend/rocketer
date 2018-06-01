@@ -31,7 +31,7 @@ class NoPermError(Exception):
     pass
 
 @bot.command(pass_context=True)
-async def lock():
+async def lock(ctx):
     if ctx.message.author.id in Moderators:
         room = ctx.message.channel
         Registered = discord.utils.find(ctx.server.roles, id="452135771672018954")
@@ -44,7 +44,7 @@ async def lock():
             raise NoPermError
     
 @bot.command(pass_context=True)
-async def unlock():
+async def unlock(ctx):
     if ctx.message.author.id in Moderators:
         room = ctx.message.channel
         Registered = discord.utils.find(ctx.server.roles, id="452135771672018954")
