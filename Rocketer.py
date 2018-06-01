@@ -244,9 +244,8 @@ async def on_member_remove(member):
 async def on_message(message):
     if message.content.startswith('r-lock'):
         if message.author.id in Moderators:
-            find = discord.utils.find()
             room = message.channel
-            Registered = find(lambda m: m.name == 'Registered', channel.server.roles)
+            Registered = discord.utils.find(lambda m: m.name == 'Registered', channel.server.roles)
             overwrite = discord.Overwrite()
             overwrite.send_messages = False
             await bot.edit_channel_permissions(room, Registered, overwrite)
