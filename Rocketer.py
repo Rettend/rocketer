@@ -31,6 +31,32 @@ class NoPermError(Exception):
     pass
 
 @bot.command(pass_context=True)
+async def lock():
+    if ctx.message.author.id in Moderators:
+        room = ctx.message.channel
+        Registered = discord.utils.find(ctx.server.roles, id="452135771672018954")
+        overwrite = discord.Overwrite()
+        overwrite.send_messages = False
+        await bot.edit_channel_permissions(room, Registered, overwrite)
+        await bot.send_message(room, f"**{room.mention} is now locked!**")
+    else:
+            await bot.send_message(ctx.message.channel, f'**Boi, you cant use this command...*')
+            raise NoPermError
+    
+@bot.command(pass_context=True)
+async def unlock():
+    if ctx.message.author.id in Moderators:
+        room = ctx.message.channel
+        Registered = discord.utils.find(ctx.server.roles, id="452135771672018954")
+        overwrite = discord.Overwrite()
+        overwrite.send_messages = True
+        await bot.edit_channel_permissions(room, Registered, overwrite)
+        await bot.send_message(room, f"**{room.mention} is now unlocked!**")
+    else:
+        await bot.send_message(ctx.message.channel, f'**Boi, you cant use this command...*')
+        raise NoPermError
+
+@bot.command(pass_context=True)
 async def clear(ctx, number : int):
     if ctx.message.author.id in Moderators:
         number += 1
@@ -120,7 +146,7 @@ async def suggest(ctx, pref, text):
         em = discord.Embed(title=f"{msg}", description=f"**From {ctx.message.author.mention}**\n⋙ {text}", colour=col)
         channel = bot.get_channel(id="444837114258128916")
         room = bot.get_channel(id="444837114258128916")
-        await bot.send_message(ctx.message.channel, f"**:white_check_mark: Sent in #{channel}**")
+        await bot.send_message(ctx.message.channel, f"**:white_check_mark: Sent in {channel.mention}**")
         mesg = await bot.send_message(room, embed=em)
         if pref is "S":
             await bot.add_reaction(mesg, "👍")
