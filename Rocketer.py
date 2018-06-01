@@ -11,6 +11,7 @@ member = discord.Member
 user = discord.User
 Imox = ["365173881952272384"]
 permissions = discord.Permissions
+"""Registered : 452135771672018954"""
 #--------------------------------------------
 
 #--------------MODERATOR'S ID-----------------
@@ -47,7 +48,7 @@ async def locke(ctx):
 async def unlock(ctx):
     if ctx.message.author.id in Moderators:
         room = ctx.message.channel
-        Registered = discord.utils.find(ctx.server.roles, id="452135771672018954")
+        Registered = discord.utils.find(ctx.server.roles, id="")
         overwrite = discord.Overwrite()
         overwrite.send_messages = True
         await bot.edit_channel_permissions(room, Registered, overwrite)
@@ -244,7 +245,7 @@ async def on_message(message):
     if message.content.startswith('r-lock'):
         if message.author.id in Moderators:
             room = message.channel
-            Registered = discord.utils.find(server.roles, id="452135771672018954")
+            Registered = discord.utils.find(server.roles, name="Registered")
             overwrite = discord.Overwrite()
             overwrite.send_messages = False
             await bot.edit_channel_permissions(room, Registered, overwrite)
