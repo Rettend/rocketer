@@ -31,7 +31,7 @@ class NoPermError(Exception):
     pass
 
 @bot.command(pass_context=True)
-async def lock(ctx):
+async def locke(ctx):
     if ctx.message.author.id in Moderators:
         room = ctx.message.channel
         Registered = discord.utils.find(ctx.server.roles, id="452135771672018954")
@@ -40,8 +40,8 @@ async def lock(ctx):
         await bot.edit_channel_permissions(room, Registered, overwrite)
         await bot.send_message(room, f"**{room.mention} is now locked!**")
     else:
-            await bot.send_message(ctx.message.channel, f'**Boi, you cant use this command...*')
-            raise NoPermError
+        await bot.send_message(ctx.message.channel, f'**Boi, you cant use this command...*')
+        raise NoPermError
     
 @bot.command(pass_context=True)
 async def unlock(ctx):
@@ -241,6 +241,17 @@ async def on_member_remove(member):
 
 @bot.event
 async def on_message(message):
+    if message.content.startswith('r-lock'):
+        if message.author.id in Moderators:
+            room = message.channel
+            Registered = discord.utils.find(server.roles, id="452135771672018954")
+            overwrite = discord.Overwrite()
+            overwrite.send_messages = False
+            await bot.edit_channel_permissions(room, Registered, overwrite)
+            await bot.send_message(room, f"**{room.mention} is now locked!**")
+        else:
+            await bot.send_message(ctx.message.channel, f'**Boi, you cant use this command...*')
+            raise NoPermError
     if message.content.upper().startswith('R-AMIOWNER?'):
         if message.author.id in owner:
             await bot.send_message(message.channel, ':white_check_mark: **You are the Owner, Hey Rettend :D**')
