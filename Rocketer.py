@@ -222,7 +222,10 @@ async def on_member_join(member):
             is_verified = True
             break
         if is_verified == False:
-            await bot.send_message(room, f"**Welcome __{member.name}__, I will show you around, First, to __get permissions for all channels__, you need to type `r-verify` and __answer all of the questions!__\nThan type `r-register` ! __IMPORTANT: typing `r-register` without answering the questions, will unregister you!__**")
+            em = discord.Embed(title=f"__{member.name}__ Joined!", description=None, colour=0x3498db)
+            em.add_field(text="\n**Welcome __{member.name}__,**\n\nI will show you around, First, to __get permissions for all channels__, you need to type `r-verify` and __answer all of the questions!__\nThan type `r-register`!\n\n**__IMPORTANT__: typing `r-register` without answering the questions, will unregister you!**")
+            em.set_thumbnail(url="https://cdn.discordapp.com/emojis/391322023739129856.png?v=1")
+            await bot.send_message(room, embed=em)
 
 @bot.listen()
 async def on_member_remove(member):
@@ -242,6 +245,7 @@ async def on_message(message):
                            ":small_blue_diamond: Type `r-latest` to get the latest updates!\n"
                            f":white_small_square: If you have any questions, ask it to {Rettend.mention}", colour=0x3498db)
         em.set_thumbnail(url="https://cdn.discordapp.com/emojis/430347128100093962.gif?v=1")
+        em.ser_thumbnail(url="https://cdn.discordapp.com/emojis/391322023739129856.png?v=1")
         await bot.send_message(message.channel, embed=em)
     if message.content.startswith('r-lock'):
         if message.author.id in Moderators:
