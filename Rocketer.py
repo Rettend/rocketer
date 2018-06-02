@@ -232,8 +232,9 @@ async def on_member_remove(member):
 async def on_message(message):
     if message.content.startswith("r-help"):
         Rettend = discord.utils.get(message.server.members, id="361534796830081024")
-        em = discord.Embed(title="HELP", description="Hey! Dont get Scared, Ask for help!\n"
+        em = discord.Embed(title="HELP", description="__Hey! Dont get Scared, Ask for help!__\n"
                            "\n"
+                           ":small_blue_diamond: Try `r-mod` to get the moderator commands, but you need to be Staff to use them!\n"
                            ":white_small_square: Use the `r-list` command to get all of the commands!\n"
                            ":small_blue_diamond: Type `r-latest` to get the latest updates!\n"
                            f":white_small_square: If you have any questions, ask it to {Rettend.mention}", colour=0x3498db)
@@ -504,7 +505,8 @@ async def on_message(message):
                         ':small_blue_diamond: r-register\n'
                         ':white_small_square: r-clear {number}\n'
                         ':small_blue_diamond: r-oof\n'
-                        ':white_small_square: r-8ball {Question}\n', inline=True)
+                        ':white_small_square: r-8ball {Question}\n'
+                        ':small_blue_diamond: r-help', inline=True)
         emb.set_thumbnail(url='https://cdn.discordapp.com/emojis/385152309090451467.png?v=1')
         emb.set_footer(text='The Official Bot of PissRocket, inviting and using the Bot in other servers breaks the Term of Use.\nType r-help for more commands!!')
         await bot.send_message(message.channel, embed=emb)
@@ -513,11 +515,8 @@ async def on_message(message):
                             ":small_blue_diamond: r-suggest {Q or S or C or __B__} \"{message}\"\n"
                             "New prefix: __B__ for Command Bugs\n"
                             "\n"
-                            ":white_small_square: r-oof\n"
-                            "Fun\n"
-                            "\n"
-                            ":small_blue_diamond: r-nick \"{name}\"\n"
-                            "Change your name\n"
+                            ":white_small_square: r-help\n"
+                            "Fixed.\n"
                             "\n"
                             ":white_small_square: r-list\n"
                             "The commands list finnaly working", colour=0x3498db)
