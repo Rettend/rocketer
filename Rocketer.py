@@ -253,13 +253,6 @@ async def on_message(message):
             await bot.send_message(message.channel, ':white_check_mark: **You are the Owner, Hey Rettend :D**')
         else:
             await bot.send_message(message.channel, ':negative_squared_cross_mark: **You aren\'t the Owner.**')
-    if message.content.startswith('r-ping'):
-        e = discord.Embed(title=':ping_pong: **Pong!**', colour=0x3498db)
-        msg = await bot.send_message(message.channel, embed=e)
-        ping = time.time()
-        complete = "Its %.8f MS" % ping
-        em = discord.Embed(title=complete, colour=0x3498db)
-        await bot.edit_message(msg, embed=em)
     if message.content.startswith('r-say'):
         args = message.content.split(' ')
         await bot.send_message(message.channel, '**%s**' % (' '.join(args[1:])))
