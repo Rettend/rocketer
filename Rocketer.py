@@ -32,32 +32,6 @@ class NoPermError(Exception):
     pass
 
 @bot.command(pass_context=True)
-async def locke(ctx):
-    if ctx.message.author.id in Moderators:
-        room = ctx.message.channel
-        Registered = discord.utils.find(ctx.server.roles, id="452135771672018954")
-        overwrite = discord.Overwrite()
-        overwrite.send_messages = False
-        await bot.edit_channel_permissions(room, Registered, overwrite)
-        await bot.send_message(room, f"**{room.mention} is now locked!**")
-    else:
-        await bot.send_message(ctx.message.channel, f'**Boi, you cant use this command...*')
-        raise NoPermError
-    
-@bot.command(pass_context=True)
-async def unlock(ctx):
-    if ctx.message.author.id in Moderators:
-        room = ctx.message.channel
-        Registered = discord.utils.find(ctx.server.roles, id="")
-        overwrite = discord.Overwrite()
-        overwrite.send_messages = True
-        await bot.edit_channel_permissions(room, Registered, overwrite)
-        await bot.send_message(room, f"**{room.mention} is now unlocked!**")
-    else:
-        await bot.send_message(ctx.message.channel, f'**Boi, you cant use this command...*')
-        raise NoPermError
-
-@bot.command(pass_context=True)
 async def clear(ctx, number : int):
     if ctx.message.author.id in Moderators:
         number += 1
@@ -249,7 +223,18 @@ async def on_message(message):
             overwrite = discord.PermissionOverwrite()
             overwrite.send_messages = False
             await bot.edit_channel_permissions(room, Registered, overwrite)
-            await bot.send_message(room, f"**{room.mention} is now locked!**")
+            await bot.send_message(room, f"**{room.mention} is now locked! Ha ha**")
+        else:
+            await bot.send_message(ctx.message.channel, f'**Boi, you cant use this command...*')
+            raise NoPermError
+    if message.content.startswith('r-unlock'):
+        if message.author.id in Moderators:
+            room = message.channel
+            Registered = discord.utils.get(message.server.roles, name="Registered")
+            overwrite = discord.PermissionOverwrite()
+            overwrite.send_messages = True
+            await bot.edit_channel_permissions(room, Registered, overwrite)
+            await bot.send_message(room, f"**{room.mention} is now unlocked, feel free to chat!**")
         else:
             await bot.send_message(ctx.message.channel, f'**Boi, you cant use this command...*')
             raise NoPermError
