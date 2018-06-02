@@ -5,13 +5,14 @@ from discord.ext import commands
 version = "0.6.4"
 owner = ["361534796830081024"]
 bot = commands.Bot(command_prefix='r-', description=None)
+bot.remove_command("help")
 message = discord.Message
 server = discord.Server
 member = discord.Member
 user = discord.User
 Imox = ["365173881952272384"]
+Rettend = discord.AppInfo.owner
 permissions = discord.Permissions
-"""Registered : 452135771672018954"""
 #--------------------------------------------
 
 #--------------MODERATOR'S ID----------------
@@ -33,8 +34,6 @@ class NoPermError(Exception):
 #--------------------------------------------
 
 #----------------COMMANDS--------------------
-@bot.remove_command('help')
-
 @bot.command(pass_context=True)
 async def ping(ctx):
     before = time.monotonic()
@@ -232,6 +231,13 @@ async def on_member_remove(member):
 
 @bot.event
 async def on_message(message):
+    if message.content.startswith("r-help"):
+        em = discord.Embed(title="HELP", description="Hey! Dont get Scared, Ask for help!\n"
+                           "\n"
+                           ":white_small_square: Use the `r-list` command to get all of the commands!\n"
+                           ":small_blue_diamond: Type `r-latest` to get the latest updates!\n"
+                           f":white_small_square: If you have any questions, ask it to {Rettend.mention}", colour=0x3498db)
+        await bot.send_message(message.channel, embed=em)
     if message.content.startswith('r-lock'):
         if message.author.id in Moderators:
             room = message.channel
