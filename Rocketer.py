@@ -33,9 +33,8 @@ class NoPermError(Exception):
 
 @bot.command(pass_context=True)
 async def ping(ctx):
-    await bot.delete_message(ctx.message)
     before = time.monotonic()
-    msg = await bot.say(":ping_pong: **Pong!**")
+    msg = await bot.say(":ping_pong: **...**")
     ping = (time.monotonic() - before) * 1000
     pinges = int(ping)
     if pinges > 1000:
