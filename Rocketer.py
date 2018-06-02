@@ -32,10 +32,14 @@ class NoPermError(Exception):
     pass
 
 @bot.command(pass_context=True)
-async def pong(ctx):
-    msg = await bot.say("**Pong!**")
-    await asyncio.sleep(3)
-    await bot.edit_message(msg, "**Looks like {0} Ms.**".format(round(bot.latency, 1)))
+async def ping(ctx):
+    """ Pong! """
+    await delete_message(ctx.message)
+    before = time.monotonic()
+    message = await ctx.send("Pong!")
+    ping = (time.monotonic() - before) * 1000
+    await message.edit(content=f"Pong!  `{int(ping)}ms`")
+    print(f'Ping {int(ping)}ms')
 
 @bot.command(pass_context=True)
 async def clear(ctx, number : int):
