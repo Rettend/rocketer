@@ -11,7 +11,6 @@ server = discord.Server
 member = discord.Member
 user = discord.User
 Imox = ["365173881952272384"]
-Rettend = discord.AppInfo.owner
 permissions = discord.Permissions
 #--------------------------------------------
 
@@ -232,11 +231,13 @@ async def on_member_remove(member):
 @bot.event
 async def on_message(message):
     if message.content.startswith("r-help"):
+        Rettend = discord.utils.get(message.server.members, id="361534796830081024")
         em = discord.Embed(title="HELP", description="Hey! Dont get Scared, Ask for help!\n"
                            "\n"
                            ":white_small_square: Use the `r-list` command to get all of the commands!\n"
                            ":small_blue_diamond: Type `r-latest` to get the latest updates!\n"
-                           f":white_small_square: If you have any questions, ask it to {Rettend}", colour=0x3498db)
+                           f":white_small_square: If you have any questions, ask it to {Rettend.mention}", colour=0x3498db)
+        em.set_thumbnail(url="https://cdn.discordapp.com/emojis/430347128100093962.gif?v=1")
         await bot.send_message(message.channel, embed=em)
     if message.content.startswith('r-lock'):
         if message.author.id in Moderators:
