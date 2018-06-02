@@ -31,7 +31,7 @@ async def on_ready():
 class NoPermError(Exception):
     pass
 
-@bot.command()
+@bot.command(pass_context=True)
 async def pong(ctx):
     msg = await bot.say("**Pong!**")
     await asyncio.sleep(3)
