@@ -33,12 +33,11 @@ class NoPermError(Exception):
 
 @bot.command(pass_context=True)
 async def ping(ctx):
-    """ Pong! """
-    await delete_message(ctx.message)
+    await bot.delete_message(ctx.message)
     before = time.monotonic()
-    message = await ctx.send("Pong!")
+    msg = await bot.say("Pong!")
     ping = (time.monotonic() - before) * 1000
-    await message.edit(content=f"Pong!  `{int(ping)}ms`")
+    await bot.edit_message(msg, f"Pong!  `{int(ping)}ms`")
     print(f'Ping {int(ping)}ms')
 
 @bot.command(pass_context=True)
