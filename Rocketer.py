@@ -37,12 +37,12 @@ async def ping(ctx):
     msg = await bot.say(":ping_pong: **...**")
     ping = (time.monotonic() - before) * 1000
     pinges = int(ping)
-    if pinges > 1000:
-        mesg = "Omg, we are really sloooooow...."
-    elif pinges > 400:
+    if pinges > 400:
         mesg = "Thats a lot!"
     elif pinges < 100:
         mesg = "Its Good, Boi ;)"
+    else:
+        mesg = "Omg, we are really sloooooow...."
     await bot.edit_message(msg, f":ping_pong: **Seems like `{pinges}` MS\n{mesg}**")
 
 @bot.command(pass_context=True)
