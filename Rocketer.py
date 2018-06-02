@@ -2,7 +2,7 @@ import discord, logging, json, asyncio, time, random, aiohttp, re, datetime, tra
 from discord.ext import commands
 
 #-------------------DATA---------------------
-version = "0.6.4"
+version = "0.6.6"
 owner = ["361534796830081024"]
 bot = commands.Bot(command_prefix='r-', description=None)
 bot.remove_command("help")
@@ -12,6 +12,7 @@ member = discord.Member
 user = discord.User
 Imox = ["365173881952272384"]
 permissions = discord.Permissions
+underworking = ":warning: **Meh Boi, this command hasn't finished. Please wait until it's got.** :warning:"
 #--------------------------------------------
 
 #--------------MODERATOR'S ID----------------
@@ -230,6 +231,8 @@ async def on_member_remove(member):
 
 @bot.event
 async def on_message(message):
+    if message.content.startswith("r-mod"):
+        await bot.send_message(message.channel, underworking)
     if message.content.startswith("r-help"):
         Rettend = discord.utils.get(message.server.members, id="361534796830081024")
         em = discord.Embed(title="HELP", description="__Hey! Dont get Scared, Ask for help!__\n"
