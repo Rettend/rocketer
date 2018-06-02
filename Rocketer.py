@@ -236,7 +236,7 @@ async def on_message(message):
                            "\n"
                            ":white_small_square: Use the `r-list` command to get all of the commands!\n"
                            ":small_blue_diamond: Type `r-latest` to get the latest updates!\n"
-                           f":white_small_square: If you have any questions, ask it to {Rettend.mention}", colour=0x3498db)
+                           f":white_small_square: If you have any questions, ask it to {Rettend}", colour=0x3498db)
         await bot.send_message(message.channel, embed=em)
     if message.content.startswith('r-lock'):
         if message.author.id in Moderators:
