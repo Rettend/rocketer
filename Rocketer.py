@@ -39,13 +39,10 @@ async def ping(ctx):
     pinges = int(ping)
     if pinges > 1000:
         mesg = "Omg, we are really sloooooow...."
-        break
     if pinges > 400:
         mesg = "Thats a lot!"
-        break
     if pinges < 100:
         mesg = "Its Good, Boi ;)"
-        break
     await bot.edit_message(msg, f"**Seems like `{pinges}` MS\n{mesg}**")
 
 @bot.command(pass_context=True)
