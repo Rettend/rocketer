@@ -39,9 +39,9 @@ async def ping(ctx):
     pinges = int(ping)
     if pinges > 1000:
         mesg = "Omg, we are really sloooooow...."
-    if pinges > 400:
+    elif pinges > 400:
         mesg = "Thats a lot!"
-    if pinges < 100:
+    elif pinges < 100:
         mesg = "Its Good, Boi ;)"
     await bot.edit_message(msg, f"**Seems like `{pinges}` MS\n{mesg}**")
 
