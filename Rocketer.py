@@ -35,7 +35,7 @@ class NoPermError(Exception):
 async def pong(ctx):
     msg = await bot.say("**Pong!**")
     await asyncio.sleep(3)
-    await bot.edit_message(msg, "**Looks like {0} Ms.**".format(round(bot.latency, 1))
+    await bot.edit_message(msg, "**Looks like {0} Ms.**".format(round(bot.latency, 1)))
 
 @bot.command(pass_context=True)
 async def clear(ctx, number : int):
