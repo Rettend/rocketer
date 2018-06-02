@@ -35,10 +35,16 @@ class NoPermError(Exception):
 async def ping(ctx):
     await bot.delete_message(ctx.message)
     before = time.monotonic()
-    msg = await bot.say("Pong!")
+    msg = await bot.say(":ping_pong: **Pong!**")
     ping = (time.monotonic() - before) * 1000
-    await bot.edit_message(msg, f"Pong!  `{int(ping)}ms`")
-    print(f'Ping {int(ping)}ms')
+    pinges = int(ping)
+    if pinges > 1000:
+        mesg = "Omg, we are really sloooooow...."
+    if pinges > 400:
+        mesg = "Thats a lot!"
+    if pinges < 100:
+        mesg = "Its Good, Boi ;)"
+    await bot.edit_message(msg, f"**Seems like `{pinges}` MS\n{mesg}**")
 
 @bot.command(pass_context=True)
 async def clear(ctx, number : int):
