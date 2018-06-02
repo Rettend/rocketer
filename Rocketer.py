@@ -246,7 +246,7 @@ async def on_message(message):
         if message.author.id in Moderators:
             room = message.channel
             Registered = discord.utils.get(message.server.roles, name="Registered")
-            overwrite = discord.Overwrite()
+            overwrite = discord.PermissionOverwrite()
             overwrite.send_messages = False
             await bot.edit_channel_permissions(room, Registered, overwrite)
             await bot.send_message(room, f"**{room.mention} is now locked!**")
