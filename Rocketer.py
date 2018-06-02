@@ -43,7 +43,7 @@ async def ping(ctx):
         mesg = "Thats a lot!"
     elif pinges < 100:
         mesg = "Its Good, Boi ;)"
-    await bot.edit_message(msg, f"**Seems like `{pinges}` MS\n{mesg}**")
+    await bot.edit_message(msg, f":ping_pong: **Seems like `{pinges}` MS\n{mesg}**")
 
 @bot.command(pass_context=True)
 async def clear(ctx, number : int):
