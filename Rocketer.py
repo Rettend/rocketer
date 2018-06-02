@@ -2,7 +2,7 @@ import discord, logging, json, asyncio, time, random, aiohttp, re, datetime, tra
 from discord.ext import commands
 
 #-------------------DATA---------------------
-version = "0.6.1"
+version = "0.6.4"
 owner = ["361534796830081024"]
 bot = commands.Bot(command_prefix='r-', description=None)
 message = discord.Message
@@ -14,22 +14,26 @@ permissions = discord.Permissions
 """Registered : 452135771672018954"""
 #--------------------------------------------
 
-#--------------MODERATOR'S ID-----------------
+#--------------MODERATOR'S ID----------------
 """                  Imox                  Rettend                PReiZ                 Lapras                Legends               sunrab                Spork"""
 Moderators = ["365173881952272384", "361534796830081024", "407382812518383627", "323851553662566401", "386400236916047872", "366607123771293696", "375991973246533642"]
 #--------------------------------------------
 
+#-----------------SETUP----------------------
 @bot.event
 async def on_ready():
     print('Logged in as')
     print(bot.user.name)
     print(bot.user.id)
     print('------')
-    print(discord.utils.oauth_url(bot.user.id))
     await bot.change_presence(game=discord.Game(name='Restarted 🤘'))
 
 class NoPermError(Exception):
     pass
+#--------------------------------------------
+
+#----------------COMMANDS--------------------
+@bot.remove_command('help')
 
 @bot.command(pass_context=True)
 async def ping(ctx):
@@ -125,12 +129,8 @@ async def suggest(ctx, pref, text):
             msg = "𝓒𝓸𝓶𝓶𝓪𝓷𝓭 𝓢𝓾𝓰𝓰𝒆𝓼𝓽𝓲𝓸𝓷"
         if pref is "B":
             msg = "𝓑𝓾𝓰𝓼"
-        if pref is None:
+        else:
             bot.say("**Please use a valid prefix! The available prefixes: __Q__, __S__, __C__, __B__**")
-        if text is None:
-            bot.say("**Please write a message!**")
-        if text and pref is None:
-            bot.say("**Usage:\n\tr-suggest {pref} \"{message}\"**")
     finally:
         colours = [0x11806a, 0x1abc9c, 0x2ecc71, 0x1f8b4c, 0x3498db, 0x206694, 0x9b59b6, 0x71368a, 0xe91e63, 0xad1457, 0xf1c40f, 0xc27c0e, 0xe67e22, 0xa84300, 0xe74c3c, 0x992d22, 0x95a5a6, 0x607d8b, 0x979c9f, 0x546e7a]
         col = random.choice(colours)
