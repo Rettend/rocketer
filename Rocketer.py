@@ -524,6 +524,9 @@ async def on_message(message):
                             ":white_small_square: r-help\n"
                             "Fixed.\n"
                             "\n"
+                            ":small_blue_diamond: r-ping\n"
+                            "Shows your ping! Finally its working!!\n"
+                            "\n"
                             ":white_small_square: r-list\n"
                             "The commands list finnaly working", colour=0x3498db)
         emb.set_thumbnail(url="https://cdn.discordapp.com/emojis/438035428386275340.png?v=1")
