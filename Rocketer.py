@@ -245,7 +245,7 @@ async def on_message(message):
     if message.content.startswith('r-lock'):
         if message.author.id in Moderators:
             room = message.channel
-            Registered = discord.utils.get(name = 'Registered', server.roles)
+            Registered = discord.utils.get(message.server.roles, name="Registered")
             overwrite = discord.Overwrite()
             overwrite.send_messages = False
             await bot.edit_channel_permissions(room, Registered, overwrite)
