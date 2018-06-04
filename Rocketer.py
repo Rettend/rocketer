@@ -18,9 +18,14 @@ underworking = ":warning: **Meh Boi, this command hasn't finished. Please wait u
 
 #MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM-ID-MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
 
-#--------------MODERATOR'S ID----------------\|/-mute, -kick, -unmute, -
-"""                  Imox                  Rettend                PReiZ                 Lapras                Legends               sunrab                Spork"""
-Moderators = ["365173881952272384", "361534796830081024", "407382812518383627", "323851553662566401", "386400236916047872", "366607123771293696", "375991973246533642"]
+#-----------------ADMIN'S ID-----------------\|/-ban, -lock, -unlock
+"""               Imox                 Rettend               Lapras               Legends                Spork                  Hman
+Admins = ["365173881952272384", "361534796830081024", "323851553662566401", "386400236916047872", "375991973246533642", "392039138179940362"]
+"""
+#--------------MODERATOR'S ID----------------\|/-mute, -kick, -unmute
+"""                 PReiZ                 sunrab
+Moderators = ["407382812518383627", "366607123771293696"]
+"""
 #--------------------------------------------
 
 #MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
@@ -41,29 +46,81 @@ class NoPermError(Exception):
 
 #----------------COMMANDS--------------------
 @bot.command(pass_context=True)
+async def unban(ctx, user : discord.User, Reason):
+    if ctx.message.author.id in Admins:
+        room = ctx.message.channel
+        await bot.unban(ctx.message.server, user)
+        LogRoom = bot.get_channel(id="401752340366884885")
+        await bot.say(f"**{user.mention} got unbanned by {ctx.message.author.mention} for __{Reason}__\nSee the logs in {LogRoom.mention}**")
+        em = discord.Embed(title="╲⎝⧹𝓤𝓝𝓑𝓐𝓝⧸⎠╱", description=None, colour=0xe91e63)
+        em.add_field(name="User", value=f"{user.mention}")
+        em.add_field(name="Moderator", value=f"{ctx.message.author}")
+        em.add_field(name="Reason", value=f"{Reason}")
+        await bot.send_message(LogRoom, embed=em)
+    else:
+        await bot.send_message(ctx.message.channel, f'**Boi, you cant use this command...*')
+        raise NoPermError
+
+@bot.command(pass_context=True)
+async def ban(ctx, user : discord.User, Day : int, Reason):
+    if ctx.message.author.id in Admins:
+        room = ctx.message.channel
+        await bot.ban(user, delete_message_days=Day)
+        LogRoom = bot.get_channel(id="401752340366884885")
+        await bot.say(f"**{user.mention} got banned by {ctx.message.author.mention} for __{Reason}__\nSee the logs in {LogRoom.mention}**")
+        em = discord.Embed(title="╲⎝⧹𝓑𝓐𝓝⧸⎠╱", description=None, colour=0xad1457)
+        em.add_field(name="User", value=f"{user.mention}")
+        em.add_field(name="Moderator", value=f"{ctx.message.author}")
+        em.add_field(name="Reason", value=f"{Reason}")
+        await bot.send_message(LogRoom, embed=em)
+    else:
+        await bot.send_message(ctx.message.channel, f'**Boi, you cant use this command...*')
+        raise NoPermError
+
+@bot.command(pass_context=True)
+async def kick(ctx, user : discord.User, Reason):
+    if ctx.message.author.id in Moderators or Admins:
+        room = ctx.message.channel
+        await bot.kick(user)
+        LogRoom = bot.get_channel(id="401752340366884885")
+        await bot.say(f"**{user.mention} got Kicked by {ctx.message.author.mention} for __{Reason}__\nSee the logs in {LogRoom.mention}**")
+        em = discord.Embed(title="╲⎝⧹𝓚𝓘𝓒𝓚⧸⎠╱", description=None, colour=0xe74c3c)
+        em.add_field(name="User", value=f"{user.mention}")
+        em.add_field(name="Moderator", value=f"{ctx.message.author}")
+        em.add_field(name="Reason", value=f"{Reason}")
+        await bot.send_message(LogRoom, embed=em)
+    else:
+        await bot.send_message(ctx.message.channel, f'**Boi, you cant use this command...*')
+        raise NoPermError
+
+@bot.command(pass_context=True)
 async def mute(ctx, user : discord.User, duration : int, Reason):
-    if ctx.message.author.id in Moderators:
+    if ctx.message.author.id in Moderators or Admins:
         LogRoom = bot.get_channel(id="401752340366884885")
         room = ctx.message.channel
         MutedRole = discord.utils.get(ctx.message.server.roles, name="Muted")
         await bot.add_roles(user, MutedRole)
-        await bot.say(f"**{user.mention} got Muted by {ctx.message.author.mention} for __{Reason}__\nSee the logs in {LogRoom.mention}**")
+        await bot.say(f"**{user.mention} got Muted (for {duration} sec) by {ctx.message.author.mention} for __{Reason}__\nSee the logs in {LogRoom.mention}**")
         em = discord.Embed(title="╲⎝⧹𝓜𝓤𝓣𝓔⧸⎠╱", description=None, colour=0x11806a)
         em.add_field(name="User", value=f"{user.mention}")
         em.add_field(name="Moderator", value=f"{ctx.message.author}")
         em.add_field(name="Reason", value=f"{Reason}")
-        em.add_field(name="Duration", value=f"{duration}")
+        em.add_field(name="Duration", value=f"{duration} sec")
         await bot.send_message(LogRoom, embed=em)
         await asyncio.sleep(duration)
         await bot.remove_roles(user, MutedRole)
-        """LOG-HERE"""
+        em = discord.Embed(title="╲⎝⧹𝓤𝓝𝓜𝓤𝓣𝓔⧸⎠╱", description=None, colour=0x1abc9c)
+        em.add_field(name="User", value=f"{user.mention}")
+        em.add_field(name="Moderator", value=f"{ctx.message.author}")
+        em.add_field(name="Reason", value="Time is up...")
+        await bot.send_message(LogRoom, embed=em)
     else:
         await bot.send_message(ctx.message.channel, f'**Boi, you cant use this command...*')
         raise NoPermError
 
 @bot.command(pass_context=True)
 async def unmute(ctx, user : discord.User, Reason):
-    if ctx.message.author.id in Moderators:
+    if ctx.message.author.id in Moderators or Admins:
         LogRoom = bot.get_channel(id="401752340366884885")
         room = ctx.message.channel
         MutedRole = discord.utils.get(ctx.message.server.roles, name="Muted")
@@ -279,7 +336,27 @@ async def on_member_remove(member):
 @bot.event
 async def on_message(message):
     if message.content.startswith("r-mod"):
-        await bot.send_message(message.channel, underworking)
+        em = discord.Embed(title="MODERATION COMMANDS", description=None, colour=0x3498db)
+        em.add_field(name="Admin commands", value=":large_blue_diamond: r-ban {member} {0 - 7 amount of days to delete his messages} \"{Reason}\"\n"
+                     ":black_small_square: Kicks the user and removes his messages for the given days, the user can't rejoin, until he gots unbanned\n"
+                     "\n"
+                     ":large_orange_diamond: r-unban {member} \"{Reason}\"\n"
+                     ":black_small_square: UnBans the Banned user, the user now can rejoin by instant-invite links\n")
+        em.add_field(name="Mod commands", value=":large_blue_diamond: r-kick {member} \"{Reason}\"\n"
+                     ":black_small_square: Kicks the user from the server, the user can rejoin by instant-invite links\n"
+                     "\n"
+                     ":large_orange_diamond: r-mute {member} {duration(in sec)} \"{Reason}\"\n"
+                     ":black_small_square: Mutes the user, this user can't send messages for the given duration, if the _time is up,_ he will auto get unmuted\n"
+                     "\n"
+                     ":large_blue_diamond: r-unmute {member} \"{Reason}\"\n"
+                     ":black_small_square: UnMutes the Muted user, this user now allowed to send messages\n"
+                     "\n"
+                     ":large_orange_diamond: r-lock\n"
+                     ":black_small_square: Locks down the currently channel, only Admins can send messages until an unlock\n"
+                     "\n"
+                     ":large_blue_diamond: r-unlock\n"
+                     ":black_small_square: Unlocks the currently locked channel, now everyone can send messages there")
+        await bot.send_message(message.channel, )
     if message.content.startswith("r-help"):
         Rettend = discord.utils.get(message.server.members, id="361534796830081024")
         em = discord.Embed(title="HELP", description="__Hey! Dont get Scared, Ask for help!__\n"
@@ -291,7 +368,7 @@ async def on_message(message):
         em.set_thumbnail(url="https://cdn.discordapp.com/emojis/430347128100093962.gif?v=1")
         await bot.send_message(message.channel, embed=em)
     if message.content.startswith('r-lock'):
-        if message.author.id in Moderators:
+        if message.author.id in Admins:
             room = message.channel
             Registered = discord.utils.get(message.server.roles, name="Registered")
             overwrite = discord.PermissionOverwrite()
@@ -302,7 +379,7 @@ async def on_message(message):
             await bot.send_message(ctx.message.channel, f'**Boi, you cant use this command...*')
             raise NoPermError
     if message.content.startswith('r-unlock'):
-        if message.author.id in Moderators:
+        if message.author.id in Admins:
             room = message.channel
             Registered = discord.utils.get(message.server.roles, name="Registered")
             overwrite = discord.PermissionOverwrite()
