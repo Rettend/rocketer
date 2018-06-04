@@ -43,11 +43,17 @@ class NoPermError(Exception):
 @bot.command(pass_context=True)
 async def mute(ctx, user : discord.User, duration : int, Reason):
     if ctx.message.author.id in Moderators:
+        LogRoom = bot.get_channel(id="401752340366884885")
         room = ctx.message.channel
         MutedRole = discord.utils.get(ctx.message.server.roles, name="Muted")
         await bot.add_roles(user, MutedRole)
-        await bot.say(f"**{user.mention} got Muted by {ctx.message.author.mention} for __{Reason}__**")
-        """LOG-HERE"""
+        await bot.say(f"**{user.mention} got Muted by {ctx.message.author.mention} for __{Reason}__\nSee the logs in {LogRoom.mention}**")
+        em = discord.Embed(title="╲⎝⧹𝓜𝓤𝓣𝓔⧸⎠╱", description=None, colour=0x11806a)
+        em.add_field(name="User", value=f"{user.mention}")
+        em.add_field(name="Moderator", value=f"{ctx.message.author}")
+        em.add_field(name="Reason", value=f"{Reason}")
+        em.add_field(name="Duration", value=f"{duration}")
+        await bot.send_message(LogRoom, embed=em)
         await asyncio.sleep(duration)
         await bot.remove_roles(user, MutedRole)
         """LOG-HERE"""
@@ -58,11 +64,16 @@ async def mute(ctx, user : discord.User, duration : int, Reason):
 @bot.command(pass_context=True)
 async def unmute(ctx, user : discord.User, Reason):
     if ctx.message.author.id in Moderators:
+        LogRoom = bot.get_channel(id="401752340366884885")
         room = ctx.message.channel
         MutedRole = discord.utils.get(ctx.message.server.roles, name="Muted")
         await bot.remove_roles(user, MutedRole)
-        await bot.say(f"**{user.mention} got UnMuted (he he) by {ctx.message.author.mention} for __{Reason}__**")
-        """LOG-HERE"""
+        await bot.say(f"**{user.mention} got UnMuted (he he) by {ctx.message.author.mention} for __{Reason}__\nSee the logs in {LogRoom.mention}**")
+        em = discord.Embed(title="╲⎝⧹𝓤𝓝𝓜𝓤𝓣𝓔⧸⎠╱", description=None, colour=0x1abc9c)
+        em.add_field(name="User", value=f"{user.mention}")
+        em.add_field(name="Moderator", value=f"{ctx.message.author}")
+        em.add_field(name="Reason", value=f"{Reason}")
+        await bot.send_message(LogRoom, embed=em)
     else:
         await bot.send_message(ctx.message.channel, f'**Boi, you cant use this command...*')
         raise NoPermError
