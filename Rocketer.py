@@ -15,10 +15,16 @@ permissions = discord.Permissions
 underworking = ":warning: **Meh Boi, this command hasn't finished. Please wait until it's got.** :warning:"
 #--------------------------------------------
 
-#--------------MODERATOR'S ID----------------
+
+#MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM-ID-MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+
+#--------------MODERATOR'S ID----------------\|/-mute, -kick, -unmute, -
 """                  Imox                  Rettend                PReiZ                 Lapras                Legends               sunrab                Spork"""
 Moderators = ["365173881952272384", "361534796830081024", "407382812518383627", "323851553662566401", "386400236916047872", "366607123771293696", "375991973246533642"]
 #--------------------------------------------
+
+#MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+
 
 #-----------------SETUP----------------------
 @bot.event
@@ -35,6 +41,33 @@ class NoPermError(Exception):
 
 #----------------COMMANDS--------------------
 @bot.command(pass_context=True)
+async def mute(ctx, user : discord.User, duration : int, Reason):
+    if ctx.message.author.id in Moderators:
+        room = ctx.message.channel
+        MutedRole = discord.utils.get(ctx.message.server.roles, name="Muted")
+        await bot.add_roles(user, MutedRole)
+        await bot.say(f"**{user.mention} got Muted by {ctx.message.author.mention} for __{Reason}__**")
+        """LOG-HERE"""
+        await asyncio.sleep(duration)
+        await bot.remove_roles(user, MutedRole)
+        """LOG-HERE"""
+    else:
+        await bot.send_message(ctx.message.channel, f'**Boi, you cant use this command...*')
+        raise NoPermError
+
+@bot.command(pass_context=True)
+async def unmute(ctx, user : discord.User, Reason):
+    if ctx.message.author.id in Moderators:
+        room = ctx.message.channel
+        MutedRole = discord.utils.get(ctx.message.server.roles, name="Muted")
+        await bot.remove_roles(user, MutedRole)
+        await bot.say(f"**{user.mention} got UnMuted (he he) by {ctx.message.author.mention} for __{Reason}__**")
+        """LOG-HERE"""
+    else:
+        await bot.send_message(ctx.message.channel, f'**Boi, you cant use this command...*')
+        raise NoPermError
+        
+@bot.command(pass_context=True)
 async def ping(ctx):
     before = time.monotonic()
     msg = await bot.say(":ping_pong: **...**")
@@ -43,7 +76,7 @@ async def ping(ctx):
     if 999 > pinges > 400:
         mesg = "Thats a lot!"
     elif pinges > 1000:
-        mesg = "Omg, we are really sloooooow...."
+        mesg = "Omg, really sloooooow...."
     elif 399 > pinges > 101:
         mesg = "Ahhh, not good!"
     elif pinges < 100:
