@@ -72,6 +72,7 @@ async def ban(ctx, user : discord.User, Day : int, Reason):
         em.add_field(name="User", value=f"{user.mention}")
         em.add_field(name="Moderator", value=f"{ctx.message.author}")
         em.add_field(name="Reason", value=f"{Reason}")
+        em.set_thumbnail(url="https://cdn.discordapp.com/attachments/388945761611808769/453211671935057920/banned.gif")
         await bot.send_message(LogRoom, embed=em)
     else:
         await bot.send_message(ctx.message.channel, f'**Boi, you cant use this command...*')
@@ -335,10 +336,6 @@ async def on_member_remove(member):
 
 @bot.event
 async def on_message(message):
-    if message.content.startswith("r-hehe"):
-        em = discord.Embed(title=None, description=None, colour=0xad1457)
-        em.set_thumbnail(url="https://cdn.discordapp.com/attachments/388945761611808769/453211671935057920/banned.gif")
-        await bot.send_message(message.channel, embed=em)
     if message.content.startswith("r-mod"):
         em = discord.Embed(title="MODERATION COMMANDS", description=None, colour=0x3498db)
         em.add_field(name="Admin commands", value=":small_blue_diamond: r-ban {member} {0 - 7 amount of days to delete his messages} \"{Reason}\"\n"
