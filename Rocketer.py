@@ -19,13 +19,13 @@ underworking = ":warning: **Meh Boi, this command hasn't finished. Please wait u
 #MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM-ID-MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
 
 #-----------------ADMIN'S ID-----------------\|/-ban, -lock, -unlock
-"""               Imox                 Rettend               Lapras               Legends                Spork                  Hman
+"""               Imox                 Rettend               Lapras               Legends                Spork                  Hman"""
 Admins = ["365173881952272384", "361534796830081024", "323851553662566401", "386400236916047872", "375991973246533642", "392039138179940362"]
-"""
+
 #--------------MODERATOR'S ID----------------\|/-mute, -kick, -unmute
-"""                 PReiZ                 sunrab
+"""                 PReiZ                 sunrab"""
 Moderators = ["407382812518383627", "366607123771293696"]
-"""
+
 #--------------------------------------------
 
 #MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
