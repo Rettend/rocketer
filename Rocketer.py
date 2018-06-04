@@ -356,7 +356,7 @@ async def on_message(message):
                      "\n"
                      ":large_blue_diamond: r-unlock\n"
                      ":black_small_square: Unlocks the currently locked channel, now everyone can send messages there")
-        await bot.send_message(message.channel, )
+        await bot.send_message(message.channel, embed=em)
     if message.content.startswith("r-help"):
         Rettend = discord.utils.get(message.server.members, id="361534796830081024")
         em = discord.Embed(title="HELP", description="__Hey! Dont get Scared, Ask for help!__\n"
