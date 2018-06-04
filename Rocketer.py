@@ -58,7 +58,7 @@ async def unban(ctx, user : discord.User, Reason):
         em.add_field(name="Reason", value=f"{Reason}")
         await bot.send_message(LogRoom, embed=em)
     else:
-        await bot.send_message(ctx.message.channel, f'**Boi, you cant use this command...*')
+        await bot.send_message(ctx.message.channel, f'*Boi, you cant use this command...*')
         raise NoPermError
 
 @bot.command(pass_context=True)
@@ -75,7 +75,7 @@ async def ban(ctx, user : discord.User, Day : int, Reason):
         em.set_thumbnail(url="https://cdn.discordapp.com/attachments/388945761611808769/453211671935057920/banned.gif")
         await bot.send_message(LogRoom, embed=em)
     else:
-        await bot.send_message(ctx.message.channel, f'**Boi, you cant use this command...*')
+        await bot.send_message(ctx.message.channel, f'*Boi, you cant use this command...*')
         raise NoPermError
 
 @bot.command(pass_context=True)
@@ -91,7 +91,7 @@ async def kick(ctx, user : discord.User, Reason):
         em.add_field(name="Reason", value=f"{Reason}")
         await bot.send_message(LogRoom, embed=em)
     else:
-        await bot.send_message(ctx.message.channel, f'**Boi, you cant use this command...*')
+        await bot.send_message(ctx.message.channel, f'*Boi, you cant use this command...*')
         raise NoPermError
 
 @bot.command(pass_context=True)
@@ -116,7 +116,7 @@ async def mute(ctx, user : discord.User, duration : int, Reason):
         em.add_field(name="Reason", value="Time is up...")
         await bot.send_message(LogRoom, embed=em)
     else:
-        await bot.send_message(ctx.message.channel, f'**Boi, you cant use this command...*')
+        await bot.send_message(ctx.message.channel, f'*Boi, you cant use this command...*')
         raise NoPermError
 
 @bot.command(pass_context=True)
@@ -133,7 +133,7 @@ async def unmute(ctx, user : discord.User, Reason):
         em.add_field(name="Reason", value=f"{Reason}")
         await bot.send_message(LogRoom, embed=em)
     else:
-        await bot.send_message(ctx.message.channel, f'**Boi, you cant use this command...*')
+        await bot.send_message(ctx.message.channel, f'*Boi, you cant use this command...*')
         raise NoPermError
         
 @bot.command(pass_context=True)
@@ -162,7 +162,7 @@ async def clear(ctx, number : int):
         await asyncio.sleep(4)
         await bot.delete_message(msg)
     else:
-        await bot.send_message(ctx.message.channel, f'**Boi, you cant use this command...*')
+        await bot.send_message(ctx.message.channel, f'*Boi, you cant use this command...*')
         raise NoPermError
 
 @bot.command(pass_context=True)
@@ -378,7 +378,7 @@ async def on_message(message):
             await bot.edit_channel_permissions(room, Registered, overwrite)
             await bot.send_message(room, f"**{room.mention} is now locked! Ha ha**")
         else:
-            await bot.send_message(ctx.message.channel, f'**Boi, you cant use this command...*')
+            await bot.send_message(ctx.message.channel, f'*Boi, you cant use this command...*')
             raise NoPermError
     if message.content.startswith('r-unlock'):
         if message.author.id in Admins:
@@ -389,7 +389,7 @@ async def on_message(message):
             await bot.edit_channel_permissions(room, Registered, overwrite)
             await bot.send_message(room, f"**{room.mention} is now unlocked, feel free to chat!**")
         else:
-            await bot.send_message(ctx.message.channel, f'**Boi, you cant use this command...*')
+            await bot.send_message(ctx.message.channel, f'*Boi, you cant use this command...*')
             raise NoPermError
     if message.content.upper().startswith('R-AMIOWNER?'):
         if message.author.id in owner:
