@@ -2,7 +2,7 @@ import discord, logging, json, asyncio, time, random, aiohttp, re, datetime, tra
 from discord.ext import commands
 
 #-------------------DATA---------------------
-version = "0.6.6"
+version = "0.8.2"
 owner = ["361534796830081024"]
 bot = commands.Bot(command_prefix='r-', description=None)
 bot.remove_command("help")
@@ -641,8 +641,8 @@ async def on_message(message):
         await bot.send_message(message.channel, embed=emb)
     if message.content.startswith('r-latest'):
         emb = discord.Embed(title="LATEST UPDATES", description=":high_brightness: The Currently version is __" + version + "__ :high_brightness:\n\n"
-                            ":small_blue_diamond: r-suggest {Q or S or C or __B__} \"{message}\"\n"
-                            "New prefix: __B__ for Command Bugs\n"
+                            ":small_blue_diamond: Moderator Commands are here!!\n"
+                            "Type `r-mod` for the commands\n"
                             "\n"
                             ":white_small_square: r-help\n"
                             "Fixed.\n"
