@@ -337,25 +337,26 @@ async def on_member_remove(member):
 async def on_message(message):
     if message.content.startswith("r-mod"):
         em = discord.Embed(title="MODERATION COMMANDS", description=None, colour=0x3498db)
-        em.add_field(name="Admin commands", value=":large_blue_diamond: r-ban {member} {0 - 7 amount of days to delete his messages} \"{Reason}\"\n"
+        em.add_field(name="Admin commands", value=":small_blue_diamond: r-ban {member} {0 - 7 amount of days to delete his messages} \"{Reason}\"\n"
                      ":black_small_square: Kicks the user and removes his messages for the given days, the user can't rejoin, until he gots unbanned\n"
                      "\n"
-                     ":large_orange_diamond: r-unban {member} \"{Reason}\"\n"
-                     ":black_small_square: UnBans the Banned user, the user now can rejoin by instant-invite links\n")
-        em.add_field(name="Mod commands", value=":large_blue_diamond: r-kick {member} \"{Reason}\"\n"
+                     ":small_orange_diamond: r-unban {member} \"{Reason}\"\n"
+                     ":black_small_square: UnBans the Banned user, the user now can rejoin by instant-invite links\n\n\n")
+        em.add_field(name="Mod commands", value=":small_blue_diamond: r-kick {member} \"{Reason}\"\n"
                      ":black_small_square: Kicks the user from the server, the user can rejoin by instant-invite links\n"
                      "\n"
-                     ":large_orange_diamond: r-mute {member} {duration(in sec)} \"{Reason}\"\n"
+                     ":small_orange_diamond: r-mute {member} {duration(in sec)} \"{Reason}\"\n"
                      ":black_small_square: Mutes the user, this user can't send messages for the given duration, if the _time is up,_ he will auto get unmuted\n"
                      "\n"
-                     ":large_blue_diamond: r-unmute {member} \"{Reason}\"\n"
+                     ":small_blue_diamond: r-unmute {member} \"{Reason}\"\n"
                      ":black_small_square: UnMutes the Muted user, this user now allowed to send messages\n"
                      "\n"
-                     ":large_orange_diamond: r-lock\n"
+                     ":small_orange_diamond: r-lock\n"
                      ":black_small_square: Locks down the currently channel, only Admins can send messages until an unlock\n"
                      "\n"
-                     ":large_blue_diamond: r-unlock\n"
+                     ":small_blue_diamond: r-unlock\n"
                      ":black_small_square: Unlocks the currently locked channel, now everyone can send messages there")
+        em.set_thumbnail(url="https://discordapp.com/assets/eb4ba561a219d88f1f2eb06114d6a9a5.svg")
         await bot.send_message(message.channel, embed=em)
     if message.content.startswith("r-help"):
         Rettend = discord.utils.get(message.server.members, id="361534796830081024")
