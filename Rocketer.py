@@ -154,7 +154,7 @@ async def ping(ctx):
 
 @bot.command(pass_context=True)
 async def clear(ctx, number : int):
-    if ctx.message.author.id in Moderators:
+    if ctx.message.author.id in Moderators or Admins:
         number += 1
         deleted = await bot.purge_from(ctx.message.channel, limit=number)
         num = number - 1
