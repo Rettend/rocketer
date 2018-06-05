@@ -2,7 +2,7 @@ import discord, logging, json, asyncio, time, random, aiohttp, re, datetime, tra
 from discord.ext import commands
 
 #-------------------DATA---------------------
-version = "0.8.2"
+version = "0.8.3"
 owner = ["361534796830081024"]
 bot = commands.Bot(command_prefix='r-', description=None)
 bot.remove_command("help")
@@ -45,6 +45,19 @@ class NoPermError(Exception):
 #--------------------------------------------
 
 #----------------COMMANDS--------------------
+@bot.command(pass_context=True)
+async def kill(ctx, user : discord.User):
+    life = ["Yes", "Yes2" "No", "No2"]
+    yourlife = random.choice(life)
+    if yourlife == "Yes":
+        bot.say(f"**{user.mention} got killed by {ctx.message.author}** <:rip:449949312508493834>")
+    elif yourlife == "Yes2":
+        bot.say(f"**{ctx.message.author} shoot down {user.mention}**")
+    elif yourlife == "No":
+        bot.say(f"**Ha ha {ctx.message.author}, really funny xd**")
+    else:
+        bot.say(f"**No u, {ctx.message.author}**")
+
 @bot.command(pass_context=True)
 async def unban(ctx, user : discord.User, Reason):
     if ctx.message.author.id in Admins:
@@ -324,10 +337,12 @@ async def on_member_join(member):
             is_verified = True
             break
         if is_verified == False:
+            member = discord.User
             em = discord.Embed(title=f"__{member.name}__ Joined!", description=None, colour=0x3498db)
-            em.add_field(name=None, value="\n**Welcome __{member.name}__,**\n\nI will show you around, First, to __get permissions for all channels__, you need to type `r-verify` and __answer all of the questions!__\nThan type `r-register`!\n\n**__IMPORTANT__: typing `r-register` without answering the questions, will unregister you!**")
+            em.add_field(name=None, value=f"\n**Welcome __{member.mention}__,**\n\nI will show you around, First, to __get permissions for all channels__, you need to type `r-verify` and __answer all of the questions!__\nThan type `r-register`!\n\n**__IMPORTANT__: typing `r-register` without answering the questions, will unregister you!**")
             em.set_thumbnail(url="https://cdn.discordapp.com/emojis/391322023739129856.png?v=1")
             await bot.send_message(room, embed=em)
+            return member
 
 @bot.listen()
 async def on_member_remove(member):
@@ -357,7 +372,6 @@ async def on_message(message):
                      "\n"
                      ":small_blue_diamond: r-unlock\n"
                      ":black_small_square: Unlocks the currently locked channel, now everyone can send messages there")
-        em.set_thumbnail(url="https://discordapp.com/assets/eb4ba561a219d88f1f2eb06114d6a9a5.svg")
         await bot.send_message(message.channel, embed=em)
     if message.content.startswith("r-help"):
         Rettend = discord.utils.get(message.server.members, id="361534796830081024")
@@ -635,7 +649,8 @@ async def on_message(message):
                         ':white_small_square: r-clear {number}\n'
                         ':small_blue_diamond: r-oof\n'
                         ':white_small_square: r-8ball {Question}\n'
-                        ':small_blue_diamond: r-help', inline=True)
+                        ':small_blue_diamond: r-help\n'
+                        ':white_small_square: r-kill {user}', inline=True)
         emb.set_thumbnail(url='https://cdn.discordapp.com/emojis/385152309090451467.png?v=1')
         emb.set_footer(text='The Official Bot of PissRocket, inviting and using the Bot in other servers breaks the Term of Use.\nType r-help for more commands!!')
         await bot.send_message(message.channel, embed=emb)
@@ -644,8 +659,8 @@ async def on_message(message):
                             ":small_blue_diamond: Moderator Commands are here!!\n"
                             "Type `r-mod` for the commands\n"
                             "\n"
-                            ":white_small_square: r-help\n"
-                            "Fixed.\n"
+                            ":white_small_square: r-kill {user}\n"
+                            "Dont ab00se.\n"
                             "\n"
                             ":small_blue_diamond: r-ping\n"
                             "Shows your ping! Finally its working!!\n"
