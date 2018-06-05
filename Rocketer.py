@@ -51,8 +51,8 @@ async def whoami(ctx):
     smsg = random.choice(msg)
     colours = [0x11806a, 0x1abc9c, 0x2ecc71, 0x1f8b4c, 0x3498db, 0x206694, 0x9b59b6, 0x71368a, 0xe91e63, 0xad1457, 0xf1c40f, 0xc27c0e, 0xe67e22, 0xa84300, 0xe74c3c, 0x992d22, 0x95a5a6, 0x607d8b, 0x979c9f, 0x546e7a]
     col = random.choice(colours)
-    em = discord.Embed(title="WHO AM I?", description=f"**\nYou are{smsg}**", colour=col)
-    em.set_thumbnail(url=message.author.avatar_url)
+    em = discord.Embed(title="WHO AM I?", description=f"**\n{ctx.message.author}, You are{smsg}**", colour=col)
+    em.set_thumbnail(url=ctx.message.author.avatar_url)
     await bot.send_message(ctx.message.channel, embed=em)
 
 @bot.command(pass_context=True)
@@ -344,6 +344,7 @@ async def verify(ctx):
     
 @bot.listen()
 async def on_member_join(member):
+    room2 = bot.get_channel(id="370269066864361476")
     room = bot.get_channel(id="381774233199443968")
     is_verified = False
     for role in member.roles:
@@ -355,6 +356,7 @@ async def on_member_join(member):
             em.add_field(name=None, value=f"\n**Welcome __{member.mention}__,**\n\nI will show you around, First, to __get permissions for all channels__, you need to type `r-verify` and __answer all of the questions!__\nThan type `r-register`!\n\n**__IMPORTANT__: typing `r-register` without answering the questions, will unregister you!**")
             em.set_thumbnail(url="https://cdn.discordapp.com/emojis/391322023739129856.png?v=1")
             await bot.send_message(room, embed=em)
+    await bot.send_message(room2, f"**Welcome {member.mention}, have a great time here! btw go to {room.mention} and verify yourself ;)**"
 
 @bot.listen()
 async def on_member_remove(member):
