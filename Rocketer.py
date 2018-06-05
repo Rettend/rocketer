@@ -50,13 +50,13 @@ async def kill(ctx, user : discord.User):
     life = ["Yes", "Yes2" "No", "No2"]
     yourlife = random.choice(life)
     if yourlife == "Yes":
-        bot.say(f"**{user.mention} got killed by {ctx.message.author}** <:rip:449949312508493834>")
+        await bot.say(f"**{user.mention} got killed by {ctx.message.author}** <:rip:449949312508493834>")
     elif yourlife == "Yes2":
-        bot.say(f"**{ctx.message.author} shoot down {user.mention}**")
+        await bot.say(f"**{ctx.message.author} shoot down {user.mention}**")
     elif yourlife == "No":
-        bot.say(f"**Ha ha {ctx.message.author}, really funny xd**")
+        await bot.say(f"**Ha ha {ctx.message.author}, really funny xd**")
     else:
-        bot.say(f"**No u, {ctx.message.author}**")
+        await bot.say(f"**No u, {ctx.message.author}**")
 
 @bot.command(pass_context=True)
 async def unban(ctx, user : discord.User, Reason):
@@ -337,16 +337,14 @@ async def on_member_join(member):
             is_verified = True
             break
         if is_verified == False:
-            member = discord.User
             em = discord.Embed(title=f"__{member.name}__ Joined!", description=None, colour=0x3498db)
             em.add_field(name=None, value=f"\n**Welcome __{member.mention}__,**\n\nI will show you around, First, to __get permissions for all channels__, you need to type `r-verify` and __answer all of the questions!__\nThan type `r-register`!\n\n**__IMPORTANT__: typing `r-register` without answering the questions, will unregister you!**")
             em.set_thumbnail(url="https://cdn.discordapp.com/emojis/391322023739129856.png?v=1")
             await bot.send_message(room, embed=em)
-            return member
 
 @bot.listen()
 async def on_member_remove(member):
-    room2 = bot.get_channel(id="370269066864361476")
+    room2 = bot.get_channel(id="453598661306482688")
     await bot.send_message(room2, f"**{member} left without saying anything...** <:thonkSad:421004865049985035>")
 
 @bot.event
