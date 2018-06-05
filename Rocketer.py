@@ -46,6 +46,16 @@ class NoPermError(Exception):
 
 #----------------COMMANDS--------------------
 @bot.command(pass_context=True)
+async def whoami?(ctx):
+    msg = [" a chicken", " a rabbit xd", " a fucking chicken", " _nothing_  hehe", ", wait, who you?", " a giant penis", " the devil >:)", " Donald Trump", " an Alien", " scared as hell... (ha ha)", " somebody, idk u Lol.", " a fat mouse.", " the Sup-sup-super Grandma!", " uhm, Should i know you??", ", ahhhhhh", " You."]
+    smsg = random.choice(msg)
+    colours = [0x11806a, 0x1abc9c, 0x2ecc71, 0x1f8b4c, 0x3498db, 0x206694, 0x9b59b6, 0x71368a, 0xe91e63, 0xad1457, 0xf1c40f, 0xc27c0e, 0xe67e22, 0xa84300, 0xe74c3c, 0x992d22, 0x95a5a6, 0x607d8b, 0x979c9f, 0x546e7a]
+    col = random.choice(colours)
+    em = discord.Embed(title="WHO AM I?", description=f"**\nYou are{smsg}**", colour=col)
+    em.set_thumbnail(url=message.author.avatar_url)
+    await bot.send_message(ctx.message.channel, embed=em)
+
+@bot.command(pass_context=True)
 async def slap(ctx, member : discord.Member, Reason):
     await bot.say(f"**{ctx.message.author} slaped {member.mention} for {Reason}**")
 
@@ -353,14 +363,6 @@ async def on_member_remove(member):
 
 @bot.event
 async def on_message(message):
-    if message.content.upper().startswith("r-WHOAMI?"):
-        msg = [" a chicken", " a rabbit xd", " a fucking chicken", " _nothing_  hehe", ", wait, who you?", " a giant penis", " the devil >:)", " Donald Trump", " an Alien", " scared as hell... (ha ha)", " somebody, idk u Lol.", " a fat mouse.", " the Sup-sup-super Grandma!", " uhm, Should i know you??", ", ahhhhhh", " You."]
-        sendable_msg = random.choice(msg)
-        colours = [0x11806a, 0x1abc9c, 0x2ecc71, 0x1f8b4c, 0x3498db, 0x206694, 0x9b59b6, 0x71368a, 0xe91e63, 0xad1457, 0xf1c40f, 0xc27c0e, 0xe67e22, 0xa84300, 0xe74c3c, 0x992d22, 0x95a5a6, 0x607d8b, 0x979c9f, 0x546e7a]
-        col = random.choice(colours)
-        em = discord.Embed(title="WHO AM I?", description=f"**\nYou are{sendable_msg}**", colour=col)
-        em.set_thumbnail(url=message.author.avatar_url)
-        await bot.say(embed=em)
     if message.content.startswith("r-mod"):
         em = discord.Embed(title="MODERATION COMMANDS", description=None, colour=0x3498db)
         em.add_field(name="Admin commands", value=":small_blue_diamond: r-ban {member} {0 - 7 amount of days to delete his messages} \"{Reason}\"\n"
