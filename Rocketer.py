@@ -2,7 +2,7 @@ import discord, logging, json, asyncio, time, random, aiohttp, re, datetime, tra
 from discord.ext import commands
 
 #-------------------DATA---------------------
-version = "0.8.3"
+version = "0.8.6"
 owner = ["361534796830081024"]
 bot = commands.Bot(command_prefix='r-', description=None)
 bot.remove_command("help")
@@ -46,7 +46,7 @@ class NoPermError(Exception):
 
 #----------------COMMANDS--------------------
 @bot.command(pass_context=True)
-async def whoami?(ctx):
+async def whoami(ctx):
     msg = [" a chicken", " a rabbit xd", " a fucking chicken", " _nothing_  hehe", ", wait, who you?", " a giant penis", " the devil >:)", " Donald Trump", " an Alien", " scared as hell... (ha ha)", " somebody, idk u Lol.", " a fat mouse.", " the Sup-sup-super Grandma!", " uhm, Should i know you??", ", ahhhhhh", " You."]
     smsg = random.choice(msg)
     colours = [0x11806a, 0x1abc9c, 0x2ecc71, 0x1f8b4c, 0x3498db, 0x206694, 0x9b59b6, 0x71368a, 0xe91e63, 0xad1457, 0xf1c40f, 0xc27c0e, 0xe67e22, 0xa84300, 0xe74c3c, 0x992d22, 0x95a5a6, 0x607d8b, 0x979c9f, 0x546e7a]
@@ -662,7 +662,9 @@ async def on_message(message):
                         ':small_blue_diamond: r-oof\n'
                         ':white_small_square: r-8ball {Question}\n'
                         ':small_blue_diamond: r-help\n'
-                        ':white_small_square: r-kill {user}', inline=True)
+                        ':white_small_square: r-kill {user}\n'
+                        ':small_blue_diamond: r-slap {user} "{Reason}"'
+                        ':white_small_square: r-whoami', inline=True)
         emb.set_thumbnail(url='https://cdn.discordapp.com/emojis/385152309090451467.png?v=1')
         emb.set_footer(text='The Official Bot of PissRocket, inviting and using the Bot in other servers breaks the Term of Use.\nType r-help for more commands!!')
         await bot.send_message(message.channel, embed=emb)
@@ -674,7 +676,7 @@ async def on_message(message):
                             ":white_small_square: r-kill {user}\n"
                             "Dont ab00se.\n"
                             "\n"
-                            ":small_blue_diamond: r-ping\n"
+                            ":small_blue_diamond: r-whoami\n"
                             "Shows your ping! Finally its working!!\n"
                             "\n"
                             ":white_small_square: r-list\n"
