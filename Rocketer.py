@@ -1,4 +1,4 @@
-import discord, logging, json, asyncio, time, random, aiohttp, re, datetime, traceback, os, sys, math
+import discord, logging, json, asyncio, time, random, aiohttp, re, datetime, traceback, os, sys, math, my_database
 from discord.ext import commands
 
 #-------------------DATA---------------------
@@ -704,7 +704,7 @@ async def on_message(message):
     await bot.process_commands(message) #IMPORTANT
 
 # define database
-conn = bot.connect("my_database.db")
+conn = lite.connect("my_database.db")
 cursor = conn.cursor()
 # get stored object from database
 sql = "SELECT * FROM my_table WHERE field_1=?"
