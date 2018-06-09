@@ -2,7 +2,7 @@ import discord, logging, json, asyncio, time, random, aiohttp, re, datetime, tra
 from discord.ext import commands
 
 #-------------------DATA---------------------
-version = "0.8.6"
+version = "0.8.9"
 owner = ["361534796830081024"]
 bot = commands.Bot(command_prefix='r-', description=None)
 bot.remove_command("help")
@@ -45,6 +45,11 @@ class NoPermError(Exception):
 #--------------------------------------------
 
 #----------------COMMANDS--------------------
+@bot.command(pass_context=True)
+async def typing(ctx):
+    await bot.say("**Im typing something** <:think:385152309090451467>")
+    await bot.send_typing(ctx.message.channel)
+
 @bot.command(pass_context=True)
 async def whoami(ctx):
     msg = [" a chicken", " a rabbit xd", " a fucking chicken", " _nothing_  hehe", ", wait, who you?", " a giant penis", " the devil >:)", " Donald Trump", " an Alien", " scared as hell... (ha ha)", " somebody, idk u Lol.", " a fat mouse.", " the Sup-sup-super Grandma!", " uhm, Should i know you??", ", ahhhhhh", " You."]
