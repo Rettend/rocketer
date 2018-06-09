@@ -1,4 +1,4 @@
-import discord, logging, json, asyncio, time, random, aiohttp, re, datetime, traceback, os, sys, math, sqlite
+import discord, logging, json, asyncio, time, random, aiohttp, re, datetime, traceback, os, sys, math
 from discord.ext import commands
 
 #-------------------DATA---------------------
@@ -703,29 +703,6 @@ async def on_message(message):
         await bot.send_message(message.channel, embed=em)
     await bot.process_commands(message) #IMPORTANT
 
-# define database
-conn = lite.connect("my_database.db")
-cursor = conn.cursor()
-# get stored object from database
-sql = "SELECT * FROM my_table WHERE field_1=?"
-cursor.execute(sql, [(value_1)])
-data = cursor.fetchall()
-# if object does not exist, create it
-if len(data) == 0:
-    sql = "INSERT INTO my_table VALUES (?, ?)"
-    cursor.execute(sql, [(value_1), (value_2)])
-# if stored object exist and we need update it
-elif ...:
-    sql = "UPDATE my_table SET field_2 = ? WHERE field_1 = ?"
-    cursor.execute(sql, [(value_2), (value_1)])
-else:
-    # get data from first object
-    value_of_field_1 = data[0][0]
-    # get data from third object
-    value_of_field_2 = data[2][1]
-# close database connection
-conn.commit()
-conn.close()
 
     
     
