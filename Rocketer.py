@@ -670,7 +670,8 @@ async def on_message(message):
                             ':small_blue_diamond: r-invite\n'
                             ':white_small_square: r-latest\n'
                             ':small_blue_diamond: r-lenny\n'
-                            ':white_small_square: r-suggest {Q or S or C or B} "{message}"', inline=True)
+                            ':white_small_square: r-suggest {Q or S or C or B} "{message}"\n'
+                            ':small_blue_diamons: r-typing', inline=True)
         emb.set_thumbnail(url='https://cdn.discordapp.com/emojis/385152309090451467.png?v=1')
         emb.set_footer(text='The Official Bot of PissRocket, inviting and using the Bot in other servers breaks the Term of Use.\nType r-help 2 for more commands!!')
         await bot.send_message(message.channel, embed=emb)
@@ -696,8 +697,8 @@ async def on_message(message):
         await bot.send_message(message.channel, embed=emb)
     if message.content.startswith('r-latest'):
         emb = discord.Embed(title="LATEST UPDATES", description=":high_brightness: The Currently version is __" + version + "__ :high_brightness:\n\n"
-                            ":small_blue_diamond: Moderator Commands are here!!\n"
-                            "Type `r-mod` for the commands\n"
+                            ":small_blue_diamond: r-typing\n"
+                            "Sends a weird typing\n"
                             "\n"
                             ":white_small_square: r-kill {user}\n"
                             "Dont ab00se.\n"
