@@ -1,4 +1,4 @@
-import discord, logging, json, asyncio, time, random, aiohttp, re, datetime, traceback, os, sys, math, my_database
+import discord, logging, json, asyncio, time, random, aiohttp, re, datetime, traceback, os, sys, math, sqlite
 from discord.ext import commands
 
 #-------------------DATA---------------------
