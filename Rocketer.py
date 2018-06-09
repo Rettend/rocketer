@@ -78,15 +78,19 @@ async def unban(ctx, user : discord.User, Reason):
         await bot.say("**You can't moderate another Moderator!**")
     else:
         if ctx.message.author.id in Admins:
-            room = ctx.message.channel
-            await bot.unban(ctx.message.server, user)
-            LogRoom = bot.get_channel(id="401752340366884885")
-            await bot.say(f"**{user.mention} got unbanned by {ctx.message.author.mention} for __{Reason}__\nSee the logs in {LogRoom.mention}**")
-            em = discord.Embed(title="╲⎝⧹𝓤𝓝𝓑𝓐𝓝⧸⎠╱", description=None, colour=0xe91e63)
-            em.add_field(name="User", value=f"{user.mention}")
-            em.add_field(name="Moderator", value=f"{ctx.message.author}")
-            em.add_field(name="Reason", value=f"{Reason}")
-            await bot.send_message(LogRoom, embed=em)
+            banneds = await bot.get_bans(ctx.message.server)
+            if user not in banneds:
+                bot.say("**Plz mention a banned user!**")
+            else:
+                room = ctx.message.channel
+                await bot.unban(ctx.message.server, user)
+                LogRoom = bot.get_channel(id="401752340366884885")
+                await bot.say(f"**{user.mention} got unbanned by {ctx.message.author.mention} for __{Reason}__\nSee the logs in {LogRoom.mention}**")
+                em = discord.Embed(title="╲⎝⧹𝓤𝓝𝓑𝓐𝓝⧸⎠╱", description=None, colour=0xe91e63)
+                em.add_field(name="User", value=f"{user.mention}")
+                em.add_field(name="Moderator", value=f"{ctx.message.author}")
+                em.add_field(name="Reason", value=f"{Reason}")
+                await bot.send_message(LogRoom, embed=em)
         else:
             await bot.send_message(ctx.message.channel, f'*Boi, you cant use this command...*')
             raise NoPermError
