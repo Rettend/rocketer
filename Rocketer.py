@@ -79,7 +79,9 @@ async def kill(ctx, user : discord.User):
 
 @bot.command(pass_context=True)
 async def unban(ctx, user : discord.User, Reason):
-    if user.id in Admins or Moderators:
+    if user.id == ctx.message.author.id:
+        await bot.say("**I won't let you moderate yourself xD**")
+    elif user.id in Admins or Moderators:
         await bot.say("**You can't moderate another Moderator!**")
     else:
         if ctx.message.author.id in Admins:
@@ -102,7 +104,9 @@ async def unban(ctx, user : discord.User, Reason):
 
 @bot.command(pass_context=True)
 async def ban(ctx, user : discord.User, Day : int, Reason):
-    if user.id in Admins or Moderators:
+    if user.id == ctx.message.author.id:
+        await bot.say("**I won't let you moderate yourself xD**")
+    elif user.id in Admins or Moderators:
         await bot.say("**You can't moderate another Moderator!**")
     else:
         if ctx.message.author.id in Admins:
@@ -122,7 +126,9 @@ async def ban(ctx, user : discord.User, Day : int, Reason):
 
 @bot.command(pass_context=True)
 async def kick(ctx, user : discord.User, Reason):
-    if user.id in Admins or Moderators:
+    if user.id == ctx.message.author.id:
+        await bot.say("**I won't let you moderate yourself xD**")
+    elif user.id in Admins or Moderators:
         await bot.say("**You can't moderate another Moderator!**")
     else:
         if ctx.message.author.id in Moderators or Admins:
@@ -141,7 +147,9 @@ async def kick(ctx, user : discord.User, Reason):
 
 @bot.command(pass_context=True)
 async def mute(ctx, user : discord.User, duration : int, Reason):
-    if user.id in Admins or Moderators:
+    if user.id == ctx.message.author.id:
+        await bot.say("**I won't let you moderate yourself xD**")
+    elif user.id in Admins or Moderators:
         await bot.say("**You can't moderate another Moderator!**")
     else:
         if ctx.message.author.id in Moderators or Admins:
@@ -169,7 +177,9 @@ async def mute(ctx, user : discord.User, duration : int, Reason):
 
 @bot.command(pass_context=True)
 async def unmute(ctx, user : discord.User, Reason):
-    if user.id in Admins or Moderators:
+    if user.id == ctx.message.author.id:
+        await bot.say("**I won't let you moderate yourself xD**")
+    elif user.id in Admins or Moderators:
         await bot.say("**You can't moderate another Moderator!**")
     else:
         if ctx.message.author.id in Moderators or Admins:
@@ -197,9 +207,9 @@ async def ping(ctx):
         mesg = "Thats a lot!"
     elif pinges > 1000:
         mesg = "Omg, really sloooooow...."
-    elif 399 > pinges > 101:
+    elif 399 > pinges > 141:
         mesg = "Ahhh, not good!"
-    elif pinges < 100:
+    elif pinges < 140:
         mesg = "Its Good, Boi ;)"
     await bot.edit_message(msg, f":ping_pong: **Seems like `{pinges}` MS\n{mesg}**")
 
