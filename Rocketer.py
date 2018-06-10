@@ -149,7 +149,7 @@ async def kick(ctx, user : discord.User, Reason):
 async def mute(ctx, user : discord.User, duration : int, Reason):
     if user.id == ctx.message.author.id:
         await bot.say("**I won't let you moderate yourself xD**")
-    elif user.id in Admins or Moderators:
+    if user.id in Admins or Moderators:
         await bot.say("**You can't moderate another Moderator!**")
     else:
         if ctx.message.author.id in Moderators or Admins:
@@ -179,7 +179,7 @@ async def mute(ctx, user : discord.User, duration : int, Reason):
 async def unmute(ctx, user : discord.User, Reason):
     if user.id == ctx.message.author.id:
         await bot.say("**I won't let you moderate yourself xD**")
-    elif user.id in Admins or Moderators:
+    if user.id in Admins or Moderators:
         await bot.say("**You can't moderate another Moderator!**")
     else:
         if ctx.message.author.id in Moderators or Admins:
