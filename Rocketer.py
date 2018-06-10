@@ -81,8 +81,6 @@ async def kill(ctx, user : discord.User):
 async def unban(ctx, user : discord.User, Reason):
     if user.id == ctx.message.author.id:
         await bot.say("**I won't let you moderate yourself xD**")
-    elif user.id in Admins or Moderators:
-        await bot.say("**You can't moderate another Moderator!**")
     else:
         if ctx.message.author.id in Admins:
             banneds = await bot.get_bans(ctx.message.server)
@@ -106,8 +104,6 @@ async def unban(ctx, user : discord.User, Reason):
 async def ban(ctx, user : discord.User, Day : int, Reason):
     if user.id == ctx.message.author.id:
         await bot.say("**I won't let you moderate yourself xD**")
-    elif user.id in Admins or Moderators:
-        await bot.say("**You can't moderate another Moderator!**")
     else:
         if ctx.message.author.id in Admins:
             room = ctx.message.channel
@@ -128,8 +124,6 @@ async def ban(ctx, user : discord.User, Day : int, Reason):
 async def kick(ctx, user : discord.User, Reason):
     if user.id == ctx.message.author.id:
         await bot.say("**I won't let you moderate yourself xD**")
-    elif user.id in Admins or Moderators:
-        await bot.say("**You can't moderate another Moderator!**")
     else:
         if ctx.message.author.id in Moderators or Admins:
             room = ctx.message.channel
@@ -149,9 +143,6 @@ async def kick(ctx, user : discord.User, Reason):
 async def mute(ctx, user : discord.User, duration : int, Reason):
     if user.id == ctx.message.author.id:
         await bot.say("**I won't let you moderate yourself xD**")
-        raise NoPermError
-    if not user.id in Admins or Moderators:
-        await bot.say("**You can't moderate another Moderator!**")
         raise NoPermError
     if ctx.message.author.id in Moderators or Admins:
         LogRoom = bot.get_channel(id="401752340366884885")
@@ -180,8 +171,6 @@ async def mute(ctx, user : discord.User, duration : int, Reason):
 async def unmute(ctx, user : discord.User, Reason):
     if user.id == ctx.message.author.id:
         await bot.say("**I won't let you moderate yourself xD**")
-    if user.id in Admins or Moderators:
-        await bot.say("**You can't moderate another Moderator!**")
     else:
         if ctx.message.author.id in Moderators or Admins:
             LogRoom = bot.get_channel(id="401752340366884885")
