@@ -150,7 +150,7 @@ async def mute(ctx, user : discord.User, duration : int, Reason):
     if user.id == ctx.message.author.id:
         await bot.say("**I won't let you moderate yourself xD**")
         raise NoPermError
-    if user.id in Admins or Moderators:
+    if not user.id in Admins or Moderators:
         await bot.say("**You can't moderate another Moderator!**")
         raise NoPermError
     if ctx.message.author.id in Moderators or Admins:
