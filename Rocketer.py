@@ -143,29 +143,29 @@ async def kick(ctx, user : discord.User, Reason):
 async def mute(ctx, user : discord.User, duration : int, Reason):
     if user.id == ctx.message.author.id:
         await bot.say("**I won't let you moderate yourself xD**")
-        raise NoPermError
-    if ctx.message.author.id in Moderators or Admins:
-        LogRoom = bot.get_channel(id="401752340366884885")
-        room = ctx.message.channel
-        MutedRole = discord.utils.get(ctx.message.server.roles, name="Muted")
-        await bot.add_roles(user, MutedRole)
-        await bot.say(f"**{user.mention} got Muted (for {duration} sec) by {ctx.message.author.mention} for __{Reason}__\nSee the logs in {LogRoom.mention}**")
-        em = discord.Embed(title="╲⎝⧹𝓜𝓤𝓣𝓔⧸⎠╱", description=None, colour=0x11806a)
-        em.add_field(name="User", value=f"{user.mention}")
-        em.add_field(name="Moderator", value=f"{ctx.message.author}")
-        em.add_field(name="Reason", value=f"{Reason}")
-        em.add_field(name="Duration", value=f"{duration} sec")
-        await bot.send_message(LogRoom, embed=em)
-        await asyncio.sleep(duration)
-        await bot.remove_roles(user, MutedRole)
-        em = discord.Embed(title="╲⎝⧹𝓤𝓝𝓜𝓤𝓣𝓔⧸⎠╱", description=None, colour=0x1abc9c)
-        em.add_field(name="User", value=f"{user.mention}")
-        em.add_field(name="Moderator", value=f"{ctx.message.author}")
-        em.add_field(name="Reason", value="Time is up...")
-        await bot.send_message(LogRoom, embed=em)
     else:
-        await bot.send_message(ctx.message.channel, f'*Boi, you cant use this command...*')
-        raise NoPermError
+        if ctx.message.author.id in Moderators or Admins:
+            LogRoom = bot.get_channel(id="401752340366884885")
+            room = ctx.message.channel
+            MutedRole = discord.utils.get(ctx.message.server.roles, name="Muted")
+            await bot.add_roles(user, MutedRole)
+            await bot.say(f"**{user.mention} got Muted (for {duration} sec) by {ctx.message.author.mention} for __{Reason}__\nSee the logs in {LogRoom.mention}**")
+            em = discord.Embed(title="╲⎝⧹𝓜𝓤𝓣𝓔⧸⎠╱", description=None, colour=0x11806a)
+            em.add_field(name="User", value=f"{user.mention}")
+            em.add_field(name="Moderator", value=f"{ctx.message.author}")
+            em.add_field(name="Reason", value=f"{Reason}")
+            em.add_field(name="Duration", value=f"{duration} sec")
+            await bot.send_message(LogRoom, embed=em)
+            await asyncio.sleep(duration)
+            await bot.remove_roles(user, MutedRole)
+            em = discord.Embed(title="╲⎝⧹𝓤𝓝𝓜𝓤𝓣𝓔⧸⎠╱", description=None, colour=0x1abc9c)
+            em.add_field(name="User", value=f"{user.mention}")
+            em.add_field(name="Moderator", value=f"{ctx.message.author}")
+            em.add_field(name="Reason", value="Time is up...")
+            await bot.send_message(LogRoom, embed=em)
+        else:
+            await bot.send_message(ctx.message.channel, f'*Boi, you cant use this command...*')
+            raise NoPermError
 
 @bot.command(pass_context=True)
 async def unmute(ctx, user : discord.User, Reason):
