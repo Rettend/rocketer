@@ -1,4 +1,4 @@
-import discord, logging, json, asyncio, time, random, aiohttp, re, datetime, traceback, os, sys, math, mysql.connector, __future__, errorcode
+import discord, logging, json, asyncio, time, random, aiohttp, re, datetime, traceback, os, sys, math, mysql.connector, __future__
 from discord.ext import commands
 
 #-------------------DATA---------------------
