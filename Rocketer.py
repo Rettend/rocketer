@@ -1,4 +1,4 @@
-import discord, logging, json, asyncio, time, random, aiohttp, re, datetime, traceback, os, sys, math, mysql.connector, __future__
+import discord, logging, json, asyncio, time, random, aiohttp, re, datetime, traceback, os, sys, math, mysql.connector, __future__, errorcode
 from discord.ext import commands
 
 #-------------------DATA---------------------
@@ -60,6 +60,24 @@ TABLES['users'] = (
     "  PRIMARY KEY (`emp_no`)"
     ") ENGINE=InnoDB")
 
+cursor = cnx.cursor()
+def create_database(cursor):
+    try:
+        cursor.execute(
+            "CREATE DATABASE {} DEFAULT CHARACTER SET 'utf8'".format(DB_NAME))
+    except mysql.connector.Error as err:
+        print("Failed creating database: {}".format(err))
+        exit(1)
+
+try:
+    cnx.database = DB_NAME  
+except mysql.connector.Error as err:
+    if err.errno == errorcode.ER_BAD_DB_ERROR:
+        create_database(cursor)
+        cnx.database = DB_NAME
+    else:
+        print(err)
+        exit(1)
 #--------------------------------------------
 
 #----------------COMMANDS--------------------
