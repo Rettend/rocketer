@@ -1,4 +1,4 @@
-import discord, logging, json, asyncio, time, random, aiohttp, re, datetime, traceback, os, sys, math, mysql.connector
+import discord, logging, json, asyncio, time, random, aiohttp, re, datetime, traceback, os, sys, math, mysql.connector, __future__
 from discord.ext import commands
 
 #-------------------DATA---------------------
@@ -13,6 +13,7 @@ user = discord.User
 Imox = ["365173881952272384"]
 permissions = discord.Permissions
 underworking = ":warning: **Meh Boi, this command hasn't finished. Please wait until it's got.** :warning:"
+timer = calendar.timegm()
 #--------------------------------------------
 
 
@@ -46,11 +47,6 @@ class NoPermError(Exception):
 cnx = mysql.connector.connect(user='hegyi.aron101@gmail.com', password='PiTyPaNg1245',
                               host='127.0.0.1',
                               database='database')
-from __future__ import print_function
-
-import mysql.connector
-from mysql.connector import errorcode
-
 DB_NAME = 'database'
 
 TABLES = {}
@@ -117,6 +113,7 @@ async def unban(ctx, user : discord.User, Reason):
                 em.add_field(name="User", value=f"{user.mention}")
                 em.add_field(name="Moderator", value=f"{ctx.message.author}")
                 em.add_field(name="Reason", value=f"{Reason}")
+                em.set_footer(text=timer)
                 await bot.send_message(LogRoom, embed=em)
         else:
             await bot.send_message(ctx.message.channel, f'*Boi, you cant use this command...*')
@@ -137,6 +134,7 @@ async def ban(ctx, user : discord.User, Day : int, Reason):
             em.add_field(name="Moderator", value=f"{ctx.message.author}")
             em.add_field(name="Reason", value=f"{Reason}")
             em.set_thumbnail(url="https://cdn.discordapp.com/attachments/388945761611808769/453211671935057920/banned.gif")
+            em.set_footer(text=timer)
             await bot.send_message(LogRoom, embed=em)
         else:
             await bot.send_message(ctx.message.channel, f'*Boi, you cant use this command...*')
@@ -156,6 +154,7 @@ async def kick(ctx, user : discord.User, Reason):
             em.add_field(name="User", value=f"{user.mention}")
             em.add_field(name="Moderator", value=f"{ctx.message.author}")
             em.add_field(name="Reason", value=f"{Reason}")
+            em.set_footer(text=timer)
             await bot.send_message(LogRoom, embed=em)
         else:
             await bot.send_message(ctx.message.channel, f'*Boi, you cant use this command...*')
@@ -177,6 +176,7 @@ async def mute(ctx, user : discord.User, duration : int, Reason):
             em.add_field(name="Moderator", value=f"{ctx.message.author}")
             em.add_field(name="Reason", value=f"{Reason}")
             em.add_field(name="Duration", value=f"{duration} sec")
+            em.set_footer(text=timer)
             await bot.send_message(LogRoom, embed=em)
             await asyncio.sleep(duration)
             await bot.remove_roles(user, MutedRole)
@@ -184,6 +184,7 @@ async def mute(ctx, user : discord.User, duration : int, Reason):
             em.add_field(name="User", value=f"{user.mention}")
             em.add_field(name="Moderator", value=f"{ctx.message.author}")
             em.add_field(name="Reason", value="Time is up...")
+            em.set_footer(text=timer)
             await bot.send_message(LogRoom, embed=em)
         else:
             await bot.send_message(ctx.message.channel, f'*Boi, you cant use this command...*')
@@ -204,6 +205,7 @@ async def unmute(ctx, user : discord.User, Reason):
             em.add_field(name="User", value=f"{user.mention}")
             em.add_field(name="Moderator", value=f"{ctx.message.author}")
             em.add_field(name="Reason", value=f"{Reason}")
+            em.set_footer(text=timer)
             await bot.send_message(LogRoom, embed=em)
         else:
             await bot.send_message(ctx.message.channel, f'*Boi, you cant use this command...*')
