@@ -46,6 +46,24 @@ class NoPermError(Exception):
 cnx = mysql.connector.connect(user='hegyi.aron101@gmail.com', password='PiTyPaNg1245',
                               host='127.0.0.1',
                               database='database')
+from __future__ import print_function
+
+import mysql.connector
+from mysql.connector import errorcode
+
+DB_NAME = 'database'
+
+TABLES = {}
+TABLES['users'] = (
+    "CREATE TABLE `employees` ("
+    "  `emp_no` int(11) NOT NULL AUTO_INCREMENT,"
+    "  `user_name` NOT NULL,"
+    "  `user_id` NOT NULL,"
+    "  `fuel` NOT NULL,"
+    "  `hire_date` date NOT NULL,"
+    "  PRIMARY KEY (`emp_no`)"
+    ") ENGINE=InnoDB")
+
 #--------------------------------------------
 
 #----------------COMMANDS--------------------
