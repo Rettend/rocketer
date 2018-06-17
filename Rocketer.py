@@ -1,4 +1,4 @@
-import discord, logging, json, asyncio, time, random, aiohttp, re, datetime, traceback, os, sys, math
+import discord, logging, json, asyncio, time, random, aiohttp, re, datetime, traceback, os, sys, math, mysql.connector
 from discord.ext import commands
 
 #-------------------DATA---------------------
@@ -42,6 +42,10 @@ async def on_ready():
 
 class NoPermError(Exception):
     pass
+
+cnx = mysql.connector.connect(user='hegyi.aron101@gmail.com', password='PiTyPaNg1245',
+                              host='127.0.0.1',
+                              database='database')
 #--------------------------------------------
 
 #----------------COMMANDS--------------------
@@ -744,6 +748,6 @@ async def on_message(message):
 
 
 
-
+cnx.close()
 token = os.environ.get('DISCORD_TOKEN')
 bot.run(token)
