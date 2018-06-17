@@ -13,7 +13,7 @@ user = discord.User
 Imox = ["365173881952272384"]
 permissions = discord.Permissions
 underworking = ":warning: **Meh Boi, this command hasn't finished. Please wait until it's got.** :warning:"
-timer = calendar.timegm()
+timer = time.calendar.timegm()
 #--------------------------------------------
 
 
