@@ -13,7 +13,7 @@ user = discord.User
 Imox = ["365173881952272384"]
 permissions = discord.Permissions
 underworking = ":warning: **Meh Boi, this command hasn't finished. Please wait until it's got.** :warning:"
-timer = "No time"
+timer = strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
 #--------------------------------------------
 
 
@@ -45,7 +45,6 @@ class NoPermError(Exception):
     pass
 
 cnx = mysql.connector.connect(user='hegyi.aron101@gmail.com', password='PiTyPaNg1245',
-                              host='127.6.3.8',
                               database='database')
 DB_NAME = 'database'
 
