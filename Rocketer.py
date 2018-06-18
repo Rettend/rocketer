@@ -14,7 +14,7 @@ user = discord.User
 Imox = ["365173881952272384"]
 permissions = discord.Permissions
 underworking = ":warning: **Meh Boi, this command hasn't finished. Please wait until it's got.** :warning:"
-timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
+"""timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())"""
 #--------------------------------------------
 
 
@@ -125,6 +125,7 @@ async def unban(ctx, user : discord.User, Reason):
                 em.add_field(name="Moderator", value=f"{ctx.message.author}")
                 em.add_field(name="Reason", value=f"{Reason}")
                 em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
+                timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
                 em.set_footer(text=timer)
                 await bot.send_message(LogRoom, embed=em)
         else:
@@ -147,6 +148,7 @@ async def ban(ctx, user : discord.User, Day : int, Reason):
             em.add_field(name="Reason", value=f"{Reason}")
             em.set_thumbnail(url="https://cdn.discordapp.com/attachments/388945761611808769/453211671935057920/banned.gif")
             em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
+            timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
             em.set_footer(text=timer)
             await bot.send_message(LogRoom, embed=em)
         else:
@@ -168,6 +170,7 @@ async def kick(ctx, user : discord.User, Reason):
             em.add_field(name="Moderator", value=f"{ctx.message.author}")
             em.add_field(name="Reason", value=f"{Reason}")
             em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
+            timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
             em.set_footer(text=timer)
             await bot.send_message(LogRoom, embed=em)
         else:
@@ -191,6 +194,7 @@ async def mute(ctx, user : discord.User, duration : int, Reason):
             em.add_field(name="Reason", value=f"{Reason}")
             em.add_field(name="Duration", value=f"{duration} sec")
             em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
+            timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
             em.set_footer(text=timer)
             await bot.send_message(LogRoom, embed=em)
             await asyncio.sleep(duration)
@@ -200,6 +204,7 @@ async def mute(ctx, user : discord.User, duration : int, Reason):
             em.add_field(name="Moderator", value=f"{ctx.message.author}")
             em.add_field(name="Reason", value="Time is up...")
             em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
+            timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
             em.set_footer(text=timer)
             await bot.send_message(LogRoom, embed=em)
         else:
@@ -222,6 +227,7 @@ async def unmute(ctx, user : discord.User, Reason):
             em.add_field(name="Moderator", value=f"{ctx.message.author}")
             em.add_field(name="Reason", value=f"{Reason}")
             em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
+            timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
             em.set_footer(text=timer)
             await bot.send_message(LogRoom, embed=em)
         else:
@@ -244,6 +250,7 @@ async def ping(ctx):
         mesg = "Its Good, Boi ;)"
     em = discord.Embed(title=None, description=f":ping_pong: Seems like `{pinges}` MS\n{mesg}", colour=0x3498db)
     em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
+    timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
     em.set_footer(text=timer)
     await bot.edit_message(msg, embed=em)
 
@@ -255,6 +262,7 @@ async def clear(ctx, number : int):
         num = number - 1
         em = discord.Embed(title=None, description=f'{ctx.message.author} deleted __{num}__ messages', colour=0x3498db)
         em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
+        timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
         em.set_footer(text=timer)
         msg = await bot.send_message(ctx.message.channel, embed=em)
         await asyncio.sleep(4)
@@ -335,6 +343,7 @@ async def suggest(ctx, pref, text):
         col = random.choice(colours)
         em = discord.Embed(title=f"{msg}", description=f"**From {ctx.message.author.mention}**\n⋙ {text}", colour=col)
         em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
+        timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
         em.set_footer(text=timer)
         channel = bot.get_channel(id="444837114258128916")
         room = bot.get_channel(id="444837114258128916")
@@ -439,6 +448,7 @@ async def on_member_remove(member):
 @bot.event
 async def on_message(message):
     if message.content.startswith(">>time"):
+        timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
         await bot.send_message(message.channel, f"**{message.author.mention}, the time is __{timer}__**")
     if message.content.startswith("r-mod"):
         em = discord.Embed(title="MODERATION COMMANDS", description=None, colour=0x3498db)
