@@ -48,7 +48,7 @@ async def run():
     description = "A bot written in Python that uses asyncpg to connect to a postgreSQL database."
 
     # NOTE: 127.0.0.1 is the loopback address. If your db is running on the same machine as the code, this address will work
-    credentials = {"user": "USERNAME", "password": "PASSWORD", "database": "DATABSE", "host": "127.0.0.1"}
+    credentials = {"user": "Rettend", "password": "PiTyPaNg1245", "database": "database", "host": "127.0.0.1"}
     db = await asyncpg.create_pool(**credentials)
 
     # Example create table code, you'll probably change it to suit you
