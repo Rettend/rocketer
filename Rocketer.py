@@ -1,4 +1,4 @@
-import discord, logging, json, asyncio, time, random, aiohttp, re, datetime, traceback, os, sys, math
+import discord, logging, json, asyncio, time, random, aiohttp, re, datetime, traceback, os, sys, math, asyncpg
 from discord.ext import commands
 
 #-------------------DATA---------------------
@@ -44,31 +44,32 @@ async def on_ready():
 class NoPermError(Exception):
     pass
 
-import aiopg
+async def run():
+    description = "A bot written in Python that uses asyncpg to connect to a postgreSQL database."
 
-async def create_pool():
-    connstring = 'dbname=database user=Rettend password=PiTyPaNg1245 host=host'
-    pool = await aiopg.create_pool(connstring)
-    return pool
+    # NOTE: 127.0.0.1 is the loopback address. If your db is running on the same machine as the code, this address will work
+    credentials = {"user": "USERNAME", "password": "PASSWORD", "database": "DATABSE", "host": "127.0.0.1"}
+    db = await asyncpg.create_pool(**credentials)
 
-async def start_bot():
-    pool = await create_pool()
-    bot.pool = pool
-    await client.start("token")
+    # Example create table code, you'll probably change it to suit you
+    await db.execute("CREATE TABLE IF NOT EXISTS users(id bigint PRIMARY KEY, data text);")
 
-if __name__ == '__main__':
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(start_bot())
+    bot = Bot(description=description, db=db)
+    try:
+        await bot.start(config.token)
+    except KeyboardInterrupt:
+        # Make sure to do these steps if you use a command to exit the bot
+        await db.close()
+        await bot.logout()
 
-@bot.command()
-async def test():
-    async with bot.pool.acquire() as conn:
-        async with conn.cursor() as cur:
-            await cur.execute("SELECT 1;")
-            result = await cur.fetchall()
+class Bot(commands.Bot):
+    def __init__(self, **kwargs):
+        super().__init__(
+            description=kwargs.pop("description"),
+            command_prefix="?"
+        )
 
-myvar = "hello"
-await cur.execute('SELECT * FROM table WHERE "column_value"=%s;', (myvar,))
+        self.db = kwargs.pop("db")
 #--------------------------------------------
 
 #----------------COMMANDS--------------------
