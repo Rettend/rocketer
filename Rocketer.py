@@ -124,6 +124,7 @@ async def unban(ctx, user : discord.User, Reason):
                 em.add_field(name="User", value=f"{user.mention}")
                 em.add_field(name="Moderator", value=f"{ctx.message.author}")
                 em.add_field(name="Reason", value=f"{Reason}")
+                em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
                 em.set_footer(text=timer)
                 await bot.send_message(LogRoom, embed=em)
         else:
@@ -145,6 +146,7 @@ async def ban(ctx, user : discord.User, Day : int, Reason):
             em.add_field(name="Moderator", value=f"{ctx.message.author}")
             em.add_field(name="Reason", value=f"{Reason}")
             em.set_thumbnail(url="https://cdn.discordapp.com/attachments/388945761611808769/453211671935057920/banned.gif")
+            em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
             em.set_footer(text=timer)
             await bot.send_message(LogRoom, embed=em)
         else:
@@ -165,6 +167,7 @@ async def kick(ctx, user : discord.User, Reason):
             em.add_field(name="User", value=f"{user.mention}")
             em.add_field(name="Moderator", value=f"{ctx.message.author}")
             em.add_field(name="Reason", value=f"{Reason}")
+            em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
             em.set_footer(text=timer)
             await bot.send_message(LogRoom, embed=em)
         else:
@@ -187,6 +190,7 @@ async def mute(ctx, user : discord.User, duration : int, Reason):
             em.add_field(name="Moderator", value=f"{ctx.message.author}")
             em.add_field(name="Reason", value=f"{Reason}")
             em.add_field(name="Duration", value=f"{duration} sec")
+            em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
             em.set_footer(text=timer)
             await bot.send_message(LogRoom, embed=em)
             await asyncio.sleep(duration)
@@ -195,6 +199,7 @@ async def mute(ctx, user : discord.User, duration : int, Reason):
             em.add_field(name="User", value=f"{user.mention}")
             em.add_field(name="Moderator", value=f"{ctx.message.author}")
             em.add_field(name="Reason", value="Time is up...")
+            em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
             em.set_footer(text=timer)
             await bot.send_message(LogRoom, embed=em)
         else:
@@ -216,6 +221,7 @@ async def unmute(ctx, user : discord.User, Reason):
             em.add_field(name="User", value=f"{user.mention}")
             em.add_field(name="Moderator", value=f"{ctx.message.author}")
             em.add_field(name="Reason", value=f"{Reason}")
+            em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
             em.set_footer(text=timer)
             await bot.send_message(LogRoom, embed=em)
         else:
@@ -236,7 +242,10 @@ async def ping(ctx):
         mesg = "Ahhh, not good!"
     elif pinges < 140:
         mesg = "Its Good, Boi ;)"
-    await bot.edit_message(msg, f":ping_pong: **Seems like `{pinges}` MS\n{mesg}**")
+    em = discord.Embed(title=None, description=f":ping_pong: Seems like `{pinges}` MS\n{mesg}", colour=0x3498db)
+    em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
+    em.set_footer(test=timer)
+    await bot.edit_message(msg, embed=em)
 
 @bot.command(pass_context=True)
 async def clear(ctx, number : int):
@@ -244,7 +253,10 @@ async def clear(ctx, number : int):
         number += 1
         deleted = await bot.purge_from(ctx.message.channel, limit=number)
         num = number - 1
-        msg = await bot.send_message(ctx.message.channel, f'**{ctx.message.author} deleted __{num}__ messages**')
+        em = discord.Embed(title=None, description=f'{ctx.message.author} deleted __{num}__ messages', colour=0x3498db)
+        em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
+        em.set_footer(test=timer)
+        msg = await bot.send_message(ctx.message.channel, embed=em)
         await asyncio.sleep(4)
         await bot.delete_message(msg)
     else:
@@ -322,6 +334,8 @@ async def suggest(ctx, pref, text):
         colours = [0x11806a, 0x1abc9c, 0x2ecc71, 0x1f8b4c, 0x3498db, 0x206694, 0x9b59b6, 0x71368a, 0xe91e63, 0xad1457, 0xf1c40f, 0xc27c0e, 0xe67e22, 0xa84300, 0xe74c3c, 0x992d22, 0x95a5a6, 0x607d8b, 0x979c9f, 0x546e7a]
         col = random.choice(colours)
         em = discord.Embed(title=f"{msg}", description=f"**From {ctx.message.author.mention}**\n⋙ {text}", colour=col)
+        em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
+        em.set_footer(text=timer)
         channel = bot.get_channel(id="444837114258128916")
         room = bot.get_channel(id="444837114258128916")
         await bot.send_message(ctx.message.channel, f"**:white_check_mark: Sent in {channel.mention}**")
