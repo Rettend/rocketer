@@ -45,7 +45,7 @@ class NoPermError(Exception):
     pass
 
 cnx = mysql.connector.connect(user='hegyi.aron101@gmail.com', password='PiTyPaNg1245',
-                              host='127.0.0.1',
+                              host='127.6.3.8',
                               database='database')
 DB_NAME = 'database'
 
