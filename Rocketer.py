@@ -1,4 +1,4 @@
-import discord, logging, json, asyncio, time, random, aiohttp, re, datetime, traceback, os, sys, math, mysql.connector, __future__
+import discord, logging, json, asyncio, time, random, aiohttp, re, datetime, traceback, os, sys, math
 from discord.ext import commands
 
 #-------------------DATA---------------------
@@ -43,40 +43,6 @@ async def on_ready():
 
 class NoPermError(Exception):
     pass
-
-cnx = mysql.connector.connect(user='hegyi.aron101@gmail.com', password='PiTyPaNg1245',
-                              database='database')
-DB_NAME = 'database'
-
-TABLES = {}
-TABLES['users'] = (
-    "CREATE TABLE `employees` ("
-    "  `emp_no` int(11) NOT NULL AUTO_INCREMENT,"
-    "  `user_name` NOT NULL,"
-    "  `user_id` NOT NULL,"
-    "  `fuel` NOT NULL,"
-    "  `hire_date` date NOT NULL,"
-    "  PRIMARY KEY (`emp_no`)"
-    ") ENGINE=InnoDB")
-
-cursor = cnx.cursor()
-def create_database(cursor):
-    try:
-        cursor.execute(
-            "CREATE DATABASE {} DEFAULT CHARACTER SET 'utf8'".format(DB_NAME))
-    except mysql.connector.Error as err:
-        print("Failed creating database: {}".format(err))
-        exit(1)
-
-try:
-    cnx.database = DB_NAME  
-except mysql.connector.Error as err:
-    if err.errno == errorcode.ER_BAD_DB_ERROR:
-        create_database(cursor)
-        cnx.database = DB_NAME
-    else:
-        print(err)
-        exit(1)
 #--------------------------------------------
 
 #----------------COMMANDS--------------------
@@ -772,19 +738,6 @@ async def on_message(message):
 
     
     
-        
-
-
-
-
-
-
-
-
-
-
-
-
-cnx.close()
+       
 token = os.environ.get('DISCORD_TOKEN')
 bot.run(token)
