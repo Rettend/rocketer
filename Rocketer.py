@@ -447,7 +447,7 @@ async def on_member_remove(member):
 
 @bot.event
 async def on_message(message):
-    if message.content.startswith(">>time"):
+    if message.content.startswith("r-time"):
         timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
         await bot.send_message(message.channel, f"**{message.author.mention}, the time is __{timer}__**")
     if message.content.startswith("r-mod"):
