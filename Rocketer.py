@@ -244,7 +244,7 @@ async def ping(ctx):
         mesg = "Its Good, Boi ;)"
     em = discord.Embed(title=None, description=f":ping_pong: Seems like `{pinges}` MS\n{mesg}", colour=0x3498db)
     em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
-    em.set_footer(test=timer)
+    em.set_footer(text=timer)
     await bot.edit_message(msg, embed=em)
 
 @bot.command(pass_context=True)
@@ -255,7 +255,7 @@ async def clear(ctx, number : int):
         num = number - 1
         em = discord.Embed(title=None, description=f'{ctx.message.author} deleted __{num}__ messages', colour=0x3498db)
         em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
-        em.set_footer(test=timer)
+        em.set_footer(text=timer)
         msg = await bot.send_message(ctx.message.channel, embed=em)
         await asyncio.sleep(4)
         await bot.delete_message(msg)
