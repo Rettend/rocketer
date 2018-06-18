@@ -45,32 +45,20 @@ async def on_ready():
 class NoPermError(Exception):
     pass
 
-async def run():
-    description = "A bot written in Python that uses asyncpg to connect to a postgreSQL database."
+import psycopg2
 
-    # NOTE: 127.0.0.1 is the loopback address. If your db is running on the same machine as the code, this address will work
-    credentials = {"user": "Rettend", "password": "PiTyPaNg1245", "database": "database", "host": "127.0.0.1"}
-    db = await asyncpg.create_pool(**credentials)
+DATABASE_URL = os.environ['DATABASE_URL']
 
-    # Example create table code, you'll probably change it to suit you
-    await db.execute("CREATE TABLE IF NOT EXISTS users(id bigint PRIMARY KEY, data text);")
-
-    bot = Bot(description=description, db=db)
-    try:
-        await bot.start(config.token)
-    except KeyboardInterrupt:
-        # Make sure to do these steps if you use a command to exit the bot
-        await db.close()
-        await bot.logout()
-
-class Bot(commands.Bot):
-    def __init__(self, **kwargs):
-        super().__init__(
-            description=kwargs.pop("description"),
-            command_prefix="?"
-        )
-
-        self.db = kwargs.pop("db")
+conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+async def main():
+    conn = await asyncpg.connect('Rettend://postgres@localhost/database')
+    await conn.execute()
+    await conn.execute('''
+        INSERT INTO users(name, dob) VALUES($1, $2)
+    ''', 'Bob', datetime.date(1984, 3, 1))
+    row = await conn.fetchrow(
+        'SELECT * FROM users WHERE name = $1', 'Bob')
+    await conn.close()
 #--------------------------------------------
 
 #----------------COMMANDS--------------------
