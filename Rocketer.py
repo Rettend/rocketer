@@ -45,7 +45,7 @@ async def on_ready():
 class NoPermError(Exception):
     pass
 
-import psycopg2
+"""import psycopg2
 
 DATABASE_URL = os.environ['DATABASE_URL']
 
@@ -58,7 +58,7 @@ async def main():
     ''', 'Bob', datetime.date(1984, 3, 1))
     row = await conn.fetchrow(
         'SELECT * FROM users WHERE name = $1', 'Bob')
-    await conn.close()
+    await conn.close()"""
 #--------------------------------------------
 
 #----------------COMMANDS--------------------
