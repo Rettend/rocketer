@@ -13,7 +13,7 @@ user = discord.User
 Imox = ["365173881952272384"]
 permissions = discord.Permissions
 underworking = ":warning: **Meh Boi, this command hasn't finished. Please wait until it's got.** :warning:"
-timer = strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
+timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
 #--------------------------------------------
 
 
