@@ -43,6 +43,32 @@ async def on_ready():
 
 class NoPermError(Exception):
     pass
+
+import aiopg
+
+async def create_pool():
+    connstring = 'dbname=database user=Rettend password=PiTyPaNg1245 host=host'
+    pool = await aiopg.create_pool(connstring)
+    return pool
+
+async def start_bot():
+    pool = await create_pool()
+    bot.pool = pool
+    await client.start("token")
+
+if __name__ == '__main__':
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(start_bot())
+
+@bot.command()
+async def test():
+    async with bot.pool.acquire() as conn:
+        async with conn.cursor() as cur:
+            await cur.execute("SELECT 1;")
+            result = await cur.fetchall()
+
+myvar = "hello"
+await cur.execute('SELECT * FROM table WHERE "column_value"=%s;', (myvar,))
 #--------------------------------------------
 
 #----------------COMMANDS--------------------
