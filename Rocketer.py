@@ -225,7 +225,8 @@ async def unmute(ctx, user : discord.User, Reason):
 @bot.command(pass_context=True)
 async def ping(ctx):
     before = time.monotonic()
-    msg = await bot.say(":ping_pong: **...**")
+    embed = discord.Embed(description=":ping_pong: **...**", colour=0x3498db)
+    msg = await bot.say(embed=embed)
     ping = (time.monotonic() - before) * 1000
     pinges = int(ping)
     if 999 > pinges > 400:
