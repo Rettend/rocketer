@@ -14,6 +14,7 @@ user = discord.User
 Imox = ["365173881952272384"]
 permissions = discord.Permissions
 underworking = ":warning: **Meh Boi, this command hasn't finished. Please wait until it's got.** :warning:"
+serverselfroles = ["radish", "Radish", "RADISH", "dj", "Dj", "DJ", "no events", "No events", "No Events", "thonker", "Thonker"]
 """timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())"""
 #--------------------------------------------
 
@@ -46,6 +47,97 @@ async def main():
 #--------------------------------------------
 
 #----------------COMMANDS--------------------
+@bot.command(pass_context=True)
+async def selfrole(ctx, role : str):
+    if role in serverselfroles:
+        if role = "Thonker" or "thonker":
+            em = discord.Embed(title="Selfrole", description="Searching", colour=0x3498db)
+            msg = await bot.say(embed=em)
+            asyncio.sleep(1)
+            em1 = discord.Embed(title="Selfrole", description="Searching.", colour=0x3498db)
+            await bot.edit_message(msg, embed=em1)
+            asyncio.sleep(1)
+            em2 = discord.Embed(title="Selfrole", description="Searching..", colour=0x3498db)
+            await bot.edit_message(msg, embed=em2)
+            asyncio.sleep(1)
+            em3 = discord.Embed(title="Selfrole", description="Searching...", colour=0x3498db)
+            await bot.edit_message(msg, embed=em3)
+            asyncio.sleep(1)
+            em4 = discord.Embed(title="Selfrole", description="Role Found!", colour=0x3498db)
+            await bot.edit_message(msg, embed=em4)
+            asyncio.sleep(1)
+            em5 = discord.Embed(title="Selfrole", description="__Thonker__ role added successfully!", colour=0x206694)
+            await bot.edit_message(msg, embed=em5)
+        if role = "radish" or "Radish" or "RADISH":
+            em = discord.Embed(title="Selfrole", description="Searching", colour=0x3498db)
+            msg = await bot.say(embed=em)
+            asyncio.sleep(1)
+            em1 = discord.Embed(title="Selfrole", description="Searching.", colour=0x3498db)
+            await bot.edit_message(msg, embed=em1)
+            asyncio.sleep(1)
+            em2 = discord.Embed(title="Selfrole", description="Searching..", colour=0x3498db)
+            await bot.edit_message(msg, embed=em2)
+            asyncio.sleep(1)
+            em3 = discord.Embed(title="Selfrole", description="Searching...", colour=0x3498db)
+            await bot.edit_message(msg, embed=em3)
+            asyncio.sleep(1)
+            em4 = discord.Embed(title="Selfrole", description="Role Found!", colour=0x3498db)
+            await bot.edit_message(msg, embed=em4)
+            asyncio.sleep(1)
+            em5 = discord.Embed(title="Selfrole", description="__Radish__ role added successfully!", colour=0xe74c3c)
+            await bot.edit_message(msg, embed=em5)
+        if role = "dj" or "Dj" or "DJ":
+            em = discord.Embed(title="Selfrole", description="Searching", colour=0x3498db)
+            msg = await bot.say(embed=em)
+            asyncio.sleep(1)
+            em1 = discord.Embed(title="Selfrole", description="Searching.", colour=0x3498db)
+            await bot.edit_message(msg, embed=em1)
+            asyncio.sleep(1)
+            em2 = discord.Embed(title="Selfrole", description="Searching..", colour=0x3498db)
+            await bot.edit_message(msg, embed=em2)
+            asyncio.sleep(1)
+            em3 = discord.Embed(title="Selfrole", description="Searching...", colour=0x3498db)
+            await bot.edit_message(msg, embed=em3)
+            asyncio.sleep(1)
+            em4 = discord.Embed(title="Selfrole", description="Role Found!", colour=0x3498db)
+            await bot.edit_message(msg, embed=em4)
+            asyncio.sleep(1)
+            em5 = discord.Embed(title="Selfrole", description="__DJ__ role added successfully!", colour=0x3498db)
+            await bot.edit_message(msg, embed=em5)
+        if role = "no events" or "No events" or "No Events":
+            em = discord.Embed(title="Selfrole", description="Searching", colour=0x3498db)
+            msg = await bot.say(embed=em)
+            asyncio.sleep(1)
+            em1 = discord.Embed(title="Selfrole", description="Searching.", colour=0x3498db)
+            await bot.edit_message(msg, embed=em1)
+            asyncio.sleep(1)
+            em2 = discord.Embed(title="Selfrole", description="Searching..", colour=0x3498db)
+            await bot.edit_message(msg, embed=em2)
+            asyncio.sleep(1)
+            em3 = discord.Embed(title="Selfrole", description="Searching...", colour=0x3498db)
+            await bot.edit_message(msg, embed=em3)
+            asyncio.sleep(1)
+            em4 = discord.Embed(title="Selfrole", description="Role Found!", colour=0x3498db)
+            await bot.edit_message(msg, embed=em4)
+            asyncio.sleep(1)
+            em5 = discord.Embed(title="Selfrole", description="__No Events__ role added successfully!\nYou wont get any Event notifications!", colour=0x1abc9c)
+            await bot.edit_message(msg, embed=em5)
+    else:
+        em = discord.Embed(title="Selfrole", description="Searching", colour=0x3498db)
+        msg = await bot.say(embed=em)
+        asyncio.sleep(1)
+        em1 = discord.Embed(title="Selfrole", description="Searching.", colour=0x3498db)
+        await bot.edit_message(msg, embed=em1)
+        asyncio.sleep(1)
+        em2 = discord.Embed(title="Selfrole", description="Searching..", colour=0x3498db)
+        await bot.edit_message(msg, embed=em2)
+        asyncio.sleep(1)
+        em3 = discord.Embed(title="Selfrole", description="Searching...", colour=0x3498db)
+        await bot.edit_message(msg, embed=em3)
+        asyncio.sleep(1)
+        em4 = discord.Embed(title="Selfrole", description="Role Not Found, or that isnt a Selfrole!\nPlease write a valid Selfrole!\n__The available Selfroles:\n-Thonker, Radish, DJ, No Events", colour=0x3498db)
+        await bot.edit_message(msg, embed=em4)
+
 @bot.command(pass_context=True)
 async def typing(ctx):
     await bot.say("**Im typing something** <:think:385152309090451467>")
