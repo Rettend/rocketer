@@ -49,7 +49,7 @@ async def main():
 #----------------COMMANDS--------------------
 @bot.command(pass_context=True)
 async def selfrole(ctx, role : str):
-    if role = "Thonker" or "thonker":
+    if role is "Thonker" or "thonker":
         em = discord.Embed(title="Selfrole", description="Searching", colour=0x3498db)
         msg = await bot.say(embed=em)
         asyncio.sleep(1)
@@ -67,7 +67,7 @@ async def selfrole(ctx, role : str):
         asyncio.sleep(1)
         em5 = discord.Embed(title="Selfrole", description="__Thonker__ role added successfully!", colour=0x206694)
         await bot.edit_message(msg, embed=em5)
-    if role = "radish" or "Radish" or "RADISH":
+    if role is "radish" or "Radish" or "RADISH":
         em = discord.Embed(title="Selfrole", description="Searching", colour=0x3498db)
         msg = await bot.say(embed=em)
         asyncio.sleep(1)
@@ -85,7 +85,7 @@ async def selfrole(ctx, role : str):
         asyncio.sleep(1)
         em5 = discord.Embed(title="Selfrole", description="__Radish__ role added successfully!", colour=0xe74c3c)
         await bot.edit_message(msg, embed=em5)
-    if role = "dj" or "Dj" or "DJ":
+    if role is "dj" or "Dj" or "DJ":
         em = discord.Embed(title="Selfrole", description="Searching", colour=0x3498db)
         msg = await bot.say(embed=em)
         asyncio.sleep(1)
@@ -103,7 +103,7 @@ async def selfrole(ctx, role : str):
         asyncio.sleep(1)
         em5 = discord.Embed(title="Selfrole", description="__DJ__ role added successfully!", colour=0x3498db)
         await bot.edit_message(msg, embed=em5)
-    if role = "no events" or "No events" or "No Events":
+    if role is "no events" or "No events" or "No Events":
         em = discord.Embed(title="Selfrole", description="Searching", colour=0x3498db)
         msg = await bot.say(embed=em)
         asyncio.sleep(1)
