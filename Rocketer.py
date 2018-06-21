@@ -121,7 +121,7 @@ async def selfrole(ctx, role : str):
         asyncio.sleep(1)
         em5 = discord.Embed(title="Selfrole", description="__No Events__ role added successfully!\nYou wont get any Event notifications!", colour=0x1abc9c)
         await bot.edit_message(msg, embed=em5)
-    if role not in serverselfro
+    if role not in serversellroles:
         em = discord.Embed(title="Selfrole", description="Searching", colour=0x3498db)
         msg = await bot.say(embed=em)
         asyncio.sleep(1)
