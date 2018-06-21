@@ -416,7 +416,7 @@ async def on_message(message):
         dj = discord.utils.get(message.server.roles, id="403594320634052610")
         noevents = discord.utils.get(message.server.roles, id="435090845960634378")
         em = discord.Embed(title="Selfroles", colour=0x3498db)
-        em.add_field(name="Searching for Selfroles...")
+        em.add_field(name="Searching for Selfroles...", value=None)
         msg = await bot.say(embed=em)
         await asyncio.sleep(3)
         em1  = discord.Embed(title="Selfroles", colour=0x3498db)
