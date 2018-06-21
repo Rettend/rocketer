@@ -417,7 +417,7 @@ async def on_message(message):
         noevents = discord.utils.get(message.server.roles, id="435090845960634378")
         em = discord.Embed(title="Selfroles", colour=0x3498db)
         em.add_field(name="Searching for Selfroles...", value=None)
-        msg = await bot.say(embed=em)
+        msg = await bot.send_message(message.channel, embed=em)
         await asyncio.sleep(3)
         em1  = discord.Embed(title="Selfroles", colour=0x3498db)
         em.add_field(name=f"{thonker.mention}", value=f"You can get acces to the {thonkroom.mention} channel!")
@@ -437,7 +437,7 @@ async def on_message(message):
         await asyncio.sleep(1)
     if message.content.lower().startswith("r-selfrole no events"):
         em = discord.Embed(title="Selfrole", description="Searching", colour=0x3498db)
-        msg = await bot.say(embed=em)
+        msg = await bot.send_message(message.channel, embed=em)
         await asyncio.sleep(1)
         em1 = discord.Embed(title="Selfrole", description="Searching.", colour=0x3498db)
         await bot.edit_message(msg, embed=em1)
@@ -457,7 +457,7 @@ async def on_message(message):
         await bot.add_roles(message.author, role)
     if message.content.lower().startswith("r-selfrole dj"):
         em = discord.Embed(title="Selfrole", description="Searching", colour=0x3498db)
-        msg = await bot.say(embed=em)
+        msg = await bot.send_message(message.channel, embed=em)
         await asyncio.sleep(1)
         em1 = discord.Embed(title="Selfrole", description="Searching.", colour=0x3498db)
         await bot.edit_message(msg, embed=em1)
@@ -477,7 +477,7 @@ async def on_message(message):
         await bot.add_roles(message.author, role)
     if message.content.lower().startswith("r-selfrole radish"):
         em = discord.Embed(title="Selfrole", description="Searching", colour=0x3498db)
-        msg = await bot.say(embed=em)
+        msg = await bot.send_message(message.channel, embed=em)
         await asyncio.sleep(1)
         em1 = discord.Embed(title="Selfrole", description="Searching.", colour=0x3498db)
         await bot.edit_message(msg, embed=em1)
@@ -498,7 +498,7 @@ async def on_message(message):
     if message.content.lower().startswith("r-selfrole thonker"):
         thonkroom = bot.get_channel(id="381148244094222357")
         em = discord.Embed(title="Selfrole", description="Searching", colour=0x3498db)
-        msg = await bot.say(embed=em)
+        msg = await bot.send_message(message.channel, embed=em)
         await asyncio.sleep(1)
         em1 = discord.Embed(title="Selfrole", description="Searching.", colour=0x3498db)
         await bot.edit_message(msg, embed=em1)
