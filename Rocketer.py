@@ -332,7 +332,7 @@ async def poll(ctx, question, options: str):
         await bot.add_reaction(react_message, reaction)
     await bot.edit_message(react_message, embed=embed)
 
-@bot.command(pass_context=True)
+"""@bot.command(pass_context=True)
 async def register(ctx):
     for server in bot.servers:
         roles = server.roles
@@ -377,7 +377,7 @@ async def verify(ctx):
                                         '__Type `r-register` if you answered all of the questions above, and to finish the verification__**'.format(room), colour=0x3498db)
                 em.set_thumbnail(url=message.author.avatar_url)
                 await bot.send_message(ctx.message.channel, embed=em)
-                break
+                break"""
     
 @bot.listen()
 async def on_member_join(member):
@@ -390,9 +390,15 @@ async def on_member_join(member):
             break
         if is_verified == False:
             em = discord.Embed(title=f"__{member.name}__ Joined!", description="", colour=0x3498db)
-            em.add_field(name=None, value=f"\n**Welcome __{member.mention}__,**\n\nI will show you around, First, to __get permissions for all channels__, you need to type `r-verify` and __answer all of the questions!__\nThan type `r-register`!\n\n**__IMPORTANT__: typing `r-register` without answering the questions, will unregister you!**")
+            em.add_field(name=None, value=f"\n**Welcome __{member.mention}__,**\n\nI will show you around, First, to __get permissions for all channels__, you need to answer one question __:warning:IMPORTANT: Type A: before your answer to trigger me!:warning:__\n-What games do you play?\n\nEnjoy staying here, chat, search for playing-mates, farm lemons :lemon: or just listen to Music ;)\n__Its for Staffs, with this its easier to add Games-Roles to you!__**")
             em.set_thumbnail(url="https://cdn.discordapp.com/emojis/391322023739129856.png?v=1")
             await bot.send_message(room, embed=em)
+
+            def check(msg):
+                return msg.content.startswith('A:')
+
+            message = await bot.wait_for_message(check=check)
+            await bot.send_message(room, f'**Congratulation {member.mention}, you will got your roles and acces :)**')
     await bot.send_message(room2, f"**Welcome {member.mention}, have a great time here! btw go to {room.mention} and verify yourself ;)**")
 
 @bot.listen()
