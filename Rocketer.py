@@ -68,7 +68,7 @@ async def selfrole(ctx, role : str):
         asyncio.sleep(1)
         em5 = discord.Embed(title="Selfrole", description=f"__Thonker__ role added successfully!\nNow you have acces to the {thonkroom.mention} channel!", colour=0x206694)
         await bot.edit_message(msg, embed=em5)
-        break
+        return
     elif role is "radish" or "Radish" or "RADISH":
         em = discord.Embed(title="Selfrole", description="Searching", colour=0x3498db)
         msg = await bot.say(embed=em)
@@ -87,7 +87,7 @@ async def selfrole(ctx, role : str):
         asyncio.sleep(1)
         em5 = discord.Embed(title="Selfrole", description="__Radish__ role added successfully!\nYou wont gain XP any more!", colour=0xe74c3c)
         await bot.edit_message(msg, embed=em5)
-        break
+        return
     elif role is "dj" or "Dj" or "DJ":
         em = discord.Embed(title="Selfrole", description="Searching", colour=0x3498db)
         msg = await bot.say(embed=em)
@@ -106,7 +106,7 @@ async def selfrole(ctx, role : str):
         asyncio.sleep(1)
         em5 = discord.Embed(title="Selfrole", description="__DJ__ role added successfully!\nNow you can use the Music Bots' commands!", colour=0x3498db)
         await bot.edit_message(msg, embed=em5)
-        break
+        return
     elif role is "no events" or "No events" or "No Events":
         em = discord.Embed(title="Selfrole", description="Searching", colour=0x3498db)
         msg = await bot.say(embed=em)
@@ -125,7 +125,7 @@ async def selfrole(ctx, role : str):
         asyncio.sleep(1)
         em5 = discord.Embed(title="Selfrole", description="__No Events__ role added successfully!\nYou wont get any Event notifications!", colour=0x1abc9c)
         await bot.edit_message(msg, embed=em5)
-        break
+        return
     elif role not in serverselroles:
         em = discord.Embed(title="Selfrole", description="Searching", colour=0x3498db)
         msg = await bot.say(embed=em)
