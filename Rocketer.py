@@ -391,7 +391,7 @@ async def on_member_join(member):
             break
         if is_verified == False:
             em = discord.Embed(title=f"__{member.name}__ Joined!", description="", colour=0x3498db)
-            em.add_field(name=None, value=f"\n**Welcome __{member.mention}__,**\n\nI will show you around, First, to __get permissions for all channels__, you need to answer one question __:warning:IMPORTANT: Type A: before your answer to trigger me!:warning:__\n-What games do you play?\n\nEnjoy staying here, chat, search for playing-mates, farm lemons :lemon: or just listen to Music ;)\n__Its for Staffs, with this its easier to add Games-Roles to you!__**")
+            em.add_field(name=None, value=f"\n**Welcome __{member.mention}__,**\n\nI will show you around, First, to __get permissions to all channels__, you need to answer one question\n **__:warning:IMPORTANT: Type A: before your answer to trigger me!:warning:__\n-What games do you play?\n\nEnjoy staying here, chat, search for playing-mates, farm lemons :lemon: or just listen to Music ;)\n__Its for Staffs, with this its easier to add Games-Roles to you!__**")
             em.set_thumbnail(url="https://cdn.discordapp.com/emojis/391322023739129856.png?v=1")
             await bot.send_message(room, embed=em)
 
@@ -399,7 +399,21 @@ async def on_member_join(member):
                 return msg.content.startswith('A:')
 
             message = await bot.wait_for_message(check=check)
-            await bot.send_message(room, f'**Congratulation {member.mention}, you will got your roles and acces :)**')
+            for server in bot.servers:
+                roles = server.roles
+                members = server.members
+                member = None
+                for mem in members:
+                    member = mem
+                    break
+                for role in roles:
+                    if role.name == "Registered":
+                        await bot.add_roles(member, role)
+                        break
+                    elif role.name == "Unregistered":
+                        await bot.remove_roles(member, role)
+                        await bot.send_message(room, f'**Congratulation {member.mention}, you will got your roles and acces :)**')
+                        break
     await bot.send_message(room2, f"**Welcome {member.mention}, have a great time here! btw go to {room.mention} and verify yourself ;)**")
 
 @bot.listen()
