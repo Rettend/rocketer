@@ -67,7 +67,7 @@ class YouTube:
         search_response = youtube.search().list(q=ctx.message.content.split(
             ' ', 2)[2], part="id,snippet", maxResults=1, type="channel").execute()
         if len(search_response.get('items')) == 0:
-            await bot channels found.")
+            await bot channels found.
         else:
             chanid = search_response.get('items')[0]['id']['channelId']
             data = youtube.channels().list(part='statistics,snippet', id=chanid).execute()
