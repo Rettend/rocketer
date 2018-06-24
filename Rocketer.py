@@ -476,7 +476,7 @@ async def on_member_remove(member):
 
 @bot.event
 async def on_message(message):
-    if message.content(" "):
+    if message.content("update"):
         channelsroom = bot.get_channel(id="460397552379101184")
         for channels in message.server.channels:
             await bot.edit_channel(channelsroom, name=f"🌐Channels: {int(channels)}")
