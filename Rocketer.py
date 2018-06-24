@@ -422,8 +422,9 @@ async def verify(ctx):
 @bot.event
 async def on_channel_create(channel):
     channelsroom = bot.get_channel(id="460397552379101184")
-    channels = bot.get_all_channels()
-    await bot.edit_channel(channelsroom, name=f"🌐Channels: {channels}")
+    for channels in message.server.channels:
+        int(channels)
+        await bot.edit_channel(channelsroom, name=f"🌐Channels: {channels}")
 
 @bot.listen()
 async def on_member_join(member):
