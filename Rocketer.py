@@ -7,7 +7,7 @@ version = "0.8.9"
 owner = ["361534796830081024"]
 bot = commands.Bot(command_prefix='r-', description=None)
 bot.remove_command("help")
-#startup_extensions = ["YouTube"]
+startup_extensions = ["YouTube"]
 message = discord.Message
 server = discord.Server
 member = discord.Member
@@ -31,7 +31,7 @@ async def on_ready():
 class NoPermError(Exception):
     pass
 
-@bot.command()
+"""@bot.command()
 async def load(extension_name : str):
     """Loads an extension."""
     try:
@@ -53,7 +53,7 @@ if __name__ == "__main__":
             bot.load_extension(extension)
         except Exception as e:
             exc = '{}: {}'.format(type(e).__name__, e)
-            print('Failed to load extension {}\n{}'.format(extension, exc))
+            print('Failed to load extension {}\n{}'.format(extension, exc))"""
 
 #--------------------------------------------
 
