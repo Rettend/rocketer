@@ -31,20 +31,30 @@ async def on_ready():
 class NoPermError(Exception):
     pass
 
-"""import psycopg2
+@bot.command()
+async def load(extension_name : str):
+    """Loads an extension."""
+    try:
+        bot.load_extension(extension_name)
+    except (AttributeError, ImportError) as e:
+        await bot.say("```py\n{}: {}\n```".format(type(e).__name__, str(e)))
+        return
+    await bot.say("{} loaded.".format(extension_name))
 
-DATABASE_URL = os.environ['DATABASE_URL']
+@bot.command()
+async def unload(extension_name : str):
+    """Unloads an extension."""
+    bot.unload_extension(extension_name)
+    await bot.say("{} unloaded.".format(extension_name))
 
-conn = psycopg2.connect(DATABASE_URL, sslmode='require')
-async def main():
-    conn = await asyncpg.connect('Rettend://postgres@localhost/database')
-    await conn.execute()
-    await conn.execute('''
-        INSERT INTO users(name, dob) VALUES($1, $2)
-    ''', 'Bob', datetime.date(1984, 3, 1))
-    row = await conn.fetchrow(
-        'SELECT * FROM users WHERE name = $1', 'Bob')
-    await conn.close()"""
+if __name__ == "__main__":
+    for extension in startup_extensions:
+        try:
+            bot.load_extension(extension)
+        except Exception as e:
+            exc = '{}: {}'.format(type(e).__name__, e)
+            print('Failed to load extension {}\n{}'.format(extension, exc))
+
 #--------------------------------------------
 
 #----------------COMMANDS--------------------
