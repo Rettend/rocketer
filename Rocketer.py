@@ -461,10 +461,10 @@ async def on_member_join(member):
 @bot.event
 async def on_channel_create(channel):
     channelsroom = bot.get_channel(id="460397552379101184")
-    for channels in message.server.channels:
+    for channels in server.channels:
         int(channels)
         await bot.edit_channel(channelsroom, name=f"🌐Channels: {channels}")
-    
+
 @bot.listen()
 async def on_member_remove(member):
     """membersroom = bot.get_channel(id="460397271788421120")
