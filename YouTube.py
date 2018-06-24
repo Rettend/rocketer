@@ -58,8 +58,8 @@ class YouTube:
                            value=vidurl, inline=False)
             data.set_image(
                 url="https://i.ytimg.com/vi/{}/hqdefault.jpg".format(vidid))
-                await bot.say(embed=data)
-                statsd.increment('bot.commands.run', 1)
+            await bot.say(embed=data)
+            statsd.increment('bot.commands.run', 1)
                         
     @commands.command(pass_context=True)
     async def channel(self, ctx):
@@ -87,9 +87,8 @@ class YouTube:
             data.add_field(name="Channel Link",
                            value=chanurl, inline=False)
             data.set_image(url=img)
-            try:
-                await bot.say(embed=data)
-                statsd.increment('bot.commands.run', 1)
+            await bot.say(embed=data)
+            statsd.increment('bot.commands.run', 1)
 
     @commands.command(pass_context=True)
     async def lookup(self, ctx):
