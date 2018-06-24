@@ -3,3 +3,4 @@ asyncio
 aiohttp
 asyncpg
 psycopg2-binary
+apiclient
