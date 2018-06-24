@@ -459,6 +459,18 @@ async def on_member_join(member):
     await bot.send_message(room2, f"**Welcome {member.mention}, have a great time here! btw go to {room.mention} and verify yourself ;)**")
 
 @bot.event
+async def on_server_role_create(role):
+    botserver = bot.get_server(id="370269066864361472")
+    rolesroom = bot.get_channel(id="460457033129263145")
+    await bot.edit_channel(rolesroom, name=f"🌵Roles: {len(botserver.roles)}")  
+
+@bot.event
+async def on_server_role_delete(role):
+    botserver = bot.get_server(id="370269066864361472")
+    rolesroom = bot.get_channel(id="460457033129263145")
+    await bot.edit_channel(rolesroom, name=f"🌵Roles: {len(botserver.roles)}")  
+
+@bot.event
 async def on_channel_create(channel):
     botserver = bot.get_server(id="370269066864361472")
     channelsroom = bot.get_channel(id="460397552379101184")
