@@ -7,6 +7,7 @@ version = "0.8.9"
 owner = ["361534796830081024"]
 bot = commands.Bot(command_prefix='r-', description=None)
 bot.remove_command("help")
+startup_extensions = ["YouTube"]
 message = discord.Message
 server = discord.Server
 member = discord.Member
