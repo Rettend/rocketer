@@ -418,9 +418,20 @@ async def verify(ctx):
                 em.set_thumbnail(url=message.author.avatar_url)
                 await bot.send_message(ctx.message.channel, embed=em)
                 break"""
-    
+
+@bot.event
+async def on_channel_create(channel):
+    channelsroom = bot.get_channel(id="460397552379101184")
+    channels = await bot.get_all_channels()
+    channels = int(channels)
+    await bot.edit_channel(channelsroom, name=f"🌐Channels: {channels}")
+
 @bot.listen()
 async def on_member_join(member):
+    membersroom = bot.get_channel(id="460397271788421120")
+    members = await bot.get_all_members()
+    members = int(members)
+    await bot.edit_channel(membersroom, name=f"👤Members: {members}")
     room2 = bot.get_channel(id="370269066864361476")
     room = bot.get_channel(id="381774233199443968")
     is_verified = False
@@ -457,6 +468,10 @@ async def on_member_join(member):
 
 @bot.listen()
 async def on_member_remove(member):
+    membersroom = bot.get_channel(id="460397271788421120")
+    members = await bot.get_all_members()
+    members = int(members)
+    await bot.edit_channel(membersroom, name=f"👤Members: {members}")
     room2 = bot.get_channel(id="453598661306482688")
     await bot.send_message(room2, f"**{member} left without saying anything...** <:thonkSad:421004865049985035>")
 
