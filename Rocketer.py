@@ -26,6 +26,11 @@ async def on_ready():
     print(bot.user.id)
     print('------')
     await bot.change_presence(game=discord.Game(name='Restarted 🤘'))
+    botserver = bot.get_server(id="370269066864361472")
+    channelsroom = bot.get_channel(id="460397552379101184")
+    for channels in botserver.channels:
+        int(channels)
+        await bot.edit_channel(channelsroom, name=f"🌐Channels: {channels}")
 
 class NoPermError(Exception):
     pass
@@ -458,12 +463,12 @@ async def on_member_join(member):
                         break
     await bot.send_message(room2, f"**Welcome {member.mention}, have a great time here! btw go to {room.mention} and verify yourself ;)**")
 
-@bot.event
+"""@bot.event
 async def on_channel_create(channel):
     channelsroom = bot.get_channel(id="460397552379101184")
     for channels in server.channels:
         int(channels)
-        await bot.edit_channel(channelsroom, name=f"🌐Channels: {channels}")
+        await bot.edit_channel(channelsroom, name=f"🌐Channels: {channels}")"""
 
 @bot.listen()
 async def on_member_remove(member):
