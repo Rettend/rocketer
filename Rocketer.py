@@ -28,7 +28,7 @@ async def on_ready():
     await bot.change_presence(game=discord.Game(name='Restarted 🤘'))
     botserver = bot.get_server(id="370269066864361472")
     channelsroom = bot.get_channel(id="460397552379101184")
-    len(channels)
+    len(channelsroom)
     await bot.edit_channel(channelsroom, name=f"🌐Channels: {channels}")
 
 class NoPermError(Exception):
