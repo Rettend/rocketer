@@ -10,6 +10,7 @@ import logging
 import aiohttp
 import re
 
+bot = commands.Bot(command_prefix='r-', description=None)
 # Some systems will crash without this because Google's Python is built
 # differently
 sys.modules['win32file'] = None
@@ -34,14 +35,12 @@ class YouTube:
         self.bot = bot
         self.session = aiohttp.ClientSession(loop=self.bot.loop)
 
-    @commands.command(aliases=["s"])
+    @commands.command(pass_context=True)
     async def search(self, ctx):
         """Searches YouTube for a video. 
         Returns the first result."""
         try:
-            if len(ctx.message.content.split(' ', 2)) == 2:
-                await bot.say("Arguments needed!\n\nExample: `yt search Darude Sandstorm`")
-            else:
+            try:
                 youtube = build("youtube", "v3", developerKey=youtube_key)
                 search_response = youtube.search().list(q=ctx.message.content.split(
                     ' ', 2)[2], part="id,snippet", maxResults=1, type="video").execute()
@@ -64,34 +63,15 @@ class YouTube:
                     data.set_image(
                         url="https://i.ytimg.com/vi/{}/hqdefault.jpg".format(vidid))
                     try:
-                        await ctx.send(embed=data)
+                        await bot.say(embed=data)
                         statsd.increment('bot.commands.run', 1)
-                    except discord.HTTPException:
-                        statsd.increment('bot.commands.errored', 1)
-                        logger.exception("Missing embed links perms")
-                        await ctx.send("Looks like the bot doesn't have embed links perms... It kinda needs these, so I'd suggest adding them!")
-        except Exception as e:
-            logger.exception(e)
-            statsd.increment('bot.commands.errored', 1)
-            data = discord.Embed(title="__***Error in video search!***__",
-                                 description="No data for video ID!", colour=discord.Colour(value=11735575))
-            data.add_field(name="Whoops!", value="Looks like the API returned a video, but there is no associated data with it!\nThis could be due to the video being unavailable anymore, or it is country blocked!", inline=False)
-            data.add_field(name="What can I do now?",
-                           value="Not much really. *__Please don't re-search the video__*, as this adds unnecessary strain on the bot, and you'll get the same result.", inline=False)
-            try:
-                await bot.say(embed=data)
-            except discord.HTTPException:
-                logger.exception("Missing embed links perms")
-                await bot.say("Looks like the bot doesn't have embed links perms... It kinda needs these, so I'd suggest adding them!")
 
-    @commands.command(aliases=["c"])
+    @commands.command(pass_context=True)
     async def channel(self, ctx):
         """Searches YouTube for a channel. 
         Returns the first result."""
         try:
-            if len(ctx.message.content.split(' ', 2)) == 2:
-                await bot.say("Arguments needed!\n\nExample: `yt channel TrapNation`")
-            else:
+            try:
                 youtube = build("youtube", "v3", developerKey=youtube_key)
                 search_response = youtube.search().list(q=ctx.message.content.split(
                     ' ', 2)[2], part="id,snippet", maxResults=1, type="channel").execute()
@@ -119,31 +99,12 @@ class YouTube:
                     try:
                         await bot.say(embed=data)
                         statsd.increment('bot.commands.run', 1)
-                    except discord.HTTPException:
-                        statsd.increment('bot.commands.errored', 1)
-                        logger.exception("Missing embed links perms")
-                        await bot.say("Looks like the bot doesn't have embed links perms... It kinda needs these, so I'd suggest adding them!")
-        except Exception as e:
-            logger.exception(e)
-            statsd.increment('bot.commands.errored', 1)
-            data = discord.Embed(title="__***Error in channel search!***__",
-                                 description="No data for channel ID!", colour=discord.Colour(value=11735575))
-            data.add_field(name="Whoops!", value="Looks like the API returned a channel, but there is no associated data with it!\nThis could be due to the video being unavailable anymore, or it is country blocked!", inline=False)
-            data.add_field(name="What can I do now?",
-                           value="Not much really. *__Please don't re-search the channel__*, as this adds unnecessary strain on the bot, and you'll get the same result.", inline=False)
-            try:
-                await bot.say(embed=data)
-            except discord.HTTPException:
-                logger.exception("Missing embed links perms")
-                await bot.say("Looks like the bot doesn't have embed links perms... It kinda needs these, so I'd suggest adding them!")
 
-    @commands.command(aliases=['l'])
+    @commands.command(pass_context=True)
     async def lookup(self, ctx):
         """Reverse lookup for youtube videos. Returns statistics and stuff"""
         try:
-            if len(ctx.message.content.split(' ', 2)) == 2:
-                await bot.say("Arguments needed!\n\nExample: `yt lookup https://www.youtube.com/watch?v=dQw4w9WgXcQ`")
-            else:
+            try:
                 url = re.compile(
                     r'http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?')
                 shorturl = re.compile(
@@ -179,33 +140,12 @@ class YouTube:
                     try:
                         await bot.say(embed=data)
                         statsd.increment('bot.commands.run', 1)
-                    except discord.HTTPException:
-                        statsd.increment('bot.commands.errored', 1)
-                        logger.exception("Missing embed links perms")
-                        await bot.say("Looks like the bot doesn't have embed links perms... It kinda needs these, so I'd suggest adding them!")
-                else:
-                    await bot.say("Whoops! Looks like you didn't specify a URL for me to lookup!")
-        except Exception as e:
-            logger.exception(e)
-            statsd.increment('bot.commands.errored', 1)
-            data = discord.Embed(title="__***Error in reverse lookup!***__",
-                                 description="No data for video ID!", colour=discord.Colour(value=11735575))
-            data.add_field(name="Whoops!", value="Looks like the API returned info for the video, but there is no associated data with it!\nThis could be due to the video being unavailable anymore, or it is country blocked!", inline=False)
-            data.add_field(name="What can I do now?",
-                           value="Not much really. *__Please don't re-search the video__*, as this adds unnecessary strain on the bot, and you'll get the same result.", inline=False)
-            try:
-                await bot.say(embed=data)
-            except discord.HTTPException:
-                logger.exception("Missing embed links perms")
-                await bot.say("Looks like the bot doesn't have embed links perms... It kinda needs these, so I'd suggest adding them!")
 
-    @commands.command(aliases=['n'])
+    @commands.command(pass_context=True)
     async def new(self, ctx):
         """Returns the newest video for the specified channel"""
         try:
-            if len(ctx.message.content.split(' ', 2)) == 2:
-                await bot.say("Arguments needed!\n\nExample: `yt new Kurzgesagt`")
-            else:
+            try:
                 youtube = build("youtube", "v3", developerKey=youtube_key)
                 search_response = youtube.search().list(q=ctx.message.content.split(
                     ' ', 2)[2], part="id,snippet", maxResults=1, type="channel").execute()
@@ -244,13 +184,6 @@ class YouTube:
                 try:
                     await bot.say(embed=data)
                     statsd.increment('bot.commands.run', 1)
-                except discord.HTTPException:
-                    statsd.increment('bot.commands.errored', 1)
-                    logger.exception("Missing embed links perms")
-                    await bot.say("Looks like the bot doesn't have embed links perms... It kinda needs these, so I'd suggest adding them!")
-        except Exception as e:
-            logger.exception(e)
-            statsd.increment('bot.commands.errored', 1)
 
     async def get_json(self, yt_url):
         async with self.session.get(yt_url) as r:
