@@ -26,6 +26,10 @@ async def on_ready():
     print(bot.user.id)
     print('------')
     await bot.change_presence(game=discord.Game(name='Restarted 🤘'))
+    xmas = datetime.date(2019, 12, 24)
+    xmas = datetime.timedelta(xmas)
+    dayroom = bot.get_channel(id="460420505841696768")
+    await bot.edit_channel(dayroom, name=f"{xmas} days to Server BD!")
 
 class NoPermError(Exception):
     pass
