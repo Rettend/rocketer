@@ -219,11 +219,13 @@ async def clear(ctx, number : int):
     number += 1
     deleted = await bot.purge_from(ctx.message.channel, limit=number)
     num = number - 1
+    LogRoom = bot.get_channel(id="401752340366884885")
     em = discord.Embed(title=None, description=f'{ctx.message.author} deleted __{num}__ messages', colour=0x3498db)
     em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
     timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
     em.set_footer(text=timer)
     msg = await bot.send_message(ctx.message.channel, embed=em)
+    await bot.send_message(LogRoom, embed=em)
     await asyncio.sleep(4)
     await bot.delete_message(msg)
 
