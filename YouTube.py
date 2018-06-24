@@ -37,8 +37,6 @@ class YouTube:
 
     @commands.command(pass_context=True)
     async def search(self, ctx):
-        """Searches YouTube for a video. 
-        Returns the first result."""
         try:
             try:
                 youtube = build("youtube", "v3", developerKey=youtube_key)
@@ -65,11 +63,9 @@ class YouTube:
                     try:
                         await bot.say(embed=data)
                         statsd.increment('bot.commands.run', 1)
-
+                        
     @commands.command(pass_context=True)
     async def channel(self, ctx):
-        """Searches YouTube for a channel. 
-        Returns the first result."""
         try:
             try:
                 youtube = build("youtube", "v3", developerKey=youtube_key)
@@ -102,7 +98,6 @@ class YouTube:
 
     @commands.command(pass_context=True)
     async def lookup(self, ctx):
-        """Reverse lookup for youtube videos. Returns statistics and stuff"""
         try:
             try:
                 url = re.compile(
@@ -143,7 +138,6 @@ class YouTube:
 
     @commands.command(pass_context=True)
     async def new(self, ctx):
-        """Returns the newest video for the specified channel"""
         try:
             try:
                 youtube = build("youtube", "v3", developerKey=youtube_key)
