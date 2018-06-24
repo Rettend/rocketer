@@ -481,7 +481,7 @@ async def on_message(message):
         for channels in message.server.channels:
             await bot.edit_channel(channelsroom, name=f"🌐Channels: {int(channels)}")
         membersroom = bot.get_channel(id="460397271788421120")
-        for members in message.server.members
+        for members in message.server.members:
             await bot.edit_channel(membersroom, name=f"👤Members: {int(members)}")
     if message.content.startswith("r-selfroles"): 
         thonkroom = bot.get_channel(id="381148244094222357")
