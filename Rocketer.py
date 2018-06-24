@@ -479,7 +479,7 @@ async def on_message(message):
     if message.content.startswith("update"):
         await bot.send_message(message.channel, "updated. thx")
         channelsroom = bot.get_channel(id="460397552379101184")
-        for channels in message.server.channels:
+        for channels in message.s
             await bot.edit_channel(channelsroom, name=f"🌐Channels: {int(channels)}")
         membersroom = bot.get_channel(id="460397271788421120")
         for members in message.server.members:
