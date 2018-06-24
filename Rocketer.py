@@ -214,6 +214,42 @@ async def ping(ctx):
     await bot.edit_message(msg, embed=em)
 
 @bot.command(pass_context=True)
+@commands.has_permissions(manage_channels=True)
+async def lock(ctx, Reason):
+    Registered = discord.utils.get(ctx.message.server.roles, name="Registered")
+    overwrite = discord.PermissionOverwrite()
+    overwrite.send_messages = False
+    await bot.edit_channel_permissions(ctx.message.channel, Registered, overwrite)
+    await bot.send_message(room, f"**{ctx.message.channel.mention} is now locked!**")
+    LogRoom = bot.get_channel(id="401752340366884885")
+    em = discord.Embed(title="╲⎝⧹𝓛𝓞𝓒𝓚⧸⎠╱", description=None, colour=0x1abc9c)
+    em.add_field(name="Channel", value=f"{ctx.message.channel.mention}")
+    em.add_field(name="Moderator", value=f"{ctx.message.author}")
+    em.add_field(name="Reason", value=f"{Reason}")
+    em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
+    timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
+    em.set_footer(text=timer)
+    await bot.send_message(LogRoom, embed=em)
+
+@bot.command(pass_context=True)
+@commands.has_permissions(manage_channels=True)
+async def unlock(ctx):
+    Registered = discord.utils.get(ctx.message.server.roles, name="Registered")
+    overwrite = discord.PermissionOverwrite()
+    overwrite.send_messages = True
+    await bot.edit_channel_permissions(ctx.message.channel, Registered, overwrite)
+    await bot.send_message(room, f"**{ctx.message.channel.mention} is now unlocked, feel free to chat!**")
+    LogRoom = bot.get_channel(id="401752340366884885")
+    em = discord.Embed(title="╲⎝⧹𝓤𝓝𝓛𝓞𝓒𝓚⧸⎠╱", description=None, colour=0x1abc9c)
+    em.add_field(name="Channel", value=f"{ctx.message.channel.mention}")
+    em.add_field(name="Moderator", value=f"{ctx.message.author}")
+    em.add_field(name="Reason", value=f"{Reason}")
+    em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
+    timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
+    em.set_footer(text=timer)
+    await bot.send_message(LogRoom, embed=em)
+    
+@bot.command(pass_context=True)
 @commands.has_permissions(manage_messages=True)
 async def clear(ctx, number : int):
     number += 1
@@ -567,28 +603,6 @@ async def on_message(message):
                            f":white_small_square: If you have any questions, ask it to {Rettend.mention}", colour=0x3498db)
         em.set_thumbnail(url="https://cdn.discordapp.com/emojis/430347128100093962.gif?v=1")
         await bot.send_message(message.channel, embed=em)
-    if message.content.startswith('r-lock'):
-        if message.author.id in Admins:
-            room = message.channel
-            Registered = discord.utils.get(message.server.roles, name="Registered")
-            overwrite = discord.PermissionOverwrite()
-            overwrite.send_messages = False
-            await bot.edit_channel_permissions(room, Registered, overwrite)
-            await bot.send_message(room, f"**{room.mention} is now locked! Ha ha**")
-        else:
-            await bot.send_message(ctx.message.channel, f'*Boi, you cant use this command...*')
-            raise NoPermError
-    if message.content.startswith('r-unlock'):
-        if message.author.id in Admins:
-            room = message.channel
-            Registered = discord.utils.get(message.server.roles, name="Registered")
-            overwrite = discord.PermissionOverwrite()
-            overwrite.send_messages = True
-            await bot.edit_channel_permissions(room, Registered, overwrite)
-            await bot.send_message(room, f"**{room.mention} is now unlocked, feel free to chat!**")
-        else:
-            await bot.send_message(ctx.message.channel, f'*Boi, you cant use this command...*')
-            raise NoPermError
     if message.content.upper().startswith('R-AMIOWNER?'):
         if message.author.id in owner:
             await bot.send_message(message.channel, ':white_check_mark: **You are the Owner, Hey Rettend :D**')
