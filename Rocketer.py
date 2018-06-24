@@ -419,13 +419,6 @@ async def verify(ctx):
                 await bot.send_message(ctx.message.channel, embed=em)
                 break"""
 
-"""@bot.event
-async def on_channel_create(channel):
-    channelsroom = bot.get_channel(id="460397552379101184")
-    for channels in message.server.channels:
-        int(channels)
-        await bot.edit_channel(channelsroom, name=f"🌐Channels: {channels}")
-"""
 @bot.listen()
 async def on_member_join(member):
     membersroom = bot.get_channel(id="460397271788421120")
@@ -465,6 +458,13 @@ async def on_member_join(member):
                         break
     await bot.send_message(room2, f"**Welcome {member.mention}, have a great time here! btw go to {room.mention} and verify yourself ;)**")
 
+@bot.event
+async def on_channel_create(channel):
+    channelsroom = bot.get_channel(id="460397552379101184")
+    for channels in message.server.channels:
+        int(channels)
+        await bot.edit_channel(channelsroom, name=f"🌐Channels: {channels}")
+    
 @bot.listen()
 async def on_member_remove(member):
     """membersroom = bot.get_channel(id="460397271788421120")
@@ -476,14 +476,6 @@ async def on_member_remove(member):
 
 @bot.event
 async def on_message(message):
-    if message.content.startswith("update"):
-        await bot.send_message(message.channel, "updated. thx")
-        channelsroom = bot.get_channel(id="460397552379101184")
-        for channels in message.s
-            await bot.edit_channel(channelsroom, name=f"🌐Channels: {int(channels)}")
-        membersroom = bot.get_channel(id="460397271788421120")
-        for members in message.server.members:
-            await bot.edit_channel(membersroom, name=f"👤Members: {int(members)}")
     if message.content.startswith("r-selfroles"): 
         thonkroom = bot.get_channel(id="381148244094222357")
         thonker = discord.utils.get(message.server.roles, id="381139610924875787")
