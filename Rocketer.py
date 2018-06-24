@@ -26,6 +26,10 @@ async def on_ready():
     print(bot.user.id)
     print('------')
     await bot.change_presence(game=discord.Game(name='Restarted 🤘'))
+    channelsroom = bot.get_channel(id="460397552379101184")
+    for channels in bot.servers.channels:
+        int(channels)
+        await bot.edit_channel(channelsroom, name=f"🌐Channels: {channels}")
 
 class NoPermError(Exception):
     pass
@@ -419,13 +423,13 @@ async def verify(ctx):
                 await bot.send_message(ctx.message.channel, embed=em)
                 break"""
 
-@bot.event
+"""@bot.event
 async def on_channel_create(channel):
     channelsroom = bot.get_channel(id="460397552379101184")
     for channels in message.server.channels:
         int(channels)
         await bot.edit_channel(channelsroom, name=f"🌐Channels: {channels}")
-
+"""
 @bot.listen()
 async def on_member_join(member):
     membersroom = bot.get_channel(id="460397271788421120")
