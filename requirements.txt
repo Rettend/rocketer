@@ -4,3 +4,4 @@ aiohttp
 asyncpg
 psycopg2-binary
 apiclient
+google-api-python-client
