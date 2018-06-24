@@ -26,10 +26,6 @@ async def on_ready():
     print(bot.user.id)
     print('------')
     await bot.change_presence(game=discord.Game(name='Restarted 🤘'))
-    channelsroom = bot.get_channel(id="460397552379101184")
-    for channels in bot.servers.channels:
-        int(channels)
-        await bot.edit_channel(channelsroom, name=f"🌐Channels: {channels}")
 
 class NoPermError(Exception):
     pass
@@ -471,15 +467,22 @@ async def on_member_join(member):
 
 @bot.listen()
 async def on_member_remove(member):
-    membersroom = bot.get_channel(id="460397271788421120")
+    """membersroom = bot.get_channel(id="460397271788421120")
     members = await bot.get_all_members()
     members = int(members)
-    await bot.edit_channel(membersroom, name=f"👤Members: {members}")
+    await bot.edit_channel(membersroom, name=f"👤Members: {members}")"""
     room2 = bot.get_channel(id="453598661306482688")
     await bot.send_message(room2, f"**{member} left without saying anything...** <:thonkSad:421004865049985035>")
 
 @bot.event
 async def on_message(message):
+    if message.content(" "):
+        channelsroom = bot.get_channel(id="460397552379101184")
+        for channels in message.server.channels:
+            await bot.edit_channel(channelsroom, name=f"🌐Channels: {int(channels)}")
+        membersroom = bot.get_channel(id="460397271788421120")
+        for members in message.server.members
+            await bot.edit_channel(membersroom, name=f"👤Members: {int(members)}")
     if message.content.startswith("r-selfroles"): 
         thonkroom = bot.get_channel(id="381148244094222357")
         thonker = discord.utils.get(message.server.roles, id="381139610924875787")
