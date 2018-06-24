@@ -29,6 +29,7 @@ async def on_ready():
     botserver = bot.get_server(id="370269066864361472")
     channelsroom = bot.get_channel(id="460397552379101184")
     for channels in botserver.channels:
+        len(channels)
         await bot.edit_channel(channelsroom, name=f"🌐Channels: {channels}")
 
 class NoPermError(Exception):
