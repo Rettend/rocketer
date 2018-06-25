@@ -432,7 +432,7 @@ async def verify(ctx):
 async def on_member_join(member):
     botserver = bot.get_server(id="370269066864361472")
     membersroom = bot.get_channel(id="460397271788421120")
-    await bot.edit_channel(membersroom, name=f"👤Members: {len(botserver.members)}")
+    await bot.edit_channel(membersroom, name=f"👨‍🚀Members: {len(botserver.members)}")
     room2 = bot.get_channel(id="370269066864361476")
     room = bot.get_channel(id="381774233199443968")
     is_verified = False
@@ -495,7 +495,7 @@ async def on_channel_delete(channel):
 async def on_member_remove(member):
     botserver = bot.get_server(id="370269066864361472")
     membersroom = bot.get_channel(id="460397271788421120")
-    await bot.edit_channel(membersroom, name=f"👤Members: {len(botserver.members)}")
+    await bot.edit_channel(membersroom, name=f"👨‍🚀Members: {len(botserver.members)}")
     room2 = bot.get_channel(id="453598661306482688")
     await bot.send_message(room2, f"**{member} left without saying anything...** <:thonkSad:421004865049985035>")
 
