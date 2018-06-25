@@ -500,8 +500,8 @@ async def on_member_remove(member):
     await bot.send_message(room2, f"**{member} left without saying anything...** <:thonkSad:421004865049985035>")
 
 @bot.command(pass_context=True)
-async def say(*, args):
-    await bot.say(f"**{args}**")
+async def say(ctx, *, words):
+    await bot.say(f"**{words}**")
     
 @bot.event
 async def on_message(message):
