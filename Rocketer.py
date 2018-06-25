@@ -72,7 +72,7 @@ async def whoami(ctx):
     await bot.send_message(ctx.message.channel, embed=em)
 
 @bot.command(pass_context=True)
-async def slap(ctx, member : discord.Member, Reason):
+async def slap(ctx, member : discord.Member, *, Reason):
     await bot.say(f"**{ctx.message.author} slaped {member.mention} for {Reason}**")
 
 @bot.command(pass_context=True)
@@ -90,7 +90,7 @@ async def kill(ctx, user : discord.User):
 
 @bot.command(pass_context=True)
 @commands.has_permissions(ban_members=True)
-async def unban(ctx, user : discord.User, Reason):
+async def unban(ctx, user : discord.User, *, Reason):
     if user.id == ctx.message.author.id:
         await bot.say("**I won't let you moderate yourself xD**")
     else:
@@ -113,7 +113,7 @@ async def unban(ctx, user : discord.User, Reason):
 
 @bot.command(pass_context=True)
 @commands.has_permissions(ban_members=True)
-async def ban(ctx, user : discord.User, Day : int, Reason):
+async def ban(ctx, user : discord.User, Day : int, *, Reason):
     if user.id == ctx.message.author.id:
         await bot.say("**I won't let you moderate yourself xD**")
     else:
@@ -133,7 +133,7 @@ async def ban(ctx, user : discord.User, Day : int, Reason):
 
 @bot.command(pass_context=True)
 @commands.has_permissions(kick_members=True)
-async def kick(ctx, user : discord.User, Reason):
+async def kick(ctx, user : discord.User, *, Reason):
     if user.id == ctx.message.author.id:
         await bot.say("**I won't let you moderate yourself xD**")
     else:
@@ -152,7 +152,7 @@ async def kick(ctx, user : discord.User, Reason):
 
 @bot.command(pass_context=True)
 @commands.has_permissions(manage_messages=True)
-async def mute(ctx, user : discord.User, duration : int, Reason):
+async def mute(ctx, user : discord.User, duration : int, *, Reason):
     if user.id == ctx.message.author.id:
         await bot.say("**I won't let you moderate yourself xD**")
     else:
@@ -183,7 +183,7 @@ async def mute(ctx, user : discord.User, duration : int, Reason):
 
 @bot.command(pass_context=True)
 @commands.has_permissions(manage_messages=True)
-async def unmute(ctx, user : discord.User, Reason):
+async def unmute(ctx, user : discord.User, *, Reason):
     if user.id == ctx.message.author.id:
         await bot.say("**I won't let you moderate yourself xD**")
     else:
@@ -224,7 +224,7 @@ async def ping(ctx):
 
 @bot.command(pass_context=True)
 @commands.has_permissions(manage_channels=True)
-async def lock(ctx, Reason):
+async def lock(ctx, *, Reason):
     Registered = discord.utils.get(ctx.message.server.roles, name="Registered")
     overwrite = discord.PermissionOverwrite()
     overwrite.send_messages = False
@@ -242,7 +242,7 @@ async def lock(ctx, Reason):
 
 @bot.command(pass_context=True)
 @commands.has_permissions(manage_channels=True)
-async def unlock(ctx):
+async def unlock(ctx, *, Reason):
     Registered = discord.utils.get(ctx.message.server.roles, name="Registered")
     overwrite = discord.PermissionOverwrite()
     overwrite.send_messages = True
@@ -318,19 +318,19 @@ async def add(ctx, x : int, y : int):
     await bot.edit_message(text, f"**Oh, the result: {msg}**")
     
 @bot.command()
-async def game(play):
+async def game(*, play):
     await bot.change_presence(game=discord.Game(name=play))
     em = discord.Embed(title="Game Status", description=f"Game status changed to __{play}__!", colour=0x3498db)
     await bot.say(embed=em)
 
 @bot.command(pass_context=True)
-async def nick(ctx, name):
+async def nick(ctx, *, name):
     await bot.change_nickname(ctx.message.author, name)
     em = discord.Embed(title="Nickname", description=f"{ctx.message.author}'s nick set to __{name}__!", colour=0x3498db)
     await bot.say(embed=em)
     
 @bot.command(pass_context=True)
-async def suggest(ctx, pref, text):
+async def suggest(ctx, pref, *, text):
     try:
         if pref is "S":
             msg = "𝓢𝓾𝓰𝓰𝒆𝓼𝓽𝓲𝓸𝓷"
@@ -361,7 +361,7 @@ async def suggest(ctx, pref, text):
             await bot.add_reaction(mesg, "👎")
             
 @bot.command(pass_context=True)
-async def poll(ctx, question, options: str):
+async def poll(ctx, *, question, options: str):
     if len(options) <= 1:
         await bot.say('You need more than one option to make a poll!')
         return
@@ -499,6 +499,10 @@ async def on_member_remove(member):
     room2 = bot.get_channel(id="453598661306482688")
     await bot.send_message(room2, f"**{member} left without saying anything...** <:thonkSad:421004865049985035>")
 
+@bot.command(pass_context=True)
+async def say(*, args):
+    await bot.say(f"**{args}**")
+    
 @bot.event
 async def on_message(message):
     if message.content.startswith("r-selfroles"): 
@@ -613,24 +617,24 @@ async def on_message(message):
         await bot.send_message(message.channel, f"**{message.author.mention}, the time is __{timer}__**")
     if message.content.startswith("r-mod"):
         em = discord.Embed(title="MODERATION COMMANDS", description=None, colour=0x3498db)
-        em.add_field(name="Admin commands", value=":small_blue_diamond: r-ban {member} {0 - 7 amount of days to delete his messages} \"{Reason}\"\n"
+        em.add_field(name="Admin commands", value=":small_blue_diamond: r-ban {member} {0 - 7 amount of days to delete his messages} {Reason}\n"
                      ":black_small_square: Kicks the user and removes his messages for the given days, the user can't rejoin, until he gots unbanned\n"
                      "\n"
                      ":small_orange_diamond: r-unban {member} \"{Reason}\"\n"
                      ":black_small_square: UnBans the Banned user, the user now can rejoin by instant-invite links\n\n\n")
-        em.add_field(name="Mod commands", value=":small_blue_diamond: r-kick {member} \"{Reason}\"\n"
+        em.add_field(name="Mod commands", value=":small_blue_diamond: r-kick {member} {Reason}\n"
                      ":black_small_square: Kicks the user from the server, the user can rejoin by instant-invite links\n"
                      "\n"
-                     ":small_orange_diamond: r-mute {member} {duration(in sec)} \"{Reason}\"\n"
+                     ":small_orange_diamond: r-mute {member} {duration(in sec)} {Reason}\n"
                      ":black_small_square: Mutes the user, this user can't send messages for the given duration, if the _time is up,_ he will auto get unmuted\n"
                      "\n"
-                     ":small_blue_diamond: r-unmute {member} \"{Reason}\"\n"
+                     ":small_blue_diamond: r-unmute {member} {Reason}\n"
                      ":black_small_square: UnMutes the Muted user, this user now allowed to send messages\n"
                      "\n"
-                     ":small_orange_diamond: r-lock\n"
+                     ":small_orange_diamond: r-lock {Reason}\n"
                      ":black_small_square: Locks down the currently channel, only Admins can send messages until an unlock\n"
                      "\n"
-                     ":small_blue_diamond: r-unlock\n"
+                     ":small_blue_diamond: r-unlock {Reason}\n"
                      ":black_small_square: Unlocks the currently locked channel, now everyone can send messages there")
         await bot.send_message(message.channel, embed=em)
     if message.content.startswith("r-help"):
@@ -648,9 +652,6 @@ async def on_message(message):
             await bot.send_message(message.channel, ':white_check_mark: **You are the Owner, Hey Rettend :D**')
         else:
             await bot.send_message(message.channel, ':negative_squared_cross_mark: **You aren\'t the Owner.**')
-    if message.content.startswith('r-say'):
-        args = message.content.split(' ')
-        await bot.send_message(message.channel, '**%s**' % (' '.join(args[1:])))
     if message.content.startswith('r-bigdigits'):
         await bot.send_message(message.channel, ':globe_with_meridians: **DIGITS:\n'
                                '-Zero, One, Two, Three, Four, Five, Six, Seven, Eight, Nine\n'
@@ -870,7 +871,7 @@ async def on_message(message):
                             ':small_blue_diamond: r-invite\n'
                             ':white_small_square: r-latest\n'
                             ':small_blue_diamond: r-lenny\n'
-                            ':white_small_square: r-suggest {Q or S or C or B} "{message}"\n'
+                            ':white_small_square: r-suggest {Q or S or C or B} {message}\n'
                             ':small_blue_diamond: r-typing', inline=True)
         emb.set_thumbnail(url='https://cdn.discordapp.com/emojis/385152309090451467.png?v=1')
         emb.set_footer(text='The Official Bot of PissRocket, inviting and using the Bot in other servers breaks the Term of Use.\nType r-help 2 for more commands!!')
@@ -882,7 +883,7 @@ async def on_message(message):
                         ':white_small_square: r-mul {number1} {number2}\n'
                         ':small_blue_diamond: r-div {number1} {number2}\n'
                         ':white_small_square: r-exp {number1} {number2}\n'
-                        ':small_blue_diamond: r-nick "{name}"\n'
+                        ':small_blue_diamond: r-nick {name}\n'
                         ':white_small_square: r-verify\n'
                         ':small_blue_diamond: r-register\n'
                         ':white_small_square: r-clear {number}\n'
@@ -890,7 +891,7 @@ async def on_message(message):
                         ':white_small_square: r-8ball {Question}\n'
                         ':small_blue_diamond: r-help\n'
                         ':white_small_square: r-kill {user}\n'
-                        ':small_blue_diamond: r-slap {user} "{Reason}"\n'
+                        ':small_blue_diamond: r-slap {user} {Reason}\n'
                         ':white_small_square: r-whoami', inline=True)
         emb.set_thumbnail(url='https://cdn.discordapp.com/emojis/385152309090451467.png?v=1')
         emb.set_footer(text='The Official Bot of PissRocket, inviting and using the Bot in other servers breaks the Term of Use.\nType r-help for more commands!!')
