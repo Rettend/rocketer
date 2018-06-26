@@ -386,7 +386,10 @@ async def on_member_join(member):
     botserver = bot.get_server(id="370269066864361472")
     membersroom = bot.get_channel(id="460397271788421120")
     await bot.edit_channel(membersroom, name=f"👥Members: {len(botserver.members)}")
-    await bot.send_message(room2, f"**Welcome {member.mention}, have a great time here! Chat, Search for playing-mates, farm lemons :lemon:, or just listen to music ;)**")
+    room = bot.get_channel(id="370269066864361476")
+    em = discord.Embed(title=f"__{member.name}__ Joined!", description=f"**Welcome {member.mention}, have a great time here! Chat, Search for playing-mates, farm lemons :lemon:, or just listen to music ;)**", colour=0x3498db)
+    em.set_thumbnail(url="https://cdn.discordapp.com/emojis/391322023739129856.png?v=1")
+    await bot.send_message(room, embed=em)
 
 @bot.event
 async def on_server_role_create(role):
