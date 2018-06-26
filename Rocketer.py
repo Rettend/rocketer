@@ -381,91 +381,12 @@ async def poll(ctx, *, question, options: str):
         await bot.add_reaction(react_message, reaction)
     await bot.edit_message(react_message, embed=embed)
 
-"""@bot.command(pass_context=True)
-async def register(ctx):
-    for server in bot.servers:
-        roles = server.roles
-        members = server.members
-        member = None
-        for mem in members:
-            if mem.id == ctx.message.author.id:
-                member = mem
-                break
-        for role in roles:
-            if role.name == "Registered":
-                await bot.add_roles(member, role)
-                await bot.send_message(ctx.message.channel, "**Boi, you are already verified... Why are you want to?**")
-                break
-            elif role.name == "Unregistered":
-                await bot.remover_roles(member, role)
-                await bot.send_message(ctx.message.channel, f"**Congratulations {ctx.message.author}, you are verified!**")
-                break
-       
-@bot.command(pass_context=True)
-async def verify(ctx):
-    room = bot.get_channel(id='420141568486408203')
-    for server in bot.servers:
-        roles = server.roles
-        members = server.members
-        member = None
-        for mem in members:
-            if mem.id == ctx.message.author.id:
-                member = mem
-                break
-        for role in roles:
-            if role.name == "Registered":
-                await bot.send_message(ctx.message.channel, "**Boi, you are already verified... Why are you want to?**")
-                break
-            elif role.name == "Unregistered":
-                em = discord.Embed(title='VERIFICATION', description='**Hey __' + ctx.message.author + '__, if you want to get verified, you need to answer 3 questions:\n'
-                                        ':one: Do you play __.io games__?\n'
-                                        ':two: What else games do you play? __Please enumerate some of them__\n'
-                                        ':three: How did you get here?\n'
-                                        '__Note__: if you play a game, and you want to get this game\'s special role, you need to ask it to an Admin (or higher), that game will be added to {0.mention}\n'
-                                        '\n'
-                                        '__Type `r-register` if you answered all of the questions above, and to finish the verification__**'.format(room), colour=0x3498db)
-                em.set_thumbnail(url=message.author.avatar_url)
-                await bot.send_message(ctx.message.channel, embed=em)
-                break"""
-
 @bot.listen()
 async def on_member_join(member):
     botserver = bot.get_server(id="370269066864361472")
     membersroom = bot.get_channel(id="460397271788421120")
     await bot.edit_channel(membersroom, name=f"👥Members: {len(botserver.members)}")
-    room2 = bot.get_channel(id="370269066864361476")
-    room = bot.get_channel(id="381774233199443968")
-    is_verified = False
-    for role in member.roles:
-        if role.name == "Registered":
-            is_verified = True
-            break
-        if is_verified == False:
-            em = discord.Embed(title=f"__{member.name}__ Joined!", description="", colour=0x3498db)
-            em.add_field(name=None, value=f"\n**Welcome __{member.mention}__,**\n\nI will show you around, First, to __get permissions to all channels__, you need to answer one question\n **__:warning:IMPORTANT: Type A: before your answer to trigger me!:warning:__\n-What games do you play?\n\nEnjoy staying here, chat, search for playing-mates, farm lemons :lemon: or just listen to Music ;)\n__Its for Staffs, with this its easier to add Games-Roles to you!__**")
-            em.set_thumbnail(url="https://cdn.discordapp.com/emojis/391322023739129856.png?v=1")
-            await bot.send_message(room, embed=em)
-
-            def check(msg):
-                return msg.content('A:')
-
-            message = await bot.wait_for_message(check=check)
-            for server in bot.servers:
-                roles = server.roles
-                members = server.members
-                member = None
-                for mem in members:
-                    member = mem
-                    break
-                for role in roles:
-                    if role.name == "Registered":
-                        await bot.add_roles(member, role)
-                        break
-                    elif role.name == "Unregistered":
-                        await bot.remove_roles(member, role)
-                        await bot.send_message(room, f'**Congratulation {member.mention}, you will got your roles and acces :)**')
-                        break
-    await bot.send_message(room2, f"**Welcome {member.mention}, have a great time here! btw go to {room.mention} and verify yourself ;)**")
+    await bot.send_message(room2, f"**Welcome {member.mention}, have a great time here! Chat, Search for playing-mates, farm lemons :lemon:, or just listen to music ;)**")
 
 @bot.event
 async def on_server_role_create(role):
