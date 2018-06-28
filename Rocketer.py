@@ -56,9 +56,9 @@ if __name__ == "__main__":
 #--------------------------------------------
 
 #----------------COMMANDS--------------------
-@bot.command(pass_context=True)
+"""@bot.command(pass_context=True)
 async def fight(ctx, member : discord.Member):
-    e = discord.Embed(title="Lets Fight!", description="", colour=
+    e = discord.Embed(title="Lets Fight!", description="", colour="""
 
 @bot.command(pass_context=True)
 async def typing(ctx):
