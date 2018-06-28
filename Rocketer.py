@@ -362,7 +362,7 @@ async def suggest(ctx, pref, *, text):
             await bot.add_reaction(mesg, "👎")
             
 @bot.command(pass_context=True)
-async def poll(ctx, *, question, options: str):
+async def poll(ctx, options: str, *, question):
     if len(options) <= 1:
         await bot.say('You need more than one option to make a poll!')
         return
