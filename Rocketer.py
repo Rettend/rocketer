@@ -3,7 +3,7 @@ from time import gmtime
 from discord.ext import commands
 
 #-------------------DATA---------------------
-version = "0.8.9"
+version = "0.8.11"
 owner = ["361534796830081024"]
 bot = commands.Bot(command_prefix='r-', description=None)
 bot.remove_command("help")
@@ -56,6 +56,10 @@ if __name__ == "__main__":
 #--------------------------------------------
 
 #----------------COMMANDS--------------------
+@bot.command(pass_context=True)
+async def fight(ctx, member : discord.Member):
+    e = discord.Embed(title="Lets Fight!", description="", colour=
+
 @bot.command(pass_context=True)
 async def typing(ctx):
     await bot.say("**Im typing something** <:think:385152309090451467>")
