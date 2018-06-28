@@ -391,6 +391,8 @@ async def on_member_join(member):
     em = discord.Embed(title=f"__{member.name}__ Joined!", description=f"**Welcome {member.mention}, have a great time here! Chat, Search for playing-mates, farm lemons :lemon:, or just listen to music ;)**", colour=0x3498db)
     em.set_thumbnail(url="https://cdn.discordapp.com/emojis/391322023739129856.png?v=1")
     await bot.send_message(room, embed=em)
+    role = discord.utils.get(botserver.roles, name="User")
+    await bot.add_roles(role, member)
 
 @bot.event
 async def on_server_role_create(role):
