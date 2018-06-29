@@ -1,8 +1,9 @@
 import discord, logging, json, asyncio, time, random, aiohttp, re, datetime, traceback, os, sys, math, asyncpg
 from time import gmtime
 from discord.ext import commands
-
+from functions import edit_json,read_json
 #-------------------DATA---------------------
+
 version = "0.8.11"
 owner = ["361534796830081024"]
 bot = commands.Bot(command_prefix='r-', description=None)
@@ -433,6 +434,9 @@ async def say(ctx, *, words):
     await bot.say(f"**{words}**")
 #-----------------------------------------------
 
+reaction_roles=read_json('reaction_roles')
+active_messages=[]
+
 @bot.command(pass_context=True)
 async def add_er(ctx,emoji:str=None,role:discord.Role=None):
 	'''Add an Emoji that assigns a Role'''
@@ -443,6 +447,8 @@ async def add_er(ctx,emoji:str=None,role:discord.Role=None):
 	if role.position >= bot_member.top_role.position:
 		await bot.say("Can't assign that role, bot role needs to be raised.")
 		return
+	reaction_roles[emoji]=role.id
+	edit_json('reaction_roles',reaction_roles)
 	await bot.say('{} will assign members to {}'.format(emoji,role.mention))
 
 @bot.command(pass_context=True)
@@ -450,10 +456,15 @@ async def remove_er(ctx,emoji):
 	'''Remove an Emoji that assigns a Role'''
 	role=discord.utils.get(ctx.message.server.roles,id=reaction_roles[emoji])
 	await bot.say('{} will no longer assign {}'.format(emoji,role.mention))
+	del reaction_roles[emoji]
+	edit_json('reaction_roles',reaction_roles)
 
 @bot.command(pass_context=True)
 async def er(ctx):
 	'''React with Emojis to assign a role to yourself'''
+	if len(reaction_roles)==0:
+		await bot.say("No emojis have been assigned to roles")
+		return
 	global active_messages
 	server=ctx.message.server
 	message=''
