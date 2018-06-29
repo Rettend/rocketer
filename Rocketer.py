@@ -437,6 +437,7 @@ async def say(ctx, *, words):
 reaction_roles=read_json('reaction_roles')
 active_messages=[]
 
+@commands.has_permissions(manage_server=True)
 @bot.command(pass_context=True)
 async def add_er(ctx,emoji:str=None,role:discord.Role=None):
 	'''Add an Emoji that assigns a Role'''
@@ -451,6 +452,7 @@ async def add_er(ctx,emoji:str=None,role:discord.Role=None):
 	edit_json('reaction_roles',reaction_roles)
 	await bot.say('{} will assign members to {}'.format(emoji,role.mention))
 
+@commands.has_permissions(manage_server=True)
 @bot.command(pass_context=True)
 async def remove_er(ctx,emoji):
 	'''Remove an Emoji that assigns a Role'''
@@ -459,6 +461,7 @@ async def remove_er(ctx,emoji):
 	del reaction_roles[emoji]
 	edit_json('reaction_roles',reaction_roles)
 
+@commands.has_permissions(manage_server=True)
 @bot.command(pass_context=True)
 async def er(ctx):
 	'''React with Emojis to assign a role to yourself'''
@@ -485,8 +488,8 @@ async def on_reaction_add(reaction,user):
 			if e_role in user.roles:
 				await bot.remove_roles(user,e_role)
             else:
-		        await bot.remove_reaction(reaction.message,reaction.emoji,user)
-		        await bot.add_roles(user,role)
+                await bot.remove_reaction(reaction.message,reaction.emoji,user)
+                await bot.add_roles(user,role)
 #-----------------------------------------------
 
 @bot.event
