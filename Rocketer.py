@@ -454,9 +454,6 @@ async def remove_er(ctx,emoji):
 @bot.command(pass_context=True)
 async def er(ctx):
 	'''React with Emojis to assign a role to yourself'''
-	if len(reaction_roles)==0:
-		await bot.say("No emojis have been assigned to roles")
-		return
 	global active_messages
 	server=ctx.message.server
 	message=''
