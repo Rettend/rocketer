@@ -486,17 +486,6 @@ async def on_reaction_add(reaction,user):
 				await bot.remove_roles(user,e_role)
 		await bot.remove_reaction(reaction.message,reaction.emoji,user)
 		await bot.add_roles(user,role)
-
-@bot.event
-async def on_reaction_remove(reaction,user):
-	if reaction.message.id in active_messages and reaction.emoji in reaction_roles and user != bot.user:
-		role=discord.utils.get(reaction.message.server.roles,id=reaction_roles[reaction.emoji])
-		for r_id in reaction_roles.values():
-			e_role=discord.utils.get(reaction.message.server.roles,id=r_id)
-			if e_role in user.roles:
-				await bot.remove_roles(user,e_role)
-		await bot.remove_reaction(reaction.message,reaction.emoji,user)
-		await bot.remove_roles(user,role)
 #-----------------------------------------------
 
 @bot.event
