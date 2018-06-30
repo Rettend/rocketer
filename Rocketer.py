@@ -441,21 +441,21 @@ active_messages=[]
 @bot.command(pass_context=True)
 async def add_er(ctx, emoji : str=None, role : discord.Role=None):
 	if (emoji or role) is None:
-		await bot.say('Missing arguments `Emoji` or `@Role`')
+		await bot.say('**Missing arguments `Emoji` or `@Role`**')
 		return
 	bot_member=discord.utils.get(ctx.message.server.members, id=bot.user.id)
 	if role.position >= bot_member.top_role.position:
-		await bot.say("Can't assign that role, bot role needs to be raised.")
+		await bot.say("**Can't assign that role, bot role needs to be raised.**")
 		return
 	reaction_roles[emoji] = role.id
 	edit_json('reaction_roles', reaction_roles)
-	await bot.say('{} will assign members to {}'.format(emoji, role.mention))
+	await bot.say('**{} will assign members to {}**'.format(emoji, role.mention))
 
 @commands.has_permissions(manage_server=True)
 @bot.command(pass_context=True)
 async def remove_er(ctx, emoji):
 	role = discord.utils.get(ctx.message.server.roles, id=reaction_roles[emoji])
-	await bot.say('{} will no longer assign {}'.format(emoji, role.mention))
+	await bot.say('**{} will no longer assign {}**'.format(emoji, role.mention))
 	del reaction_roles[emoji]
 	edit_json('reaction_roles', reaction_roles)
 
@@ -463,14 +463,14 @@ async def remove_er(ctx, emoji):
 @bot.command(pass_context=True)
 async def er(ctx):
 	if len(reaction_roles) == 0:
-		await bot.say("No emojis have been assigned to roles")
+		await bot.say("**No emojis have been assigned to roles**")
 		return
 	global active_messages
 	server = ctx.message.server
 	message = ''
 	for emoji, role in reaction_roles.items():
 		role = discord.utils.get(server.roles, id=role)
-		message += '{} will assign {}\n'.format(emoji, role.mention)
+		message += '**__Click on the Reactions to get roles!__\n{} will assign {}\n**'.format(emoji, role.mention)
 	msg = await bot.say(message)
 	for emoji in reaction_roles.keys():
 		await bot.add_reaction(msg, emoji)
@@ -482,8 +482,6 @@ async def on_reaction_add(reaction, user):
         role = discord.utils.get(reaction.message.server.roles, id=reaction_roles[reaction.emoji])
         for r_id in reaction_roles.values():
             e_role = discord.utils.get(reaction.message.server.roles, id=r_id)
-            """if e_role in user.roles:
-                await bot.remove_roles(user, e_role)"""
         await bot.add_roles(user, role)
 
 @bot.event
@@ -497,113 +495,6 @@ async def on_reaction_remove(reaction, user):
 
 @bot.event
 async def on_message(message):
-    if message.content.startswith("r-selfroles"): 
-        thonkroom = bot.get_channel(id="381148244094222357")
-        thonker = discord.utils.get(message.server.roles, id="381139610924875787")
-        radish = discord.utils.get(message.server.roles, id="380764242757943326")
-        dj = discord.utils.get(message.server.roles, id="403594320634052610")
-        noevents = discord.utils.get(message.server.roles, id="435090845960634378")
-        em = discord.Embed(title="Selfroles", colour=0x3498db)
-        em.add_field(name="Searching for Selfroles...", value=None)
-        msg = await bot.send_message(message.channel, embed=em)
-        await asyncio.sleep(3)
-        em1  = discord.Embed(title="Selfroles", colour=0x3498db)
-        em.add_field(name=f"{thonker.mention}", value=f"You can get acces to the {thonkroom.mention} channel!")
-        await bot.edit_message(msg, embed=em1)
-        await asyncio.sleep(1)
-        em2  = discord.Embed(title="Selfroles", colour=0x3498db)
-        em.add_field(name=f"{radish.mention}", value=f"You wont gain any XP!")
-        await bot.edit_message(msg, embed=em2)
-        await asyncio.sleep(1)
-        em3  = discord.Embed(title="Selfroles", colour=0x3498db)
-        em.add_field(name=f"{dj.mention}", value=f"You can use the Music Bots' commands!")
-        await bot.edit_message(msg, embed=em3)
-        await asyncio.sleep(1)
-        em4  = discord.Embed(title="Selfroles", colour=0x3498db)
-        em.add_field(name=f"{noevents.mention}", value=f"You wont recive any Event notification!")
-        await bot.edit_message(msg, embed=em4)
-        await asyncio.sleep(1)
-    if message.content.lower().startswith("r-selfrole no events"):
-        em = discord.Embed(title="Selfrole", description="Searching", colour=0x3498db)
-        msg = await bot.send_message(message.channel, embed=em)
-        await asyncio.sleep(1)
-        em1 = discord.Embed(title="Selfrole", description="Searching.", colour=0x3498db)
-        await bot.edit_message(msg, embed=em1)
-        await asyncio.sleep(1)
-        em2 = discord.Embed(title="Selfrole", description="Searching..", colour=0x3498db)
-        await bot.edit_message(msg, embed=em2)
-        await asyncio.sleep(1)
-        em3 = discord.Embed(title="Selfrole", description="Searching...", colour=0x3498db)
-        await bot.edit_message(msg, embed=em3)
-        await asyncio.sleep(1)
-        em4 = discord.Embed(title="Selfrole", description="Role Found!", colour=0x3498db)
-        await bot.edit_message(msg, embed=em4)
-        await asyncio.sleep(1)
-        em5 = discord.Embed(title="Selfrole", description="__No Events__ role added successfully!\nYou wont get any Event notifications!", colour=0x1abc9c)
-        await bot.edit_message(msg, embed=em5)
-        role = discord.utils.get(message.server.roles, id="435090845960634378")
-        await bot.add_roles(message.author, role)
-    if message.content.lower().startswith("r-selfrole dj"):
-        em = discord.Embed(title="Selfrole", description="Searching", colour=0x3498db)
-        msg = await bot.send_message(message.channel, embed=em)
-        await asyncio.sleep(1)
-        em1 = discord.Embed(title="Selfrole", description="Searching.", colour=0x3498db)
-        await bot.edit_message(msg, embed=em1)
-        await asyncio.sleep(1)
-        em2 = discord.Embed(title="Selfrole", description="Searching..", colour=0x3498db)
-        await bot.edit_message(msg, embed=em2)
-        await asyncio.sleep(1)
-        em3 = discord.Embed(title="Selfrole", description="Searching...", colour=0x3498db)
-        await bot.edit_message(msg, embed=em3)
-        await asyncio.sleep(1)
-        em4 = discord.Embed(title="Selfrole", description="Role Found!", colour=0x3498db)
-        await bot.edit_message(msg, embed=em4)
-        await asyncio.sleep(1)
-        em5 = discord.Embed(title="Selfrole", description="__DJ__ role added successfully!\nNow you can use the Music Bots' commands!", colour=0x3498db)
-        await bot.edit_message(msg, embed=em5)
-        role = discord.utils.get(message.server.roles, id="403594320634052610")
-        await bot.add_roles(message.author, role)
-    if message.content.lower().startswith("r-selfrole radish"):
-        em = discord.Embed(title="Selfrole", description="Searching", colour=0x3498db)
-        msg = await bot.send_message(message.channel, embed=em)
-        await asyncio.sleep(1)
-        em1 = discord.Embed(title="Selfrole", description="Searching.", colour=0x3498db)
-        await bot.edit_message(msg, embed=em1)
-        await asyncio.sleep(1)
-        em2 = discord.Embed(title="Selfrole", description="Searching..", colour=0x3498db)
-        await bot.edit_message(msg, embed=em2)
-        await asyncio.sleep(1)
-        em3 = discord.Embed(title="Selfrole", description="Searching...", colour=0x3498db)
-        await bot.edit_message(msg, embed=em3)
-        await asyncio.sleep(1)
-        em4 = discord.Embed(title="Selfrole", description="Role Found!", colour=0x3498db)
-        await bot.edit_message(msg, embed=em4)
-        await asyncio.sleep(1)
-        em5 = discord.Embed(title="Selfrole", description="__Radish__ role added successfully!\nYou wont gain XP any more!", colour=0xe74c3c)
-        await bot.edit_message(msg, embed=em5)
-        role = discord.utils.get(message.server.roles, id="380764242757943326")
-        await bot.add_roles(message.author, role)
-    if message.content.lower().startswith("r-selfrole thonker"):
-        thonkroom = bot.get_channel(id="381148244094222357")
-        em = discord.Embed(title="Selfrole", description="Searching", colour=0x3498db)
-        msg = await bot.send_message(message.channel, embed=em)
-        await asyncio.sleep(1)
-        em1 = discord.Embed(title="Selfrole", description="Searching.", colour=0x3498db)
-        await bot.edit_message(msg, embed=em1)
-        await asyncio.sleep(1)
-        em2 = discord.Embed(title="Selfrole", description="Searching..", colour=0x3498db)
-        await bot.edit_message(msg, embed=em2)
-        await asyncio.sleep(1)
-        em3 = discord.Embed(title="Selfrole", description="Searching...", colour=0x3498db)
-        await bot.edit_message(msg, embed=em3)
-        await asyncio.sleep(1)
-        em4 = discord.Embed(title="Selfrole", description="Role Found!", colour=0x3498db)
-        await bot.edit_message(msg, embed=em4)
-        await asyncio.sleep(1)
-        em5 = discord.Embed(title="Selfrole", description=f"__Thonker__ role added successfully!\nNow you have acces to the {thonkroom.mention} channel!", colour=0x206694)
-        await bot.edit_message(msg, embed=em5)
-        role = discord.utils.get(message.server.roles, id="381139610924875787")
-        await bot.add_roles(message.author, role)
     if message.content.startswith("r-time"):
         timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
         await bot.send_message(message.channel, f"**{message.author.mention}, the time is __{timer}__**")
