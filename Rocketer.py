@@ -79,10 +79,10 @@ async def whoami(ctx):
 
 @bot.command(pass_context=True)
 async def slap(ctx, member : discord.Member=None, *, Reason=None):
-    if member or Reason is None:
+    if member is None:
         await bot.reply("**The usage is `r-slap {member} {Reason}` ty.**")
-    if member or Reason is not None:
-        await bot.say(f"**{ctx.message.author} slaped {member.mention} for {Reason}**")
+    else:
+        await bot.say(f"**{ctx.message.author} slaped {member.mention} for __{Reason}__**")
 
 @bot.command(pass_context=True)
 async def kill(ctx, user : discord.User=None):
@@ -102,7 +102,7 @@ async def kill(ctx, user : discord.User=None):
 
 @bot.command(pass_context=True)
 @commands.has_permissions(ban_members=True)
-async def unban(ctx, user : discord.User, *, Reason):
+async def unban(ctx, user : discord.User=None, *, Reason=None):
     if user.id == ctx.message.author.id:
         await bot.say("**I won't let you moderate yourself xD**")
     else:
