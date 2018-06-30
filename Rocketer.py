@@ -547,44 +547,50 @@ async def say(ctx, *, words=None):
 reaction_roles=read_json('reaction_roles')
 active_messages=[]
 
-@commands.has_permissions(administrator=True) 
 @bot.command(pass_context=True)
 async def add_er(ctx, emoji : str=None, role : discord.Role=None):
-	if (emoji or role) is None:
-		await bot.say('**Missing arguments `Emoji` or `@Role`**')
-		return
-	bot_member=discord.utils.get(ctx.message.server.members, id=bot.user.id)
-	if role.position >= bot_member.top_role.position:
-		await bot.say("**Can't assign that role, bot role needs to be raised.**")
-		return
-	reaction_roles[emoji] = role.id
-	edit_json('reaction_roles', reaction_roles)
-	await bot.say('**{} will assign members to {}**'.format(emoji, role.mention))
+    if ctx.message.author.id not in owner:
+        await bot.say('**I only let my owner use this command...**')
+    else:
+        if (emoji or role) is None:
+            await bot.say('**Missing arguments `Emoji` or `@Role`**')
+            return
+        bot_member=discord.utils.get(ctx.message.server.members, id=bot.user.id)
+        if role.position >= bot_member.top_role.position:
+            await bot.say("**Can't assign that role, bot role needs to be raised.**")
+            return
+        reaction_roles[emoji] = role.id
+        edit_json('reaction_roles', reaction_roles)
+        await bot.say('**{} will assign members to {}**'.format(emoji, role.mention))
 
-@commands.has_permissions(administrator=True)
 @bot.command(pass_context=True)
 async def remove_er(ctx, emoji):
-	role = discord.utils.get(ctx.message.server.roles, id=reaction_roles[emoji])
-	await bot.say('**{} will no longer assign {}**'.format(emoji, role.mention))
-	del reaction_roles[emoji]
-	edit_json('reaction_roles', reaction_roles)
+    if ctx.message.author.id not in owner:
+        await bot.say('**I only let my owner use this command...**')
+    else:
+        role = discord.utils.get(ctx.message.server.roles, id=reaction_roles[emoji])
+        await bot.say('**{} will no longer assign {}**'.format(emoji, role.mention))
+        del reaction_roles[emoji]
+        edit_json('reaction_roles', reaction_roles)
 
-@commands.has_permissions(administrator=True)
 @bot.command(pass_context=True)
 async def er(ctx):
-	if len(reaction_roles) == 0:
-		await bot.say("**No emojis have been assigned to roles**")
-		return
-	global active_messages
-	server = ctx.message.server
-	message = ''
-	for emoji, role in reaction_roles.items():
-		role = discord.utils.get(server.roles, id=role)
-		message += '{} will assign {}\n'.format(emoji, role.mention)
-	msg = await bot.say(f"**__Click on the Reactions to get Roles!__\n{message}**")
-	for emoji in reaction_roles.keys():
-		await bot.add_reaction(msg, emoji)
-	active_messages.append(msg.id)
+    if ctx.message.author.id not in owner:
+        await bot.say('**I only let my owner use this command...**')
+    else:
+        if len(reaction_roles) == 0:
+            await bot.say("**No emojis have been assigned to roles**")
+            return
+        global active_messages
+        server = ctx.message.server
+        message = ''
+        for emoji, role in reaction_roles.items():
+            role = discord.utils.get(server.roles, id=role)
+            message += '{} will assign {}\n'.format(emoji, role.mention)
+        msg = await bot.say(f"**__Click on the Reactions to get Roles!__\n{message}**")
+        for emoji in reaction_roles.keys():
+            await bot.add_reaction(msg, emoji)
+        active_messages.append(msg.id)
 
 @bot.event
 async def on_reaction_add(reaction, user):
