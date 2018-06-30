@@ -58,6 +58,11 @@ if __name__ == "__main__":
 #----------------COMMANDS--------------------
 @bot.command(pass_context=True)
 async def selfrole(ctx, role : discord.Role=None):
+    dj_role = discord.utils.get(ctx.message.server.roles, id="403594320634052610")
+    radish_role = discord.utils.get(ctx.message.server.roles, id="380764242757943326")
+    thonker_role =discord.utils.get(ctx.message.server.roles, id="381139610924875787")
+    noe_role = discord.utils.get(ctx.message.server.roles, id="435090845960634378")
+    selfroles = [dj_role, radish_role, thonker_role, noe_role]
     global color
     if selfrole is radish_role:
         color = 0xe74c3c
@@ -67,15 +72,6 @@ async def selfrole(ctx, role : discord.Role=None):
         color = 0x206694
     elif selfrole is noe_role:
         color = 0x95a5a6
-    dj_role = discord.utils.get(ctx.message.server.roles, id="403594320634052610")
-    global dj_role
-    radish_role = discord.utils.get(ctx.message.server.roles, id="380764242757943326")
-    global radish_role
-    thonker_role =discord.utils.get(ctx.message.server.roles, id="381139610924875787")
-    global thonker_role
-    noe_role = discord.utils.get(ctx.message.server.roles, id="435090845960634378")
-    global noe_role
-    selfroles = [dj_role, radish_role, thonker_role, noe_role]
     if role is None:
         e = discord.Embed(title="Selfroles", description="The usage is `r-selfrole {selfrole}`," + f" the available Selfroles are:\n{dj_role.mention}\n{radish_role.mention}\n{thonker_role.mention}\n{noe_role.mention}", colour=0x3498db)
         e.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
