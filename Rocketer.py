@@ -4,7 +4,7 @@ from discord.ext import commands
 from functions import edit_json,read_json
 #-------------------DATA---------------------
 
-version = "0.8.11"
+version = "0.8.12"
 owner = ["361534796830081024"]
 bot = commands.Bot(command_prefix='r-', description=None)
 bot.remove_command("help")
@@ -741,51 +741,47 @@ async def on_message(message):
         await bot.send_message(message.channel, "**Usage: `r-list 1` and `r-list 2`\nAlso `r-latest` for the latest commands**")
     if message.content.startswith('r-list 1'):
         emb = discord.Embed(title='MY COMMANDS:', description="Hey, check out my commands!", colour=0x3498db)
-        emb.add_field(name='--------------------', value=':small_blue_diamond: r-bot\n'
-                            ':white_small_square: r-game {game}\n'
-                            ':small_blue_diamond: r-say {words}\n'
-                            ':white_small_square: r-ping\n'
-                            ':small_blue_diamond: r-AmiOwner?\n'
-                            ':white_small_square: r-bigdigits\n'
-                            ':small_blue_diamond: r-digits {0-9}\n'
-                            ':white_small_square: r-help\n'
-                            ':small_blue_diamond: r-leavepls\n'
-                            ':white_small_square: r-poll {title} {options}\n'
-                            ':small_blue_diamond: r-invite\n'
-                            ':white_small_square: r-latest\n'
-                            ':small_blue_diamond: r-lenny\n'
-                            ':white_small_square: r-suggest {Q or S or C or B} {message}\n'
-                            ':small_blue_diamond: r-typing', inline=True)
+        emb.add_field(name='--------------------', value=':small_blue_diamond: r-typing\n'
+                            ':white_small_square: r-whoami\n'
+                            ':small_blue_diamond: r-slap\n'
+                            ':white_small_square: r-kill\n'
+                            ':small_blue_diamond: r-ping\n'
+                            ':white_small_square: r-roll\n'
+                            ':small_blue_diamond: r-add\n'
+                            ':white_small_square: r-suv\n'
+                            ':small_blue_diamond: r-mul\n'
+                            ':white_small_square: r-div\n'
+                            ':small_blue_diamond: r-exp\n'
+                            ':white_small_square: r-game\n'
+                            ':small_blue_diamond: r-nick\n'
+                            ':white_small_square: r-suggest\n'
+                            ':small_blue_diamond: r-poll\n'
+                            ':white_small_square: r-say\n', inline=False)
         emb.set_thumbnail(url='https://cdn.discordapp.com/emojis/385152309090451467.png?v=1')
         emb.set_footer(text='The Official Bot of PissRocket, inviting and using the Bot in other servers breaks the Term of Use.\nType r-help 2 for more commands!!')
         await bot.send_message(message.channel, embed=emb)
     if message.content.startswith('r-list 2'):
         emb = discord.Embed(title='MY COMMANDS:', description="Hey, check out my commands!", colour=0x3498db)
-        emb.add_field(name='--------------------', value=':white_small_square: r-add {number1} {number2}\n'
-                        ':small_blue_diamond: r-sub {number1} {number2}\n'
-                        ':white_small_square: r-mul {number1} {number2}\n'
-                        ':small_blue_diamond: r-div {number1} {number2}\n'
-                        ':white_small_square: r-exp {number1} {number2}\n'
-                        ':small_blue_diamond: r-nick {name}\n'
-                        ':white_small_square: r-verify\n'
-                        ':small_blue_diamond: r-register\n'
-                        ':white_small_square: r-clear {number}\n'
-                        ':small_blue_diamond: r-oof\n'
-                        ':white_small_square: r-8ball {Question}\n'
-                        ':small_blue_diamond: r-help\n'
-                        ':white_small_square: r-kill {user}\n'
-                        ':small_blue_diamond: r-slap {user} {Reason}\n'
-                        ':white_small_square: r-whoami', inline=True)
+        emb.add_field(name='--------------------', value=':small_blue_diamond: r-time\n'
+                            ':white_small_square: r-mod\n'
+                            ':small_blue_diamond: r-help\n'
+                            ':white_small_square: r-AmIOwner?\n'
+                            ':small_blue_diamond: r-bigdigits\n'
+                            ':white_small_square: r-8ball\n'
+                            ':small_blue_diamond: r-lenny\n'
+                            ':white_small_square: r-oof\n'
+                            ':small_blue_diamond: r-leavepls\n'
+                            ':white_small_square: r-invite\n'
+                            ':small_blue_diamond: r-list\n'
+                            ':white_small_square: r-latest\n'
+                            ':small_blue_diamond: r-bot\n', inline=False)
         emb.set_thumbnail(url='https://cdn.discordapp.com/emojis/385152309090451467.png?v=1')
         emb.set_footer(text='The Official Bot of PissRocket, inviting and using the Bot in other servers breaks the Term of Use.\nType r-help for more commands!!')
         await bot.send_message(message.channel, embed=emb)
     if message.content.startswith('r-latest'):
         emb = discord.Embed(title="LATEST UPDATES", description=":high_brightness: The Currently version is __" + version + "__ :high_brightness:\n\n"
-                            ":small_blue_diamond: r-typing\n"
+                            ":white_small_square: r-typing\n"
                             "Sends a weird typing\n"
-                            "\n"
-                            ":white_small_square: r-kill {user}\n"
-                            "Dont ab00se.\n"
                             "\n"
                             ":small_blue_diamond: r-whoami\n"
                             "Who am I?\n"
