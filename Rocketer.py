@@ -470,7 +470,7 @@ async def er(ctx):
 	message = ''
 	for emoji, role in reaction_roles.items():
 		role = discord.utils.get(server.roles, id=role)
-		message += '**__Click on the Reactions to get roles!__\n{} will assign {}\n**'.format(emoji, role.mention)
+		message += '**{} will assign {}\n**'.format(emoji, role.mention)
 	msg = await bot.say(message)
 	for emoji in reaction_roles.keys():
 		await bot.add_reaction(msg, emoji)
