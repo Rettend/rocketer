@@ -58,6 +58,7 @@ if __name__ == "__main__":
 #----------------COMMANDS--------------------
 @bot.command(pass_context=True)
 async def selfrole(ctx, role : discord.Role=None):
+    global color
     dj_role = discord.utils.get(ctx.message.server.roles, id="403594320634052610")
     radish_role = discord.utils.get(ctx.message.server.roles, id="380764242757943326")
     thonker_role =discord.utils.get(ctx.message.server.roles, id="381139610924875787")
@@ -84,7 +85,6 @@ async def selfrole(ctx, role : discord.Role=None):
                 color = 0x206694
             elif selfrole is noe_role:
                 color = 0x95a5a6
-            return color
             e = discord.Embed(title="Selfroles", description=f"Selfrole found!\nSelfrole ({role.mention}) added succesfuly!", colour=color)
             e.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
             timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
