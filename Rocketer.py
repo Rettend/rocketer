@@ -78,21 +78,27 @@ async def whoami(ctx):
     await bot.send_message(ctx.message.channel, embed=em)
 
 @bot.command(pass_context=True)
-async def slap(ctx, member : discord.Member, *, Reason):
-    await bot.say(f"**{ctx.message.author} slaped {member.mention} for {Reason}**")
+async def slap(ctx, member : discord.Member=None, *, Reason=None):
+    if member or Reason is None:
+        await bot.reply("**The usage is `r-slap {member} {Reason}` ty.**")
+    else:
+        await bot.say(f"**{ctx.message.author} slaped {member.mention} for {Reason}**")
 
 @bot.command(pass_context=True)
 async def kill(ctx, user : discord.User):
-    life = ["Yes", "Yes2" "No", "No2"]
-    yourlife = random.choice(life)
-    if yourlife == "Yes":
-        await bot.say(f"**{user.mention} got killed by {ctx.message.author}** <:rip:449949312508493834>")
-    elif yourlife == "Yes2":
-        await bot.say(f"**{ctx.message.author} shoot down {user.mention}**")
-    elif yourlife == "No":
-        await bot.say(f"**Ha ha {ctx.message.author}, really funny xd**")
+    if user is None:
+        await bot.reply("**The usage is `r-kill {member}` ty.**")
     else:
-        await bot.say(f"**No u, {ctx.message.author}**")
+        life = ["Yes", "Yes2" "No", "No2"]
+        yourlife = random.choice(life)
+        if yourlife == "Yes":
+            await bot.say(f"**{user.mention} got killed by {ctx.message.author}** <:rip:449949312508493834>")
+        elif yourlife == "Yes2":
+            await bot.say(f"**{ctx.message.author} shoot down {user.mention}**")
+        elif yourlife == "No":
+            await bot.say(f"**Ha ha {ctx.message.author}, really funny xd**")
+        else:
+            await bot.say(f"**No u, {ctx.message.author}**")
 
 @bot.command(pass_context=True)
 @commands.has_permissions(ban_members=True)
