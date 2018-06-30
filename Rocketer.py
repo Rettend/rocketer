@@ -81,11 +81,11 @@ async def whoami(ctx):
 async def slap(ctx, member : discord.Member=None, *, Reason=None):
     if member or Reason is None:
         await bot.reply("**The usage is `r-slap {member} {Reason}` ty.**")
-    else:
+    if member or Reason is not None:
         await bot.say(f"**{ctx.message.author} slaped {member.mention} for {Reason}**")
 
 @bot.command(pass_context=True)
-async def kill(ctx, user : discord.User):
+async def kill(ctx, user : discord.User=None):
     if user is None:
         await bot.reply("**The usage is `r-kill {member}` ty.**")
     else:
