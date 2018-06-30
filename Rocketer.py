@@ -64,7 +64,7 @@ async def selfrole(ctx, role : discord.Role=None):
     noe_role = discord.utils.get(ctx.message.server.roles, id="435090845960634378")
     selfroles = [dj_role, radish_role, thonker_role, noe_role]
     if role is None:
-        e = discord.Embed(title="Selfroles", description=f"The usage is `r-selfrole \{selfrole}`, the available Selfroles are:\n{dj_role.mention}\n{radish_role.mention}\n{thonker_role.mention}\n{noe_role.mention}", colour=0x3498db)
+        e = discord.Embed(title="Selfroles", description="The usage is `r-selfrole {selfrole}`," + f" the available Selfroles are:\n{dj_role.mention}\n{radish_role.mention}\n{thonker_role.mention}\n{noe_role.mention}", colour=0x3498db)
         e.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
         timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
         e.set_footer(text=timer)
@@ -74,19 +74,34 @@ async def selfrole(ctx, role : discord.Role=None):
         timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
         e.set_footer(text=timer)
     else:
-        await bot.add_roles(ctx.message.author, role)
-        if selfrole is radish_role:
-            color = 0xe74c3c
-        elif selfrole is dj_role:
-            color = 0x3498db
-        elif selfrole is thonker_role:
-            color = 0x206694
-        elif selfrole is noe_role:
-            color = 0x95a5a6
-        e = discord.Embed(title="Selfroles", description=f"Selfrole found!\nSelfrole ({role.mention}) added succesfuly!", colour=color)
-        e.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
-        timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
-        e.set_footer(text=timer)
+        if role not in ctx.message.author.roles:
+            await bot.add_roles(ctx.message.author, role)
+            if selfrole is radish_role:
+                color = 0xe74c3c
+            if selfrole is dj_role:
+                color = 0x3498db
+            if selfrole is thonker_role:
+                color = 0x206694
+            if selfrole is noe_role:
+                color = 0x95a5a6
+            e = discord.Embed(title="Selfroles", description=f"Selfrole found!\nSelfrole ({role.mention}) added succesfuly!", colour=color)
+            e.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
+            timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
+            e.set_footer(text=timer)
+        else:
+            await bot.remove_roles(ctx.message.author, role)
+            if selfrole is radish_role:
+                color = 0xe74c3c
+            if selfrole is dj_role:
+                color = 0x3498db
+            if selfrole is thonker_role:
+                color = 0x206694
+            if selfrole is noe_role:
+                color = 0x95a5a6
+            e = discord.Embed(title="Selfroles", description=f"Selfrole found!\nSelfrole ({role.mention}) removed succesfuly!", colour=color)
+            e.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
+            timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
+            e.set_footer(text=timer)
     await bot.say(embed=e)
 
 """@bot.command(pass_context=True)
