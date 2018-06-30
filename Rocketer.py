@@ -58,6 +58,15 @@ if __name__ == "__main__":
 #----------------COMMANDS--------------------
 @bot.command(pass_context=True)
 async def selfrole(ctx, role : discord.Role=None):
+    global color
+    if selfrole is radish_role:
+        color = 0xe74c3c
+    elif selfrole is dj_role:
+        color = 0x3498db
+    elif selfrole is thonker_role:
+        color = 0x206694
+    elif selfrole is noe_role:
+        color = 0x95a5a6
     dj_role = discord.utils.get(ctx.message.server.roles, id="403594320634052610")
     radish_role = discord.utils.get(ctx.message.server.roles, id="380764242757943326")
     thonker_role =discord.utils.get(ctx.message.server.roles, id="381139610924875787")
@@ -76,30 +85,12 @@ async def selfrole(ctx, role : discord.Role=None):
     else:
         if role not in ctx.message.author.roles:
             await bot.add_roles(ctx.message.author, role)
-            if selfrole is radish_role:
-                color = 0xe74c3c
-            elif selfrole is dj_role:
-                color = 0x3498db
-            elif selfrole is thonker_role:
-                color = 0x206694
-            elif selfrole is noe_role:
-                color = 0x95a5a6
-            global color
             e = discord.Embed(title="Selfroles", description=f"Selfrole found!\nSelfrole ({role.mention}) added succesfuly!", colour=color)
             e.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
             timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
             e.set_footer(text=timer)
         else:
             await bot.remove_roles(ctx.message.author, role)
-            if selfrole is radish_role:
-                color = 0xe74c3c
-            elif selfrole is dj_role:
-                color = 0x3498db
-            elif selfrole is thonker_role:
-                color = 0x206694
-            elif selfrole is noe_role:
-                color = 0x95a5a6
-            global color
             e = discord.Embed(title="Selfroles", description=f"Selfrole found!\nSelfrole ({role.mention}) removed succesfuly!", colour=color)
             e.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
             timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
