@@ -547,7 +547,7 @@ async def say(ctx, *, words=None):
 reaction_roles=read_json('reaction_roles')
 active_messages=[]
 
-@commands.is_owner()
+@commands.has_permissions(administrator=True) 
 @bot.command(pass_context=True)
 async def add_er(ctx, emoji : str=None, role : discord.Role=None):
 	if (emoji or role) is None:
@@ -561,7 +561,7 @@ async def add_er(ctx, emoji : str=None, role : discord.Role=None):
 	edit_json('reaction_roles', reaction_roles)
 	await bot.say('**{} will assign members to {}**'.format(emoji, role.mention))
 
-@commands.is_owner()
+@commands.has_permissions(administrator=True)
 @bot.command(pass_context=True)
 async def remove_er(ctx, emoji):
 	role = discord.utils.get(ctx.message.server.roles, id=reaction_roles[emoji])
@@ -569,7 +569,7 @@ async def remove_er(ctx, emoji):
 	del reaction_roles[emoji]
 	edit_json('reaction_roles', reaction_roles)
 
-@commands.is_owner()
+@commands.has_permissions(administrator=True)
 @bot.command(pass_context=True)
 async def er(ctx):
 	if len(reaction_roles) == 0:
