@@ -78,12 +78,13 @@ async def selfrole(ctx, role : discord.Role=None):
             await bot.add_roles(ctx.message.author, role)
             if selfrole is radish_role:
                 color = 0xe74c3c
-            if selfrole is dj_role:
+            elif selfrole is dj_role:
                 color = 0x3498db
-            if selfrole is thonker_role:
+            elif selfrole is thonker_role:
                 color = 0x206694
-            if selfrole is noe_role:
+            elif selfrole is noe_role:
                 color = 0x95a5a6
+            return color
             e = discord.Embed(title="Selfroles", description=f"Selfrole found!\nSelfrole ({role.mention}) added succesfuly!", colour=color)
             e.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
             timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
@@ -92,11 +93,11 @@ async def selfrole(ctx, role : discord.Role=None):
             await bot.remove_roles(ctx.message.author, role)
             if selfrole is radish_role:
                 color = 0xe74c3c
-            if selfrole is dj_role:
+            elif selfrole is dj_role:
                 color = 0x3498db
-            if selfrole is thonker_role:
+            elif selfrole is thonker_role:
                 color = 0x206694
-            if selfrole is noe_role:
+            elif selfrole is noe_role:
                 color = 0x95a5a6
             e = discord.Embed(title="Selfroles", description=f"Selfrole found!\nSelfrole ({role.mention}) removed succesfuly!", colour=color)
             e.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
@@ -152,7 +153,7 @@ async def kill(ctx, user : discord.User=None):
 async def unban(ctx, user : discord.User=None, *, Reason=None):
     if user is None:
         await bot.reply("**The usage is `r-unban {member} {Reason}` ty.**")
-    if Reason is None:
+    elif Reason is None:
         await bot.reply("**The usage is `r-slap {member} {Reason}` ty.**")
     else:
         if user.id == ctx.message.author.id:
@@ -180,9 +181,9 @@ async def unban(ctx, user : discord.User=None, *, Reason=None):
 async def ban(ctx, user : discord.User=None, Day : int=None, *, Reason=None):
     if user is None:
         await bot.reply("**The usage is `r-ban {member} {0 - 7 amount of days to delete his messages} {Reason}` ty.**")
-    if Reason is None:
+    elif Reason is None:
         await bot.reply("**The usage is `r-ban {member} {0 - 7 amount of days to delete his messages} {Reason}` ty.**")
-    if Day is None:
+    elif Day is None:
         await bot.reply("**The usage is `r-ban {member} {0 - 7 amount of days to delete his messages} {Reason}` ty.**")
     else:
         if user.id == ctx.message.author.id:
@@ -207,7 +208,7 @@ async def ban(ctx, user : discord.User=None, Day : int=None, *, Reason=None):
 async def kick(ctx, user : discord.User=None, *, Reason=None):
     if user is None:
         await bot.reply("**The usage is `r-kick {member} {Reason}` ty.**")
-    if Reason is None:
+    elif Reason is None:
         await bot.reply("**The usage is `r-kick {member} {Reason}` ty.**")
     else:
         if user.id == ctx.message.author.id:
@@ -231,9 +232,9 @@ async def kick(ctx, user : discord.User=None, *, Reason=None):
 async def mute(ctx, user : discord.User=None, duration : int=None, *, Reason=None):
     if user is None:
         await bot.reply("**The usage is `r-mute {member} {duration(in sec)} {Reason}` ty.**")
-    if Reason is None:
+    elif Reason is None:
         await bot.reply("**The usage is `r-mute {member} {duration(in sec)} {Reason}` ty.**")
-    if duration is None:
+    elif duration is None:
         await bot.reply("**The usage is `r-mute {member} {duration(in sec)} {Reason}` ty.**")
     else:
         if user.id == ctx.message.author.id:
@@ -269,7 +270,7 @@ async def mute(ctx, user : discord.User=None, duration : int=None, *, Reason=Non
 async def unmute(ctx, user : discord.User=None, *, Reason=None):
     if user is None:
         await bot.reply("**The usage is `r-unmute {member} {Reason}` ty.**")
-    if Reason is None:
+    elif Reason is None:
         await bot.reply("**The usage is `r-unmute {member} {Reason}` ty.**")
     else:
         if user.id == ctx.message.author.id:
@@ -315,7 +316,7 @@ async def ping(ctx):
 async def lock(ctx, duration : int=None, *, Reason=None):
     if Reason is None:
         await bot.reply("**The usage is `r-lock {duration (in sec)} {Reason}` ty.**")
-    if duration is None:
+    elif duration is None:
         await bot.reply("**The usage is `r-lock {duration (in sec)} {Reason}` ty.**")
     else:
         Registered = discord.utils.get(ctx.message.server.roles, name="Registered")
@@ -393,7 +394,7 @@ async def clear(ctx, number : int=None):
 async def roll(ctx, x : int=None, y : int=None):
     if x is None:
         await bot.reply("**The usage is `r-roll {number} {number}` ty.**")
-    if y is None:
+    elif y is None:
         await bot.reply("**The usage is `r-roll {number} {number}` ty.**")
     else:
         msg = random.randint(x, y)
@@ -405,7 +406,7 @@ async def roll(ctx, x : int=None, y : int=None):
 async def sub(ctx, x : int=None, y : int=None):
     if x is None:
         await bot.reply("**The usage is `r-sub {number} {number}` ty.**")
-    if y is None:
+    elif y is None:
         await bot.reply("**The usage is `r-sub {number} {number}` ty.**")
     else:
         msg = x - y
@@ -417,7 +418,7 @@ async def sub(ctx, x : int=None, y : int=None):
 async def mul(ctx, x : int=None, y : int=None):
     if x is None:
         await bot.reply("**The usage is `r-mul {number} {number}` ty.**")
-    if y is None:
+    elif y is None:
         await bot.reply("**The usage is `r-mul {number} {number}` ty.**")
     else:
         msg = x * y
@@ -429,7 +430,7 @@ async def mul(ctx, x : int=None, y : int=None):
 async def div(ctx, x : int=None, y : int=None):
     if x is None:
         await bot.reply("**The usage is `r-div {number} {number}` ty.**")
-    if y is None:
+    elif y is None:
         await bot.reply("**The usage is `r-div {number} {number}` ty.**")
     else:
         msg = x / y
@@ -441,7 +442,7 @@ async def div(ctx, x : int=None, y : int=None):
 async def exp(ctx, x : int=None, y : int=None):
     if x is None:
         await bot.reply("**The usage is `r-exp {number} {number}` ty.**")
-    if y is None:
+    elif y is None:
         await bot.reply("**The usage is `r-exp {number} {number}` ty.**")
     else:
         msg = x ** y
@@ -453,7 +454,7 @@ async def exp(ctx, x : int=None, y : int=None):
 async def add(ctx, x : int=None, y : int=None):
     if x is None:
         await bot.reply("**The usage is `r-add {number} {number}` ty.**")
-    if y is None:
+    elif y is None:
         await bot.reply("**The usage is `r-add {number} {number}` ty.**")
     else:
         msg = x + y
@@ -483,7 +484,7 @@ async def nick(ctx, *, name=None):
 async def suggest(ctx, pref=None, *, text=None):
     if pref is None:
         await bot.reply("**The usage is `r-suggest {prefix (Q, S, C, B)} {text}` ty.**")
-    if text is None:
+    elif text is None:
         await bot.reply("**The usage is `r-suggest {prefix (Q, S, C, B)} {text}` ty.**")
     else:
         try:
@@ -519,7 +520,7 @@ async def suggest(ctx, pref=None, *, text=None):
 async def poll(ctx, options: str=None, *, question=None):
     if options is None:
         await bot.reply("**The usage is `r-poll {options (2-10)} {Question or Suggestion}` ty.**")
-    if question is None:
+    elif question is None:
         await bot.reply("**The usage is `r-poll {options (2-10)} {Question or Suggestion}` ty.**")
     else:
         if len(options) <= 1:
