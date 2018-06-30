@@ -4,7 +4,7 @@ from discord.ext import commands
 from functions import edit_json,read_json
 #-------------------DATA---------------------
 
-version = "0.8.12"
+version = "0.9.0"
 owner = ["361534796830081024"]
 bot = commands.Bot(command_prefix='r-', description=None)
 bot.remove_command("help")
@@ -103,18 +103,74 @@ async def kill(ctx, user : discord.User=None):
 @bot.command(pass_context=True)
 @commands.has_permissions(ban_members=True)
 async def unban(ctx, user : discord.User=None, *, Reason=None):
-    if user.id == ctx.message.author.id:
-        await bot.say("**I won't let you moderate yourself xD**")
+    if user is None:
+        await bot.reply("**The usage is `r-unban {member} {Reason}` ty.**")
+    if Reason is None:
+        await bot.reply("**The usage is `r-slap {member} {Reason}` ty.**")
     else:
-        banneds = await bot.get_bans(ctx.message.server)
-        if user not in banneds:
-            bot.say("**Plz mention a banned user!**")
+        if user.id == ctx.message.author.id:
+            await bot.say("**I won't let you moderate yourself xD**")
+        else:
+            banneds = await bot.get_bans(ctx.message.server)
+            if user not in banneds:
+                bot.say("**Plz mention a banned user!**")
+            else:
+                room = ctx.message.channel
+                await bot.unban(ctx.message.server, user)
+                LogRoom = bot.get_channel(id="401752340366884885")
+                await bot.say(f"**{user.mention} got unbanned by {ctx.message.author.mention} for __{Reason}__\nSee the logs in {LogRoom.mention}**")
+                em = discord.Embed(title="╲⎝⧹𝓤𝓝𝓑𝓐𝓝⧸⎠╱", description=None, colour=0xe91e63)
+                em.add_field(name="User", value=f"{user.mention}")
+                em.add_field(name="Moderator", value=f"{ctx.message.author}")
+                em.add_field(name="Reason", value=f"{Reason}")
+                em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
+                timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
+                em.set_footer(text=timer)
+                await bot.send_message(LogRoom, embed=em)
+
+@bot.command(pass_context=True)
+@commands.has_permissions(ban_members=True)
+async def ban(ctx, user : discord.User=None, Day : int=None, *, Reason=None):
+    if user is None:
+        await bot.reply("**The usage is `r-ban {member} {0 - 7 amount of days to delete his messages} {Reason}` ty.**")
+    if Reason is None:
+        await bot.reply("**The usage is `r-ban {member} {0 - 7 amount of days to delete his messages} {Reason}` ty.**")
+    if Day is None:
+        await bot.reply("**The usage is `r-ban {member} {0 - 7 amount of days to delete his messages} {Reason}` ty.**")
+    else:
+        if user.id == ctx.message.author.id:
+            await bot.say("**I won't let you moderate yourself xD**")
         else:
             room = ctx.message.channel
-            await bot.unban(ctx.message.server, user)
+            await bot.ban(user, delete_message_days=Day)
             LogRoom = bot.get_channel(id="401752340366884885")
-            await bot.say(f"**{user.mention} got unbanned by {ctx.message.author.mention} for __{Reason}__\nSee the logs in {LogRoom.mention}**")
-            em = discord.Embed(title="╲⎝⧹𝓤𝓝𝓑𝓐𝓝⧸⎠╱", description=None, colour=0xe91e63)
+            await bot.say(f"**{user.mention} got banned by {ctx.message.author.mention} for __{Reason}__\nSee the logs in {LogRoom.mention}**")
+            em = discord.Embed(title="╲⎝⧹𝓑𝓐𝓝⧸⎠╱", description=None, colour=0xad1457)
+            em.add_field(name="User", value=f"{user.mention}")
+            em.add_field(name="Moderator", value=f"{ctx.message.author}")
+            em.add_field(name="Reason", value=f"{Reason}")
+            em.set_thumbnail(url="https://cdn.discordapp.com/attachments/388945761611808769/453211671935057920/banned.gif")
+            em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
+            timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
+            em.set_footer(text=timer)
+            await bot.send_message(LogRoom, embed=em)
+
+@bot.command(pass_context=True)
+@commands.has_permissions(kick_members=True)
+async def kick(ctx, user : discord.User=None, *, Reason=None):
+    if user is None:
+        await bot.reply("**The usage is `r-kick {member} {Reason}` ty.**")
+    if Reason is None:
+        await bot.reply("**The usage is `r-kick {member} {Reason}` ty.**")
+    else:
+        if user.id == ctx.message.author.id:
+            await bot.say("**I won't let you moderate yourself xD**")
+        else:
+            room = ctx.message.channel
+            await bot.kick(user)
+            LogRoom = bot.get_channel(id="401752340366884885")
+            await bot.say(f"**{user.mention} got Kicked by {ctx.message.author.mention} for __{Reason}__\nSee the logs in {LogRoom.mention}**")
+            em = discord.Embed(title="╲⎝⧹𝓚𝓘𝓒𝓚⧸⎠╱", description=None, colour=0xe74c3c)
             em.add_field(name="User", value=f"{user.mention}")
             em.add_field(name="Moderator", value=f"{ctx.message.author}")
             em.add_field(name="Reason", value=f"{Reason}")
@@ -124,94 +180,67 @@ async def unban(ctx, user : discord.User=None, *, Reason=None):
             await bot.send_message(LogRoom, embed=em)
 
 @bot.command(pass_context=True)
-@commands.has_permissions(ban_members=True)
-async def ban(ctx, user : discord.User, Day : int, *, Reason):
-    if user.id == ctx.message.author.id:
-        await bot.say("**I won't let you moderate yourself xD**")
+@commands.has_permissions(manage_messages=True)
+async def mute(ctx, user : discord.User=None, duration : int=None, *, Reason=None):
+    if user is None:
+        await bot.reply("**The usage is `r-mute {member} {duration(in sec)} {Reason}` ty.**")
+    if Reason is None:
+        await bot.reply("**The usage is `r-mute {member} {duration(in sec)} {Reason}` ty.**")
+    if duration is None:
+        await bot.reply("**The usage is `r-mute {member} {duration(in sec)} {Reason}` ty.**")
     else:
-        room = ctx.message.channel
-        await bot.ban(user, delete_message_days=Day)
-        LogRoom = bot.get_channel(id="401752340366884885")
-        await bot.say(f"**{user.mention} got banned by {ctx.message.author.mention} for __{Reason}__\nSee the logs in {LogRoom.mention}**")
-        em = discord.Embed(title="╲⎝⧹𝓑𝓐𝓝⧸⎠╱", description=None, colour=0xad1457)
-        em.add_field(name="User", value=f"{user.mention}")
-        em.add_field(name="Moderator", value=f"{ctx.message.author}")
-        em.add_field(name="Reason", value=f"{Reason}")
-        em.set_thumbnail(url="https://cdn.discordapp.com/attachments/388945761611808769/453211671935057920/banned.gif")
-        em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
-        timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
-        em.set_footer(text=timer)
-        await bot.send_message(LogRoom, embed=em)
-
-@bot.command(pass_context=True)
-@commands.has_permissions(kick_members=True)
-async def kick(ctx, user : discord.User, *, Reason):
-    if user.id == ctx.message.author.id:
-        await bot.say("**I won't let you moderate yourself xD**")
-    else:
-        room = ctx.message.channel
-        await bot.kick(user)
-        LogRoom = bot.get_channel(id="401752340366884885")
-        await bot.say(f"**{user.mention} got Kicked by {ctx.message.author.mention} for __{Reason}__\nSee the logs in {LogRoom.mention}**")
-        em = discord.Embed(title="╲⎝⧹𝓚𝓘𝓒𝓚⧸⎠╱", description=None, colour=0xe74c3c)
-        em.add_field(name="User", value=f"{user.mention}")
-        em.add_field(name="Moderator", value=f"{ctx.message.author}")
-        em.add_field(name="Reason", value=f"{Reason}")
-        em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
-        timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
-        em.set_footer(text=timer)
-        await bot.send_message(LogRoom, embed=em)
+        if user.id == ctx.message.author.id:
+            await bot.say("**I won't let you moderate yourself xD**")
+        else:
+            LogRoom = bot.get_channel(id="401752340366884885")
+            room = ctx.message.channel
+            MutedRole = discord.utils.get(ctx.message.server.roles, name="Muted")
+            await bot.add_roles(user, MutedRole)
+            await bot.say(f"**{user.mention} got Muted (for {duration} sec) by {ctx.message.author.mention} for __{Reason}__\nSee the logs in {LogRoom.mention}**")
+            em = discord.Embed(title="╲⎝⧹𝓜𝓤𝓣𝓔⧸⎠╱", description=None, colour=0x11806a)
+            em.add_field(name="User", value=f"{user.mention}")
+            em.add_field(name="Moderator", value=f"{ctx.message.author}")
+            em.add_field(name="Reason", value=f"{Reason}")
+            em.add_field(name="Duration", value=f"{duration} sec")
+            em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
+            timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
+            em.set_footer(text=timer)
+            await bot.send_message(LogRoom, embed=em)
+            await asyncio.sleep(duration)
+            await bot.remove_roles(user, MutedRole)
+            em = discord.Embed(title="╲⎝⧹𝓤𝓝𝓜𝓤𝓣𝓔⧸⎠╱", description=None, colour=0x1abc9c)
+            em.add_field(name="User", value=f"{user.mention}")
+            em.add_field(name="Moderator", value=f"{ctx.message.author}")
+            em.add_field(name="Reason", value="Time is up...")
+            em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
+            timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
+            em.set_footer(text=timer)
+            await bot.send_message(LogRoom, embed=em)
 
 @bot.command(pass_context=True)
 @commands.has_permissions(manage_messages=True)
-async def mute(ctx, user : discord.User, duration : int, *, Reason):
-    if user.id == ctx.message.author.id:
-        await bot.say("**I won't let you moderate yourself xD**")
+async def unmute(ctx, user : discord.User=None, *, Reason=None):
+    if user is None:
+        await bot.reply("**The usage is `r-unmute {member} {Reason}` ty.**")
+    if Reason is None:
+        await bot.reply("**The usage is `r-unmute {member} {Reason}` ty.**")
     else:
-        LogRoom = bot.get_channel(id="401752340366884885")
-        room = ctx.message.channel
-        MutedRole = discord.utils.get(ctx.message.server.roles, name="Muted")
-        await bot.add_roles(user, MutedRole)
-        await bot.say(f"**{user.mention} got Muted (for {duration} sec) by {ctx.message.author.mention} for __{Reason}__\nSee the logs in {LogRoom.mention}**")
-        em = discord.Embed(title="╲⎝⧹𝓜𝓤𝓣𝓔⧸⎠╱", description=None, colour=0x11806a)
-        em.add_field(name="User", value=f"{user.mention}")
-        em.add_field(name="Moderator", value=f"{ctx.message.author}")
-        em.add_field(name="Reason", value=f"{Reason}")
-        em.add_field(name="Duration", value=f"{duration} sec")
-        em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
-        timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
-        em.set_footer(text=timer)
-        await bot.send_message(LogRoom, embed=em)
-        await asyncio.sleep(duration)
-        await bot.remove_roles(user, MutedRole)
-        em = discord.Embed(title="╲⎝⧹𝓤𝓝𝓜𝓤𝓣𝓔⧸⎠╱", description=None, colour=0x1abc9c)
-        em.add_field(name="User", value=f"{user.mention}")
-        em.add_field(name="Moderator", value=f"{ctx.message.author}")
-        em.add_field(name="Reason", value="Time is up...")
-        em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
-        timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
-        em.set_footer(text=timer)
-        await bot.send_message(LogRoom, embed=em)
-
-@bot.command(pass_context=True)
-@commands.has_permissions(manage_messages=True)
-async def unmute(ctx, user : discord.User, *, Reason):
-    if user.id == ctx.message.author.id:
-        await bot.say("**I won't let you moderate yourself xD**")
-    else:
-        LogRoom = bot.get_channel(id="401752340366884885")
-        room = ctx.message.channel
-        MutedRole = discord.utils.get(ctx.message.server.roles, name="Muted")
-        await bot.remove_roles(user, MutedRole)
-        await bot.say(f"**{user.mention} got UnMuted (he he) by {ctx.message.author.mention} for __{Reason}__\nSee the logs in {LogRoom.mention}**")
-        em = discord.Embed(title="╲⎝⧹𝓤𝓝𝓜𝓤𝓣𝓔⧸⎠╱", description=None, colour=0x1abc9c)
-        em.add_field(name="User", value=f"{user.mention}")
-        em.add_field(name="Moderator", value=f"{ctx.message.author}")
-        em.add_field(name="Reason", value=f"{Reason}")
-        em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
-        timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
-        em.set_footer(text=timer)
-        await bot.send_message(LogRoom, embed=em)
+        if user.id == ctx.message.author.id:
+            await bot.say("**I won't let you moderate yourself xD**")
+        else:
+            LogRoom = bot.get_channel(id="401752340366884885")
+            room = ctx.message.channel
+            MutedRole = discord.utils.get(ctx.message.server.roles, name="Muted")
+            await bot.remove_roles(user, MutedRole)
+            await bot.say(f"**{user.mention} got UnMuted (he he) by {ctx.message.author.mention} for __{Reason}__\nSee the logs in {LogRoom.mention}**")
+            em = discord.Embed(title="╲⎝⧹𝓤𝓝𝓜𝓤𝓣𝓔⧸⎠╱", description=None, colour=0x1abc9c)
+            em.add_field(name="User", value=f"{user.mention}")
+            em.add_field(name="Moderator", value=f"{ctx.message.author}")
+            em.add_field(name="Reason", value=f"{Reason}")
+            em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
+            timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
+            em.set_footer(text=timer)
+            await bot.send_message(LogRoom, embed=em)
         
 @bot.command(pass_context=True)
 async def ping(ctx):
@@ -236,162 +265,234 @@ async def ping(ctx):
 
 @bot.command(pass_context=True)
 @commands.has_permissions(manage_channels=True)
-async def lock(ctx, *, Reason):
-    Registered = discord.utils.get(ctx.message.server.roles, name="Registered")
-    overwrite = discord.PermissionOverwrite()
-    overwrite.send_messages = False
-    await bot.edit_channel_permissions(ctx.message.channel, Registered, overwrite)
-    await bot.send_message(ctx.message.channel, f"**{ctx.message.channel.mention} is now locked for __{Reason}__**")
-    LogRoom = bot.get_channel(id="401752340366884885")
-    em = discord.Embed(title="╲⎝⧹𝓛𝓞𝓒𝓚⧸⎠╱", description=None, colour=0x1f8b4c)
-    em.add_field(name="Channel", value=f"{ctx.message.channel.mention}")
-    em.add_field(name="Moderator", value=f"{ctx.message.author}")
-    em.add_field(name="Reason", value=f"{Reason}")
-    em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
-    timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
-    em.set_footer(text=timer)
-    await bot.send_message(LogRoom, embed=em)
-
-@bot.command(pass_context=True)
-@commands.has_permissions(manage_channels=True)
-async def unlock(ctx, *, Reason):
-    Registered = discord.utils.get(ctx.message.server.roles, name="Registered")
-    overwrite = discord.PermissionOverwrite()
-    overwrite.send_messages = True
-    await bot.edit_channel_permissions(ctx.message.channel, Registered, overwrite)
-    await bot.send_message(ctx.message.channel, f"**{ctx.message.channel.mention} is now unlocked for __{Reason}__**")
-    LogRoom = bot.get_channel(id="401752340366884885")
-    em = discord.Embed(title="╲⎝⧹𝓤𝓝𝓛𝓞𝓒𝓚⧸⎠╱", description=None, colour=0x2ecc71)
-    em.add_field(name="Channel", value=f"{ctx.message.channel.mention}")
-    em.add_field(name="Moderator", value=f"{ctx.message.author}")
-    em.add_field(name="Reason", value=f"{Reason}")
-    em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
-    timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
-    em.set_footer(text=timer)
-    await bot.send_message(LogRoom, embed=em)
-    
-@bot.command(pass_context=True)
-@commands.has_permissions(manage_messages=True)
-async def clear(ctx, number : int):
-    number += 1
-    deleted = await bot.purge_from(ctx.message.channel, limit=number)
-    num = number - 1
-    LogRoom = bot.get_channel(id="401752340366884885")
-    em = discord.Embed(title=None, description=f'{ctx.message.author} deleted __{num}__ messages', colour=0x3498db)
-    em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
-    em.add_field(name="Channel", value=f"{ctx.message.channel.mention}")
-    timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
-    em.set_footer(text=timer)
-    msg = await bot.send_message(ctx.message.channel, embed=em)
-    await bot.send_message(LogRoom, embed=em)
-    await asyncio.sleep(4)
-    await bot.delete_message(msg)
-
-@bot.command(pass_context=True)
-async def roll(ctx, x : int, y : int):
-    msg = random.randint(x, y)
-    text = await bot.send_message(ctx.message.channel, "**Hmmm...**")
-    await asyncio.sleep(3)
-    await bot.edit_message(text, f"**Oh, my choose: {msg}**")
-
-@bot.command(pass_context=True)
-async def sub(ctx, x : int, y : int):
-    msg = x - y
-    text = await bot.send_message(ctx.message.channel, "**Hmmm...**")
-    await asyncio.sleep(3)
-    await bot.edit_message(text, f"**Oh, the result: {msg}**")
-    
-@bot.command(pass_context=True)
-async def mul(ctx, x : int, y : int):
-    msg = x * y
-    text = await bot.send_message(ctx.message.channel, "**Hmmm...**")
-    await asyncio.sleep(3)
-    await bot.edit_message(text, f"**Oh, the result: {msg}**")
-    
-@bot.command(pass_context=True)
-async def div(ctx, x : int, y : int):
-    msg = x / y
-    text = await bot.send_message(ctx.message.channel, "**Hmmm...**")
-    await asyncio.sleep(3)
-    await bot.edit_message(text, f"**Oh, the result: {msg}**")
-    
-@bot.command(pass_context=True)
-async def exp(ctx, x : int, y : int):
-    msg = x ** y
-    text = await bot.send_message(ctx.message.channel, "**Hmmm...**")
-    await asyncio.sleep(3)
-    await bot.edit_message(text, f"**Oh, the result: {msg}**")
-    
-@bot.command(pass_context=True)
-async def add(ctx, x : int, y : int):
-    msg = x + y
-    text = await bot.send_message(ctx.message.channel, "**Hmmm...**")
-    await asyncio.sleep(3)
-    await bot.edit_message(text, f"**Oh, the result: {msg}**")
-    
-@bot.command()
-async def game(*, play):
-    await bot.change_presence(game=discord.Game(name=play))
-    em = discord.Embed(title="Game Status", description=f"Game status changed to __{play}__!", colour=0x3498db)
-    await bot.say(embed=em)
-
-@bot.command(pass_context=True)
-async def nick(ctx, *, name):
-    await bot.change_nickname(ctx.message.author, name)
-    em = discord.Embed(title="Nickname", description=f"{ctx.message.author}'s nick set to __{name}__!", colour=0x3498db)
-    await bot.say(embed=em)
-    
-@bot.command(pass_context=True)
-async def suggest(ctx, pref, *, text):
-    try:
-        if pref is "S":
-            msg = "𝓢𝓾𝓰𝓰𝒆𝓼𝓽𝓲𝓸𝓷"
-        if pref is "Q":
-            msg = "𝓠𝓾𝒆𝓼𝓽𝓲𝓸𝓷"
-        if pref is "C":
-            msg = "𝓒𝓸𝓶𝓶𝓪𝓷𝓭 𝓢𝓾𝓰𝓰𝒆𝓼𝓽𝓲𝓸𝓷"
-        if pref is "B":
-            msg = "𝓑𝓾𝓰𝓼"
-        else:
-            bot.say("**Please use a valid prefix! The available prefixes: __Q__, __S__, __C__, __B__**")
-    finally:
-        colours = [0x11806a, 0x1abc9c, 0x2ecc71, 0x1f8b4c, 0x3498db, 0x206694, 0x9b59b6, 0x71368a, 0xe91e63, 0xad1457, 0xf1c40f, 0xc27c0e, 0xe67e22, 0xa84300, 0xe74c3c, 0x992d22, 0x95a5a6, 0x607d8b, 0x979c9f, 0x546e7a]
-        col = random.choice(colours)
-        em = discord.Embed(title=f"{msg}", description=f"**From {ctx.message.author.mention}**\n⋙ {text}", colour=col)
+async def lock(ctx, duration : int=None, *, Reason=None):
+    if Reason is None:
+        await bot.reply("**The usage is `r-lock {duration (in sec)} {Reason}` ty.**")
+    if duration is None:
+        await bot.reply("**The usage is `r-lock {duration (in sec)} {Reason}` ty.**")
+    else:
+        Registered = discord.utils.get(ctx.message.server.roles, name="Registered")
+        overwrite = discord.PermissionOverwrite()
+        overwrite.send_messages = False
+        await bot.edit_channel_permissions(ctx.message.channel, Registered, overwrite)
+        await bot.send_message(ctx.message.channel, f"**{ctx.message.channel.mention} is now locked for __{Reason}__**")
+        LogRoom = bot.get_channel(id="401752340366884885")
+        em = discord.Embed(title="╲⎝⧹𝓛𝓞𝓒𝓚⧸⎠╱", description=None, colour=0x1f8b4c)
+        em.add_field(name="Channel", value=f"{ctx.message.channel.mention}")
+        em.add_field(name="Moderator", value=f"{ctx.message.author}")
+        em.add_field(name="Reason", value=f"{Reason}")
+        em.add_field(name="Duration", value=f"{duration} sec")
         em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
         timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
         em.set_footer(text=timer)
-        channel = bot.get_channel(id="444837114258128916")
-        room = bot.get_channel(id="444837114258128916")
-        await bot.send_message(ctx.message.channel, f"**:white_check_mark: Sent in {channel.mention}**")
-        mesg = await bot.send_message(room, embed=em)
-        if pref is "S":
-            await bot.add_reaction(mesg, "👍")
-            await bot.add_reaction(mesg, "👎")
-        if pref is "C":
-            await bot.add_reaction(mesg, "👍")
-            await bot.add_reaction(mesg, "👎")
+        await bot.send_message(LogRoom, embed=em)
+        await asyncio.sleep(duration)
+        overwrite = discord.PermissionOverwrite()
+        overwrite.send_messages = True
+        await bot.edit_channel_permissions(ctx.message.channel, Registered, overwrite)
+        await bot.send_message(ctx.message.channel, f"**{ctx.message.channel.mention} is now unlocked for __{Reason}__**")
+        LogRoom = bot.get_channel(id="401752340366884885")
+        em = discord.Embed(title="╲⎝⧹𝓤𝓝𝓛𝓞𝓒𝓚⧸⎠╱", description=None, colour=0x2ecc71)
+        em.add_field(name="Channel", value=f"{ctx.message.channel.mention}")
+        em.add_field(name="Moderator", value=f"{ctx.message.author}")
+        em.add_field(name="Reason", value=f"{Reason}")
+        em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
+        timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
+        em.set_footer(text=timer)
+        await bot.send_message(LogRoom, embed=em)
+
+@bot.command(pass_context=True)
+@commands.has_permissions(manage_channels=True)
+async def unlock(ctx, *, Reason=None):
+    if Reason is None:
+        await bot.reply("**The usage is `r-unlock {Reason}` ty.**")
+    else:
+        Registered = discord.utils.get(ctx.message.server.roles, name="Registered")
+        overwrite = discord.PermissionOverwrite()
+        overwrite.send_messages = True
+        await bot.edit_channel_permissions(ctx.message.channel, Registered, overwrite)
+        await bot.send_message(ctx.message.channel, f"**{ctx.message.channel.mention} is now unlocked for __{Reason}__**")
+        LogRoom = bot.get_channel(id="401752340366884885")
+        em = discord.Embed(title="╲⎝⧹𝓤𝓝𝓛𝓞𝓒𝓚⧸⎠╱", description=None, colour=0x2ecc71)
+        em.add_field(name="Channel", value=f"{ctx.message.channel.mention}")
+        em.add_field(name="Moderator", value=f"{ctx.message.author}")
+        em.add_field(name="Reason", value=f"{Reason}")
+        em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
+        timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
+        em.set_footer(text=timer)
+        await bot.send_message(LogRoom, embed=em)
+    
+@bot.command(pass_context=True)
+@commands.has_permissions(manage_messages=True)
+async def clear(ctx, number : int=None):
+    if number is None:
+        await bot.reply("**The usage is `r-clear {number of messages to delete}` ty.**")
+    else:
+        number += 1
+        deleted = await bot.purge_from(ctx.message.channel, limit=number)
+        num = number - 1
+        LogRoom = bot.get_channel(id="401752340366884885")
+        em = discord.Embed(title=None, description=f'{ctx.message.author} deleted __{num}__ messages', colour=0x3498db)
+        em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
+        em.add_field(name="Channel", value=f"{ctx.message.channel.mention}")
+        timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
+        em.set_footer(text=timer)
+        msg = await bot.send_message(ctx.message.channel, embed=em)
+        await bot.send_message(LogRoom, embed=em)
+        await asyncio.sleep(4)
+        await bot.delete_message(msg)
+
+@bot.command(pass_context=True)
+async def roll(ctx, x : int=None, y : int=None):
+    if x is None:
+        await bot.reply("**The usage is `r-roll {number} {number}` ty.**")
+    if y is None:
+        await bot.reply("**The usage is `r-roll {number} {number}` ty.**")
+    else:
+        msg = random.randint(x, y)
+        text = await bot.send_message(ctx.message.channel, "**Hmmm...**")
+        await asyncio.sleep(3)
+        await bot.edit_message(text, f"**Oh, my choose: {msg}**")
+
+@bot.command(pass_context=True)
+async def sub(ctx, x : int=None, y : int=None):
+    if x is None:
+        await bot.reply("**The usage is `r-sub {number} {number}` ty.**")
+    if y is None:
+        await bot.reply("**The usage is `r-sub {number} {number}` ty.**")
+    else:
+        msg = x - y
+        text = await bot.send_message(ctx.message.channel, "**Hmmm...**")
+        await asyncio.sleep(3)
+        await bot.edit_message(text, f"**Oh, the result: {msg}**")
+    
+@bot.command(pass_context=True)
+async def mul(ctx, x : int=None, y : int=None):
+    if x is None:
+        await bot.reply("**The usage is `r-mul {number} {number}` ty.**")
+    if y is None:
+        await bot.reply("**The usage is `r-mul {number} {number}` ty.**")
+    else:
+        msg = x * y
+        text = await bot.send_message(ctx.message.channel, "**Hmmm...**")
+        await asyncio.sleep(3)
+        await bot.edit_message(text, f"**Oh, the result: {msg}**")
+    
+@bot.command(pass_context=True)
+async def div(ctx, x : int=None, y : int=None):
+    if x is None:
+        await bot.reply("**The usage is `r-div {number} {number}` ty.**")
+    if y is None:
+        await bot.reply("**The usage is `r-div {number} {number}` ty.**")
+    else:
+        msg = x / y
+        text = await bot.send_message(ctx.message.channel, "**Hmmm...**")
+        await asyncio.sleep(3)
+        await bot.edit_message(text, f"**Oh, the result: {msg}**")
+    
+@bot.command(pass_context=True)
+async def exp(ctx, x : int=None, y : int=None):
+    if x is None:
+        await bot.reply("**The usage is `r-exp {number} {number}` ty.**")
+    if y is None:
+        await bot.reply("**The usage is `r-exp {number} {number}` ty.**")
+    else:
+        msg = x ** y
+        text = await bot.send_message(ctx.message.channel, "**Hmmm...**")
+        await asyncio.sleep(3)
+        await bot.edit_message(text, f"**Oh, the result: {msg}**")
+    
+@bot.command(pass_context=True)
+async def add(ctx, x : int=None, y : int=None):
+    if x is None:
+        await bot.reply("**The usage is `r-add {number} {number}` ty.**")
+    if y is None:
+        await bot.reply("**The usage is `r-add {number} {number}` ty.**")
+    else:
+        msg = x + y
+        text = await bot.send_message(ctx.message.channel, "**Hmmm...**")
+        await asyncio.sleep(3)
+        await bot.edit_message(text, f"**Oh, the result: {msg}**")
+    
+@bot.command()
+async def game(*, play=None):
+    if play is None:
+        await bot.reply("**The usage is `r-game {Something to set as a game}` ty.**")
+    else:
+        await bot.change_presence(game=discord.Game(name=play))
+        em = discord.Embed(title="Game Status", description=f"Game status changed to __{play}__!", colour=0x3498db)
+        await bot.say(embed=em)
+
+@bot.command(pass_context=True)
+async def nick(ctx, *, name=None):
+    if name is None:
+        await bot.reply("**The usage is `r-name {Something to set as your name}` ty.**")
+    else:
+        await bot.change_nickname(ctx.message.author, name)
+        em = discord.Embed(title="Nickname", description=f"{ctx.message.author}'s nick set to __{name}__!", colour=0x3498db)
+        await bot.say(embed=em)
+    
+@bot.command(pass_context=True)
+async def suggest(ctx, pref=None, *, text=None):
+    if pref is None:
+        await bot.reply("**The usage is `r-suggest {prefix (Q, S, C, B)} {text}` ty.**")
+    if text is None:
+        await bot.reply("**The usage is `r-suggest {prefix (Q, S, C, B)} {text}` ty.**")
+    else:
+        try:
+            if pref is "S":
+                msg = "𝓢𝓾𝓰𝓰𝒆𝓼𝓽𝓲𝓸𝓷"
+            if pref is "Q":
+                msg = "𝓠𝓾𝒆𝓼𝓽𝓲𝓸𝓷"
+            if pref is "C":
+                msg = "𝓒𝓸𝓶𝓶𝓪𝓷𝓭 𝓢𝓾𝓰𝓰𝒆𝓼𝓽𝓲𝓸𝓷"
+            if pref is "B":
+                msg = "𝓑𝓾𝓰𝓼"
+            else:
+                bot.say("**Please use a valid prefix! The available prefixes: __Q__, __S__, __C__, __B__**")
+        finally:
+            colours = [0x11806a, 0x1abc9c, 0x2ecc71, 0x1f8b4c, 0x3498db, 0x206694, 0x9b59b6, 0x71368a, 0xe91e63, 0xad1457, 0xf1c40f, 0xc27c0e, 0xe67e22, 0xa84300, 0xe74c3c, 0x992d22, 0x95a5a6, 0x607d8b, 0x979c9f, 0x546e7a]
+            col = random.choice(colours)
+            em = discord.Embed(title=f"{msg}", description=f"**From {ctx.message.author.mention}**\n⋙ {text}", colour=col)
+            em.set_author(name=ctx.message.author, icon_url=ctx.message.author.avatar_url)
+            timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
+            em.set_footer(text=timer)
+            channel = bot.get_channel(id="444837114258128916")
+            room = bot.get_channel(id="444837114258128916")
+            await bot.send_message(ctx.message.channel, f"**:white_check_mark: Sent in {channel.mention}**")
+            mesg = await bot.send_message(room, embed=em)
+            if pref is "S":
+                await bot.add_reaction(mesg, "👍")
+                await bot.add_reaction(mesg, "👎")
+            if pref is "C":
+                await bot.add_reaction(mesg, "👍")
+                await bot.add_reaction(mesg, "👎")
             
 @bot.command(pass_context=True)
-async def poll(ctx, options: str, *, question):
-    if len(options) <= 1:
-        await bot.say('You need more than one option to make a poll!')
-        return
-    if len(options) > 10:
-        await bot.say('You cannot make a poll for more than 10 things!')
-        return
-    if len(options) == 2:
-        reactions = ['👍', '👎']
+async def poll(ctx, options: str=None, *, question=None):
+    if options is None:
+        await bot.reply("**The usage is `r-poll {options (2-10)} {Question or Suggestion}` ty.**")
+    if question is None:
+        await bot.reply("**The usage is `r-poll {options (2-10)} {Question or Suggestion}` ty.**")
     else:
-        reactions = ['1⃣', '2⃣', '3⃣', '4⃣', '5⃣', '6⃣', '7⃣', '8⃣', '9⃣', '🔟']
-    description = []
-    for x, option in enumerate(options):
-        description += '\n {} {}'.format(reactions[x], option)
-    embed = discord.Embed(title=question, description=''.join(description), colour=0x3498db)
-    react_message = await bot.say(embed=embed)
-    for reaction in reactions[:len(options)]:
-        await bot.add_reaction(react_message, reaction)
-    await bot.edit_message(react_message, embed=embed)
+        if len(options) <= 1:
+            await bot.say('You need more than one option to make a poll!')
+            return
+        if len(options) > 10:
+            await bot.say('You cannot make a poll for more than 10 things!')
+            return
+        if len(options) == 2:
+            reactions = ['👍', '👎']
+        else:
+            reactions = ['1⃣', '2⃣', '3⃣', '4⃣', '5⃣', '6⃣', '7⃣', '8⃣', '9⃣', '🔟']
+        description = []
+        for x, option in enumerate(options):
+            description += '\n {} {}'.format(reactions[x], option)
+        embed = discord.Embed(title=question, description=''.join(description), colour=0x3498db)
+        react_message = await bot.say(embed=embed)
+        for reaction in reactions[:len(options)]:
+            await bot.add_reaction(react_message, reaction)
+        await bot.edit_message(react_message, embed=embed)
 
 @bot.listen()
 async def on_member_join(member):
@@ -436,14 +537,17 @@ async def on_member_remove(member):
     await bot.send_message(room2, f"**{member} left without saying anything...** <:thonkSad:421004865049985035>")
 
 @bot.command(pass_context=True)
-async def say(ctx, *, words):
-    await bot.say(f"**{words}**")
+async def say(ctx, *, words=None):
+    if words is None:
+        await bot.reply("**The usage is `r-say {Something}` ty.**")
+    else:
+        await bot.say(f"**{words}**")
 #-----------------------------------------------
 
 reaction_roles=read_json('reaction_roles')
 active_messages=[]
 
-@commands.has_permissions(manage_server=True)
+@commands.is_owner()
 @bot.command(pass_context=True)
 async def add_er(ctx, emoji : str=None, role : discord.Role=None):
 	if (emoji or role) is None:
@@ -457,7 +561,7 @@ async def add_er(ctx, emoji : str=None, role : discord.Role=None):
 	edit_json('reaction_roles', reaction_roles)
 	await bot.say('**{} will assign members to {}**'.format(emoji, role.mention))
 
-@commands.has_permissions(manage_server=True)
+@commands.is_owner()
 @bot.command(pass_context=True)
 async def remove_er(ctx, emoji):
 	role = discord.utils.get(ctx.message.server.roles, id=reaction_roles[emoji])
@@ -465,7 +569,7 @@ async def remove_er(ctx, emoji):
 	del reaction_roles[emoji]
 	edit_json('reaction_roles', reaction_roles)
 
-@commands.has_permissions(manage_server=True)
+@commands.is_owner()
 @bot.command(pass_context=True)
 async def er(ctx):
 	if len(reaction_roles) == 0:
@@ -524,7 +628,10 @@ async def on_message(message):
                      ":black_small_square: Locks down the currently channel, only Admins can send messages until an unlock\n"
                      "\n"
                      ":small_blue_diamond: r-unlock {Reason}\n"
-                     ":black_small_square: Unlocks the currently locked channel, now everyone can send messages there")
+                     ":black_small_square: Unlocks the currently locked channel, now everyone can send messages there\n"
+                     "\n"
+                     ":small_orange_diamond: r-clear {number of messages to delete}\n"
+                     ":black_small_square: Deletes a specific amount of messages")
         await bot.send_message(message.channel, embed=em)
     if message.content.startswith("r-help"):
         Rettend = discord.utils.get(message.server.members, id="361534796830081024")
