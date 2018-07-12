@@ -15,6 +15,7 @@ member = discord.Member
 user = discord.User
 Imox = ["365173881952272384"]
 permissions = discord.Permissions
+PRserver = "PissRocket"
 underworking = ":warning: **Meh Boi, this command hasn't finished. Please wait until it's got.** :warning:"
 """timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())"""
 #--------------------------------------------
@@ -281,6 +282,8 @@ async def unmute(ctx, user : discord.User=None, *, Reason=None):
             timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
             em.set_footer(text=timer)
             await bot.send_message(LogRoom, embed=em)
+            await bot.start_private_message(user)
+            await bot.send_message(f"**`Server: {PRserver}`\nHey! You got unmuted, dont get too excited..**")
         
 @bot.command(pass_context=True)
 async def ping(ctx):
