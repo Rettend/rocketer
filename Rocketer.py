@@ -168,6 +168,8 @@ async def unban(ctx, user : discord.User=None, *, Reason=None):
                 timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
                 em.set_footer(text=timer)
                 await bot.send_message(LogRoom, embed=em)
+                Private = await bot.start_private_message(user)
+                await bot.send_message(Private, f"**`Server: {PRserver}`\nHey! You got unbanned from {PRserver}, Ready to join back?\nhttps://discord.gg/Cf833k8**")
 
 @bot.command(pass_context=True)
 @commands.has_permissions(ban_members=True)
@@ -195,6 +197,8 @@ async def ban(ctx, user : discord.User=None, Day : int=None, *, Reason=None):
             timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
             em.set_footer(text=timer)
             await bot.send_message(LogRoom, embed=em)
+            Private = await bot.start_private_message(user)
+            await bot.send_message(Private, f"**`Server: {PRserver}`\nHey! You got banned from {PRserver}, bai bai!**")
 
 @bot.command(pass_context=True)
 @commands.has_permissions(kick_members=True)
@@ -219,6 +223,8 @@ async def kick(ctx, user : discord.User=None, *, Reason=None):
             timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
             em.set_footer(text=timer)
             await bot.send_message(LogRoom, embed=em)
+            Private = await bot.start_private_message(user)
+            await bot.send_message(Private, f"**`Server: {PRserver}`\nHey! You got kicked from {PRserver}, bai bai!**")
 
 @bot.command(pass_context=True)
 @commands.has_permissions(manage_messages=True)
@@ -247,6 +253,8 @@ async def mute(ctx, user : discord.User=None, duration : int=None, *, Reason=Non
             timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
             em.set_footer(text=timer)
             await bot.send_message(LogRoom, embed=em)
+            Private = await bot.start_private_message(user)
+            await bot.send_message(Private, f"**`Server: {PRserver}`\nHey! You got muted, i think you made some... *uh nvm***")
             await asyncio.sleep(duration)
             await bot.remove_roles(user, MutedRole)
             em = discord.Embed(title="╲⎝⧹𝓤𝓝𝓜𝓤𝓣𝓔⧸⎠╱", description=None, colour=0x1abc9c)
@@ -257,6 +265,8 @@ async def mute(ctx, user : discord.User=None, duration : int=None, *, Reason=Non
             timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())
             em.set_footer(text=timer)
             await bot.send_message(LogRoom, embed=em)
+            Private = await bot.start_private_message(user)
+            await bot.send_message(Private, f"**`Server: {PRserver}`\nHey! You got unmuted, dont get too excited..**")
 
 @bot.command(pass_context=True)
 @commands.has_permissions(manage_messages=True)
