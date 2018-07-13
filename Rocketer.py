@@ -99,8 +99,17 @@ async def selfrole(ctx, role : discord.Role=None):
     await bot.say(embed=e)
 
 """@bot.command(pass_context=True)
-async def fight(ctx, member : discord.Member):
-    e = discord.Embed(title="Lets Fight!", description="", colour="""
+async def fight(ctx, member : discord.Member=None):
+    if member is None:
+       await bot.reply("**The usage is `r-fight {member}` ty.**")
+    else: 
+        e = discord.Embed(title="Lets Fight!", description=f"{ctx.message.author} and {member.mention} ready?\n\n**Write the correct answers in the chat!**", colour=0xe74c3c)
+        e.set_thumbnail(url="https://png.pngtree.com/element_pic/19/03/20/1656ed1ca75411c.jpg")
+        await bot.say(embed=e)
+        question = ["thonk", "pissrocket", "taxi", "brawlhalla", "lin fei", "lapras", "imox", "rettend", "spork", "youtube", "pc", "no u"]
+        question = random.choice(question)
+        await bot.wait_for_message(author=ctx.message.author, content=question)"""
+        
 
 @bot.command(pass_context=True)
 async def typing(ctx):
