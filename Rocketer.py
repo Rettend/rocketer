@@ -198,7 +198,7 @@ async def ban(ctx, user : discord.User=None, Day : int=None, *, Reason=None):
             em.set_footer(text=timer)
             await bot.send_message(LogRoom, embed=em)
             Private = await bot.start_private_message(user)
-            await bot.send_message(Private, f"**`Server: {PRserver}`\nHey! You got banned from {PRserver}, bai bai!**")
+            await bot.send_message(Private, f"**`Server: {PRserver}`\nBAMM!! You got banned from {PRserver}, bai bai!**\n*Thor made hes best...*")
 
 @bot.command(pass_context=True)
 @commands.has_permissions(kick_members=True)
@@ -254,7 +254,7 @@ async def mute(ctx, user : discord.User=None, duration : int=None, *, Reason=Non
             em.set_footer(text=timer)
             await bot.send_message(LogRoom, embed=em)
             Private = await bot.start_private_message(user)
-            await bot.send_message(Private, f"**`Server: {PRserver}`\nHey! You got muted, i think you made some... *uh nvm***")
+            await bot.send_message(Private, f"**`Server: {PRserver}`\nRoses are red, violets are blue and {user.mention} is muted!**")
             await asyncio.sleep(duration)
             await bot.remove_roles(user, MutedRole)
             em = discord.Embed(title="╲⎝⧹𝓤𝓝𝓜𝓤𝓣𝓔⧸⎠╱", description=None, colour=0x1abc9c)
