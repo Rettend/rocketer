@@ -98,17 +98,24 @@ async def selfrole(ctx, role : discord.Role=None):
             e.set_footer(text=timer)
     await bot.say(embed=e)
 
-"""@bot.command(pass_context=True)
+@bot.command(pass_context=True)
 async def fight(ctx, member : discord.Member=None):
     if member is None:
        await bot.reply("**The usage is `r-fight {member}` ty.**")
     else: 
         e = discord.Embed(title="Lets Fight!", description=f"{ctx.message.author} and {member.mention} ready?\n\n**Write the correct answers in the chat!**", colour=0xe74c3c)
         e.set_thumbnail(url="https://png.pngtree.com/element_pic/19/03/20/1656ed1ca75411c.jpg")
-        await bot.say(embed=e)
+        msg = await bot.say(embed=e)
         question = ["thonk", "pissrocket", "taxi", "brawlhalla", "lin fei", "lapras", "imox", "rettend", "spork", "youtube", "pc", "no u"]
         question = random.choice(question)
-        await bot.wait_for_message(author=ctx.message.author, content=question)"""
+        random.shuffle(question)
+        em = discord.Embed(title="Lets Fight!", description=f'The word is "{word}"\n\nYou have 20 seconds to find the word.', colour=0x3498db)
+        await bot.edit_message(embed=em)
+        await bot.wait_for_message(content=question, timeout=20)
+        await bot.say("**Congratulation! You won the game!**")
+        except TimeoutError:
+            await bot.say("**Time is over!**")
+            
         
 
 @bot.command(pass_context=True)
