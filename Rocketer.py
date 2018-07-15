@@ -111,8 +111,9 @@ async def fight(ctx, member : discord.Member=None):
         random.shuffle(question)
         em = discord.Embed(title="Lets Fight!", description=f'The word is "{word}"\n\nYou have 20 seconds to find the word.', colour=0x3498db)
         await bot.edit_message(embed=em)
-        await bot.wait_for_message(content=question, timeout=20)
-        await bot.say("**Congratulation! You won the game!**")
+        try:
+            await bot.wait_for_message(content=question, timeout=20)
+            await bot.say("**Congratulation! You won the game!**")
         except TimeoutError:
             await bot.say("**Time is over!**")
             
