@@ -7,3 +7,5 @@ apiclient
 google-api-python-client
 datadog
 google_auth_oauthlib
+mysql
+mysql-connector
