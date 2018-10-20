@@ -1,4 +1,4 @@
-import discord, logging, json, asyncio, time, random, aiohttp, re, datetime, traceback, os, sys, math, asyncpg, mysql.connector
+import discord, logging, json, asyncio, time, random, aiohttp, re, datetime, traceback, os, sys, math, asyncpg
 from time import gmtime
 from discord.ext import commands
 from functions import edit_json, read_json
@@ -54,34 +54,6 @@ if __name__ == "__main__":
         except Exception as e:
             exc = '{}: {}'.format(type(e).__name__, e)
             print('Failed to load extension {}\n{}'.format(extension, exc))"""
-
-#--------------------------------------------
-
-#-------------DATABASE-SETUP-----------------
-db = mysql.connector.connect(
-  host="localhost",
-  user="Rettend",
-  passwd="No u",
-  database="mydatabase"
-)
-
-mycursor = db.cursor()
-
-sql = "INSERT INTO customers (name, address) VALUES (%s, %s)"
-val = [
-  ('Peter', 'Lowstreet 4'),
-  ('Amy', 'Apple st 652'),
-  ('Hannah', 'Mountain 21'),
-  ('Michael', 'Valley 345'),
-  ('Sandy', 'Ocean blvd 2'),
-  ('Betty', 'Green Grass 1')
-]
-
-mycursor.executemany(sql, val)
-
-db.commit()
-
-print(mycursor.rowcount)
 
 #--------------------------------------------
 
