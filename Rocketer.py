@@ -32,6 +32,7 @@ async def on_ready():
 class NoPermError(Exception):
     pass
 
+
 """@bot.command()
 async def load(extension_name : str):
     try:
