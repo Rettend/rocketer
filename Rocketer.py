@@ -111,7 +111,7 @@ async def fight(ctx, member : discord.Member=None):
         question = random.choice(questions)
         ques = list(question)
         ques = random.shuffle(ques)
-        wait(2)
+        await asyncio.sleep(2)
         em = discord.Embed(title="Lets Fight!", description=f'The word is "**{ques}**"\n\nYou have 20 seconds to find the word.', colour=0x3498db)
         await bot.edit_message(msg, embed=em)
         try:
