@@ -107,10 +107,11 @@ async def fight(ctx, member : discord.Member=None):
         e = discord.Embed(title="Lets Fight!", description=f"{ctx.message.author} and {member.mention} ready?\n\n**Write the correct answers in the chat!**", colour=0xe74c3c)
         e.set_thumbnail(url="https://png.pngtree.com/element_pic/19/03/20/1656ed1ca75411c.jpg")
         msg = await bot.say(embed=e)
-        question = ["thonk", "pissrocket", "taxi", "brawlhalla", "lin fei", "lapras", "imox", "rettend", "spork", "youtube", "pc", "no u"]
-        question = random.choice(question)
-        random.shuffle(question)
-        em = discord.Embed(title="Lets Fight!", description=f'The word is "{word}"\n\nYou have 20 seconds to find the word.', colour=0x3498db)
+        questions = ["thonk", "pissrocket", "taxi", "brawlhalla", "lin fei", "lapras", "imox", "rettend", "spork", "youtube", "pc", "no u"]
+        question = random.choice(questions)
+        ques = list(question)
+        ques = random.shuffle(ques)
+        em = discord.Embed(title="Lets Fight!", description=f'The word is "**{ques}**"\n\nYou have 20 seconds to find the word.', colour=0x3498db)
         await bot.edit_message(embed=em)
         try:
             await bot.wait_for_message(content=question, timeout=20)
