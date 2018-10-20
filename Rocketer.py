@@ -114,7 +114,7 @@ async def fight(ctx, member : discord.Member=None):
         ques = str(ques)
         await asyncio.sleep(2)
         em = discord.Embed(title="Lets Fight!", description=f'The word is "**{ques}**"\n\nYou have 20 seconds to find the word.', colour=0x3498db)
-        e.set_thumbnail(url="https://png.pngtree.com/element_pic/19/03/20/1656ed1ca75411c.jpg")    
+        em.set_thumbnail(url="https://png.pngtree.com/element_pic/19/03/20/1656ed1ca75411c.jpg")    
         await bot.edit_message(msg, embed=em)
         try:
             await bot.wait_for_message(content=question, timeout=20)
