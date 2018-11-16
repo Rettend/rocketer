@@ -3,7 +3,6 @@ from time import gmtime
 from discord.ext import commands
 from functions import edit_json, read_json
 #-------------------DATA---------------------
-
 version = "0.9.0"
 owner = ["361534796830081024"]
 bot = commands.Bot(command_prefix='r-', description=None)
@@ -18,7 +17,6 @@ permissions = discord.Permissions
 PRserver = "PissRocket"
 underworking = ":warning: **Meh Boi, this command hasn't finished. Please wait until it's got.** :warning:"
 """timer = time.strftime("%a, %d %b %Y %H:%M:%S +0000", gmtime())"""
-#--------------------------------------------
 
 #-----------------SETUP----------------------
 @bot.event
@@ -54,8 +52,6 @@ if __name__ == "__main__":
         except Exception as e:
             exc = '{}: {}'.format(type(e).__name__, e)
             print('Failed to load extension {}\n{}'.format(extension, exc))"""
-
-#--------------------------------------------
 
 #----------------COMMANDS--------------------
 @bot.command(pass_context=True)
@@ -122,8 +118,6 @@ async def fight(ctx, member : discord.Member=None):
         except TimeoutError:
             await bot.say("**Time is over!**")
             
-        
-
 @bot.command(pass_context=True)
 async def typing(ctx):
     await bot.say("**Im typing something** <:think:385152309090451467>")
@@ -163,7 +157,7 @@ async def kill(ctx, user : discord.User=None):
         else:
             await bot.say(f"**No u, {ctx.message.author}**")
 
-@bot.command(pass_context=True)
+"""@bot.command(pass_context=True)
 @commands.has_permissions(ban_members=True)
 async def unban(ctx, user : discord.User=None, *, Reason=None):
     if user is None:
@@ -192,7 +186,7 @@ async def unban(ctx, user : discord.User=None, *, Reason=None):
                 await bot.send_message(LogRoom, embed=em)
                 Private = await bot.start_private_message(user)
                 await bot.send_message(Private, f"**`Server: {PRserver}`\nHey! You got unbanned from {PRserver}, Ready to join back?\nhttps://discord.gg/Cf833k8**")
-
+"""
 @bot.command(pass_context=True)
 @commands.has_permissions(ban_members=True)
 async def ban(ctx, user : discord.User=None, Day : int=None, *, Reason=None):
@@ -617,8 +611,8 @@ async def say(ctx, *, words=None):
         await bot.reply("**The usage is `r-say {Something}` ty.**")
     else:
         await bot.say(f"**{words}**")
-#-----------------------------------------------
 
+#-----------------------------------------------
 reaction_roles=read_json('reaction_roles')
 active_messages=[]
 
@@ -682,8 +676,8 @@ async def on_reaction_remove(reaction, user):
         for r_id in reaction_roles.values():
             e_role = discord.utils.get(reaction.message.server.roles, id=r_id)
         await bot.remove_roles(user, role)
-#-----------------------------------------------
 
+#-----------------------------------------------
 @bot.event
 async def on_message(message):
     if message.content.startswith("r-time"):
@@ -693,9 +687,7 @@ async def on_message(message):
         em = discord.Embed(title="MODERATION COMMANDS", description=None, colour=0x3498db)
         em.add_field(name="Admin commands", value=":small_blue_diamond: r-ban {member} {0 - 7 amount of days to delete his messages} {Reason}\n"
                      ":black_small_square: Kicks the user and removes his messages for the given days, the user can't rejoin, until he gots unbanned\n"
-                     "\n"
-                     ":small_orange_diamond: r-unban {member} \"{Reason}\"\n"
-                     ":black_small_square: UnBans the Banned user, the user now can rejoin by instant-invite links\n\n\n")
+                     "\n\n\n")
         em.add_field(name="Mod commands", value=":small_blue_diamond: r-kick {member} {Reason}\n"
                      ":black_small_square: Kicks the user from the server, the user can rejoin by instant-invite links\n"
                      "\n"
